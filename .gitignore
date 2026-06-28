@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# OS
+.DS_Store
+
+# Archives (dataset is included as xlsx)
+data/*.zip
+
+# Duplicate/backup dataset files
+data/CCPP/*.ods
+data/CCPP/Readme.txt~
