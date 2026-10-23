@@ -1,0 +1,365 @@
+{
+  "hardware": {
+    "cpu_model": "x86_64",
+    "cpu_cores_physical": 4,
+    "cpu_cores_logical": 4,
+    "cpu_freq_mhz": 2400.0,
+    "ram_total_gb": 15.628128051757812,
+    "os_info": "Linux 6.12.94+",
+    "python_version": "3.12.3",
+    "torch_version": "2.14.1+cu130"
+  },
+  "config": {
+    "model": {
+      "model_name": "distilgpt2",
+      "max_length": 64,
+      "pad_token": "<|pad|>"
+    },
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.1,
+      "target_modules": [
+        "c_attn",
+        "c_proj"
+      ],
+      "bias": "none",
+      "task_type": "CAUSAL_LM"
+    },
+    "training": {
+      "output_dir": "./checkpoints",
+      "num_epochs": 1,
+      "batch_size": 4,
+      "gradient_accumulation_steps": 4,
+      "effective_batch_size": 32,
+      "max_grad_norm": 1.0,
+      "logging_steps": 10,
+      "eval_steps": 50,
+      "save_steps": 100,
+      "seed": 42,
+      "fp16": false,
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0002,
+        "weight_decay": 0.01,
+        "beta1": 0.9,
+        "beta2": 0.999,
+        "eps": 1e-08
+      },
+      "scheduler": {
+        "name": "cosine_with_warmup",
+        "warmup_steps": 100,
+        "warmup_ratio": 0.1,
+        "min_lr_ratio": 0.1
+      }
+    },
+    "data": {
+      "dataset_name": "wikitext",
+      "dataset_config": "wikitext-2-raw-v1",
+      "train_split": "train",
+      "val_split": "validation",
+      "test_split": "test",
+      "max_train_samples": 100,
+      "max_val_samples": 50,
+      "max_test_samples": 50
+    }
+  },
+  "parameter_analysis": {
+    "Frozen Baseline": {
+      "model_name": "Frozen Baseline",
+      "total_params": 81912576,
+      "trainable_params": 0,
+      "frozen_params": 81912576,
+      "total_size_mb": 312.4716796875,
+      "components": [
+        {
+          "name": "Embeddings",
+          "total_params": 39383808,
+          "trainable_params": 0,
+          "frozen_params": 39383808,
+          "size_mb": 150.2373046875
+        },
+        {
+          "name": "Attention",
+          "total_params": 14174208,
+          "trainable_params": 0,
+          "frozen_params": 14174208,
+          "size_mb": 54.0703125
+        },
+        {
+          "name": "MLP/FFN",
+          "total_params": 28334592,
+          "trainable_params": 0,
+          "frozen_params": 28334592,
+          "size_mb": 108.087890625
+        },
+        {
+          "name": "LayerNorm",
+          "total_params": 19968,
+          "trainable_params": 0,
+          "frozen_params": 19968,
+          "size_mb": 0.076171875
+        },
+        {
+          "name": "LM Head",
+          "total_params": 38597376,
+          "trainable_params": 0,
+          "frozen_params": 38597376,
+          "size_mb": 147.2373046875
+        }
+      ],
+      "flops_estimate": 20969619456
+    },
+    "Full Fine-tuning": {
+      "model_name": "Full Fine-tuning",
+      "total_params": 81912576,
+      "trainable_params": 81912576,
+      "frozen_params": 0,
+      "total_size_mb": 312.4716796875,
+      "components": [
+        {
+          "name": "Embeddings",
+          "total_params": 39383808,
+          "trainable_params": 39383808,
+          "frozen_params": 0,
+          "size_mb": 150.2373046875
+        },
+        {
+          "name": "Attention",
+          "total_params": 14174208,
+          "trainable_params": 14174208,
+          "frozen_params": 0,
+          "size_mb": 54.0703125
+        },
+        {
+          "name": "MLP/FFN",
+          "total_params": 28334592,
+          "trainable_params": 28334592,
+          "frozen_params": 0,
+          "size_mb": 108.087890625
+        },
+        {
+          "name": "LayerNorm",
+          "total_params": 19968,
+          "trainable_params": 19968,
+          "frozen_params": 0,
+          "size_mb": 0.076171875
+        },
+        {
+          "name": "LM Head",
+          "total_params": 38597376,
+          "trainable_params": 38597376,
+          "frozen_params": 0,
+          "size_mb": 147.2373046875
+        }
+      ],
+      "flops_estimate": 20969619456
+    },
+    "Vanilla LoRA (r=8)": {
+      "model_name": "Vanilla LoRA (r=8)",
+      "total_params": 82060032,
+      "trainable_params": 147456,
+      "frozen_params": 81912576,
+      "total_size_mb": 313.0341796875,
+      "components": [
+        {
+          "name": "Base Model (Frozen)",
+          "total_params": 81912576,
+          "trainable_params": 0,
+          "frozen_params": 81912576,
+          "size_mb": 312.4716796875
+        },
+        {
+          "name": "LoRA Adapters",
+          "total_params": 147456,
+          "trainable_params": 147456,
+          "frozen_params": 0,
+          "size_mb": 0.5625
+        }
+      ],
+      "flops_estimate": 21007368192
+    },
+    "Adaptive LoRA (Ours)": {
+      "model_name": "Adaptive LoRA (Ours)",
+      "total_params": 82318080,
+      "trainable_params": 405504,
+      "frozen_params": 81912576,
+      "total_size_mb": 314.0185546875,
+      "components": [
+        {
+          "name": "Base Model (Frozen)",
+          "total_params": 81912576,
+          "trainable_params": 0,
+          "frozen_params": 81912576,
+          "size_mb": 312.4716796875
+        },
+        {
+          "name": "LoRA Adapters",
+          "total_params": 405504,
+          "trainable_params": 405504,
+          "frozen_params": 0,
+          "size_mb": 1.546875
+        }
+      ],
+      "flops_estimate": 21073428480
+    }
+  },
+  "training_resources": {
+    "wall_time_seconds": 5.938882552999985,
+    "cpu_percent_mean": 371.477966101695,
+    "cpu_percent_max": 408.6,
+    "memory_peak_mb": 0.3015937805175781,
+    "memory_current_mb": 0.19293212890625,
+    "cpu_samples": [
+      0.0,
+      348.1,
+      378.9,
+      398.8,
+      378.9,
+      398.7,
+      388.7,
+      388.9,
+      397.6,
+      389.0,
+      388.9,
+      378.8,
+      358.7,
+      398.7,
+      408.3,
+      384.5,
+      397.2,
+      379.0,
+      398.7,
+      388.8,
+      388.9,
+      388.7,
+      398.2,
+      368.9,
+      398.8,
+      388.8,
+      408.6,
+      388.8,
+      388.9,
+      396.1,
+      388.9,
+      388.8,
+      388.8,
+      388.9,
+      398.8,
+      388.9,
+      388.8,
+      388.8,
+      388.9,
+      398.8,
+      378.9,
+      398.8,
+      398.8,
+      384.2,
+      398.9,
+      378.9,
+      388.8,
+      398.8,
+      398.8,
+      388.8,
+      388.9,
+      398.8,
+      378.9,
+      388.5,
+      378.9,
+      388.8,
+      398.8,
+      69.7,
+      39.9
+    ]
+  },
+  "training": {
+    "train_losses": [],
+    "val_losses": [
+      6.408836205800374
+    ],
+    "learning_rates": [
+      2.1800000000000005e-05,
+      2.3600000000000004e-05,
+      2.5400000000000004e-05,
+      2.7200000000000007e-05
+    ],
+    "best_val_loss": 6.408836205800374,
+    "final_train_loss": null
+  },
+  "benchmark": {
+    "Frozen Baseline": {
+      "benchmark": "wikitext2",
+      "metric": "perplexity",
+      "value": 82.8903293813657,
+      "loss": 4.4175184013121,
+      "total_tokens": 4161,
+      "samples_evaluated": 50
+    },
+    "Full Fine-tuning": {
+      "benchmark": "wikitext2",
+      "metric": "perplexity",
+      "value": 82.8903293813657,
+      "loss": 4.4175184013121,
+      "total_tokens": 4161,
+      "samples_evaluated": 50
+    },
+    "Vanilla LoRA (r=8)": {
+      "benchmark": "wikitext2",
+      "metric": "perplexity",
+      "value": 82.8903293813657,
+      "loss": 4.4175184013121,
+      "total_tokens": 4161,
+      "samples_evaluated": 50
+    },
+    "Adaptive LoRA (Ours)": {
+      "benchmark": "wikitext2",
+      "metric": "perplexity",
+      "value": 82.83751952787826,
+      "loss": 4.416881093151493,
+      "total_tokens": 4161,
+      "samples_evaluated": 50
+    }
+  },
+  "quantization": {
+    "size": {
+      "fp32_size_mb": 312.49860286712646,
+      "int8_size_mb": 349.3089084625244,
+      "compression_ratio": 0.8946196197588613,
+      "size_reduction_pct": -11.779350453944136
+    },
+    "latency": {
+      "fp32": {
+        "mean_ms": 23.11381873331963,
+        "std_ms": 1.735253735233114,
+        "p50_ms": 22.659986999997273,
+        "p95_ms": 24.336469699971985,
+        "p99_ms": 29.801164760017407,
+        "min_ms": 22.166805999972894,
+        "max_ms": 31.979168000020763,
+        "throughput_samples_per_sec": 43.26416208146749
+      },
+      "int8": {
+        "mean_ms": 16.21926126665964,
+        "std_ms": 0.6923570260282567,
+        "p50_ms": 16.063749000011285,
+        "p95_ms": 17.12868584994567,
+        "p99_ms": 18.741364289979856,
+        "min_ms": 15.547070000025087,
+        "max_ms": 19.31942099997741,
+        "throughput_samples_per_sec": 61.6550891905048
+      },
+      "speedup": 1.4250845555359826
+    },
+    "memory": {
+      "fp32_peak_mb": 0.024764060974121094,
+      "fp32_current_mb": 0.01562976837158203,
+      "int8_peak_mb": 0.022498130798339844,
+      "int8_current_mb": 0.013116836547851562
+    },
+    "accuracy": {
+      "fp32_metric": 86.10924967596654,
+      "int8_metric": 586.8530909204748,
+      "metric_change_pct": 581.5215474862836
+    }
+  }
+}
