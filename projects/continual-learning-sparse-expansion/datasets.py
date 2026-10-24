@@ -1,9 +1,30 @@
 """
 Dataset utilities for Continual Learning experiments.
 
+Datasets:
+---------
+CIFAR-100 (Split):
+- Source: torchvision / HuggingFace Hub (uoft-cs/cifar100)
+- URL: https://huggingface.co/datasets/uoft-cs/cifar100
+- Official: https://www.cs.toronto.edu/~kriz/cifar.html
+- License: MIT
+- Size: 170MB (50K train + 10K test, 100 classes, 32x32 RGB)
+
+MNIST (Permuted):
+- Source: torchvision / HuggingFace Hub (ylecun/mnist)
+- URL: https://huggingface.co/datasets/ylecun/mnist
+- Official: http://yann.lecun.com/exdb/mnist/
+- License: CC BY-SA 3.0
+- Size: 11MB (60K train + 10K test, 10 classes, 28x28 grayscale)
+
 Implements:
-- Split CIFAR-100: 100 classes divided into sequential tasks
+- Split CIFAR-100: 100 classes divided into sequential tasks (default)
 - Permuted MNIST: Standard permutation-based continual learning benchmark
+- Synthetic datasets: Opt-in only for quick testing
+
+References:
+- Zenke et al. (2017): "Continual Learning Through Synaptic Intelligence"
+- Kirkpatrick et al. (2017): "Overcoming catastrophic forgetting in neural networks"
 """
 
 import torch
@@ -14,9 +35,107 @@ import numpy as np
 from typing import List, Tuple, Optional
 import config
 
+try:
+    from datasets import load_dataset
+    HAS_DATASETS = True
+except ImportError:
+    HAS_DATASETS = False
+
+# Dataset configuration
+DATASET_CONFIG = {
+    "cifar100": {
+        "name": "CIFAR-100",
+        "huggingface": "uoft-cs/cifar100",
+        "url": "https://huggingface.co/datasets/uoft-cs/cifar100",
+        "official": "https://www.cs.toronto.edu/~kriz/cifar.html",
+        "license": "MIT",
+        "size": "170MB",
+        "train_samples": 50000,
+        "test_samples": 10000,
+        "num_classes": 100,
+        "image_size": "32x32",
+    },
+    "mnist": {
+        "name": "MNIST",
+        "huggingface": "ylecun/mnist",
+        "url": "https://huggingface.co/datasets/ylecun/mnist",
+        "official": "http://yann.lecun.com/exdb/mnist/",
+        "license": "CC BY-SA 3.0",
+        "size": "11MB",
+        "train_samples": 60000,
+        "test_samples": 10000,
+        "num_classes": 10,
+        "image_size": "28x28",
+    }
+}
+
+
+class HuggingFaceCIFAR100Wrapper(data.Dataset):
+    """Wrapper for CIFAR-100 loaded from HuggingFace Hub."""
+    
+    def __init__(self, hf_dataset, transform=None, max_samples: Optional[int] = None):
+        self.transform = transform
+        
+        if max_samples and max_samples < len(hf_dataset):
+            hf_dataset = hf_dataset.select(range(max_samples))
+        
+        self.data = []
+        self.targets = []
+        
+        for item in hf_dataset:
+            self.data.append(np.array(item['img']))
+            self.targets.append(item['fine_label'])
+        
+        self.data = np.array(self.data)
+    
+    def __len__(self):
+        return len(self.targets)
+    
+    def __getitem__(self, idx):
+        from PIL import Image
+        img = Image.fromarray(self.data[idx])
+        target = self.targets[idx]
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, target
+
+
+class HuggingFaceMNISTWrapper(data.Dataset):
+    """Wrapper for MNIST loaded from HuggingFace Hub."""
+    
+    def __init__(self, hf_dataset, transform=None, max_samples: Optional[int] = None):
+        self.transform = transform
+        
+        if max_samples and max_samples < len(hf_dataset):
+            hf_dataset = hf_dataset.select(range(max_samples))
+        
+        self.data = []
+        self.targets = []
+        
+        for item in hf_dataset:
+            self.data.append(np.array(item['image']))
+            self.targets.append(item['label'])
+        
+        self.data = np.array(self.data)
+    
+    def __len__(self):
+        return len(self.targets)
+    
+    def __getitem__(self, idx):
+        from PIL import Image
+        img = Image.fromarray(self.data[idx], mode='L')
+        target = self.targets[idx]
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, target
+
 
 class SyntheticCIFAR100(data.Dataset):
-    """Synthetic CIFAR-100-like dataset for fast testing."""
+    """Synthetic CIFAR-100-like dataset for fast testing (opt-in only)."""
     
     def __init__(self, num_samples: int = 5000, train: bool = True, transform=None):
         self.num_samples = num_samples
@@ -48,6 +167,9 @@ class SplitCIFAR100:
     
     Each task contains a disjoint subset of classes.
     Default: 10 tasks with 10 classes each.
+    
+    By default loads real CIFAR-100 from torchvision/HuggingFace.
+    Set use_synthetic=True for synthetic data (testing only).
     """
     
     def __init__(
@@ -55,11 +177,14 @@ class SplitCIFAR100:
         root: str = "./data",
         num_tasks: int = None,
         classes_per_task: int = None,
-        download: bool = True
+        download: bool = True,
+        use_synthetic: bool = False,
+        max_samples: Optional[int] = None
     ):
         self.num_tasks = num_tasks or config.NUM_TASKS
         self.classes_per_task = classes_per_task or config.CLASSES_PER_TASK
         self.root = root
+        self.use_synthetic = use_synthetic
         
         # Data augmentation for training
         self.train_transform = transforms.Compose([
@@ -81,17 +206,62 @@ class SplitCIFAR100:
             )
         ])
         
-        # Load dataset - use synthetic for fast testing (real download is 169MB)
-        print("Using synthetic CIFAR-100-like dataset for fast testing")
-        self.train_data = SyntheticCIFAR100(
-            num_samples=5000, train=True, transform=self.train_transform
-        )
-        self.test_data = SyntheticCIFAR100(
-            num_samples=1000, train=False, transform=self.test_transform
-        )
+        if use_synthetic:
+            print("Using synthetic CIFAR-100-like dataset (opt-in)")
+            self.train_data = SyntheticCIFAR100(
+                num_samples=max_samples or 5000, train=True, transform=self.train_transform
+            )
+            self.test_data = SyntheticCIFAR100(
+                num_samples=(max_samples or 5000) // 5, train=False, transform=self.test_transform
+            )
+        else:
+            self._load_real_cifar100(download, max_samples)
         
         # Create task splits
         self._create_task_splits()
+    
+    def _load_real_cifar100(self, download: bool, max_samples: Optional[int]):
+        """Load real CIFAR-100 from torchvision or HuggingFace."""
+        try:
+            print("Loading CIFAR-100 from torchvision...")
+            self.train_data = torchvision.datasets.CIFAR100(
+                root=self.root, train=True, download=download, transform=self.train_transform
+            )
+            self.test_data = torchvision.datasets.CIFAR100(
+                root=self.root, train=False, download=download, transform=self.test_transform
+            )
+            
+            if max_samples and max_samples < len(self.train_data):
+                indices = list(range(max_samples))
+                self.train_data = data.Subset(self.train_data, indices)
+                self.train_data.targets = [self.train_data.dataset.targets[i] for i in indices]
+            
+            print(f"Loaded {len(self.train_data)} train, {len(self.test_data)} test samples from CIFAR-100")
+            
+        except Exception as e:
+            print(f"torchvision CIFAR-100 download failed: {e}")
+            if HAS_DATASETS:
+                self._load_from_huggingface(max_samples)
+            else:
+                raise RuntimeError(
+                    "Cannot load CIFAR-100. Options:\n"
+                    "1. Ensure network connectivity for torchvision download\n"
+                    "2. Install datasets library: pip install datasets\n"
+                    "3. Use use_synthetic=True for synthetic data"
+                )
+    
+    def _load_from_huggingface(self, max_samples: Optional[int]):
+        """Load CIFAR-100 from HuggingFace Hub."""
+        print("Loading CIFAR-100 from HuggingFace Hub...")
+        hf_dataset = load_dataset("uoft-cs/cifar100")
+        
+        self.train_data = HuggingFaceCIFAR100Wrapper(
+            hf_dataset["train"], transform=self.train_transform, max_samples=max_samples
+        )
+        self.test_data = HuggingFaceCIFAR100Wrapper(
+            hf_dataset["test"], transform=self.test_transform
+        )
+        print(f"Loaded {len(self.train_data)} train, {len(self.test_data)} test from HuggingFace")
     
     def _create_task_splits(self):
         """Create disjoint class splits for each task."""
@@ -208,33 +378,83 @@ class PermutedMNIST:
     
     Each task uses a different fixed permutation of the input pixels.
     The original MNIST is task 0 (identity permutation).
+    
+    By default loads real MNIST from torchvision/HuggingFace.
+    Set use_synthetic=True for synthetic data (testing only).
     """
     
     def __init__(
         self,
         root: str = "./data",
         num_tasks: int = None,
-        download: bool = True
+        download: bool = True,
+        use_synthetic: bool = False,
+        max_samples: Optional[int] = None
     ):
         self.num_tasks = num_tasks or config.NUM_TASKS
         self.root = root
+        self.use_synthetic = use_synthetic
         
         self.transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
         
-        # Load dataset - use synthetic for fast testing
-        print("Using synthetic MNIST-like dataset for fast testing")
-        self.train_data = SyntheticMNIST(
-            num_samples=6000, train=True, transform=self.transform
-        )
-        self.test_data = SyntheticMNIST(
-            num_samples=1000, train=False, transform=self.transform
-        )
+        if use_synthetic:
+            print("Using synthetic MNIST-like dataset (opt-in)")
+            self.train_data = SyntheticMNIST(
+                num_samples=max_samples or 6000, train=True, transform=self.transform
+            )
+            self.test_data = SyntheticMNIST(
+                num_samples=(max_samples or 6000) // 6, train=False, transform=self.transform
+            )
+        else:
+            self._load_real_mnist(download, max_samples)
         
         # Generate permutations for each task
         self._generate_permutations()
+    
+    def _load_real_mnist(self, download: bool, max_samples: Optional[int]):
+        """Load real MNIST from torchvision or HuggingFace."""
+        try:
+            print("Loading MNIST from torchvision...")
+            self.train_data = torchvision.datasets.MNIST(
+                root=self.root, train=True, download=download, transform=self.transform
+            )
+            self.test_data = torchvision.datasets.MNIST(
+                root=self.root, train=False, download=download, transform=self.transform
+            )
+            
+            if max_samples and max_samples < len(self.train_data):
+                indices = list(range(max_samples))
+                self.train_data = data.Subset(self.train_data, indices)
+            
+            print(f"Loaded {len(self.train_data)} train, {len(self.test_data)} test samples from MNIST")
+            
+        except Exception as e:
+            print(f"torchvision MNIST download failed: {e}")
+            if HAS_DATASETS:
+                self._load_from_huggingface(max_samples)
+            else:
+                raise RuntimeError(
+                    "Cannot load MNIST. Options:\n"
+                    "1. Ensure network connectivity for torchvision download\n"
+                    "2. Install datasets library: pip install datasets\n"
+                    "3. Use use_synthetic=True for synthetic data"
+                )
+    
+    def _load_from_huggingface(self, max_samples: Optional[int]):
+        """Load MNIST from HuggingFace Hub."""
+        print("Loading MNIST from HuggingFace Hub...")
+        hf_dataset = load_dataset("ylecun/mnist")
+        
+        self.train_data = HuggingFaceMNISTWrapper(
+            hf_dataset["train"], transform=self.transform, max_samples=max_samples
+        )
+        self.test_data = HuggingFaceMNISTWrapper(
+            hf_dataset["test"], transform=self.transform
+        )
+        print(f"Loaded {len(self.train_data)} train, {len(self.test_data)} test from HuggingFace")
     
     def _generate_permutations(self):
         """Generate fixed permutations for each task."""

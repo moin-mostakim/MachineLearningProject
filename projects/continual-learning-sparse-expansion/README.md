@@ -76,6 +76,41 @@ python main.py --dataset split_cifar100
 python main.py --dataset permuted_mnist
 ```
 
+## Datasets
+
+The system uses real CIFAR-100 and MNIST datasets from torchvision/HuggingFace by default.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **CIFAR-100** | torchvision / HuggingFace | [uoft-cs/cifar100](https://huggingface.co/datasets/uoft-cs/cifar100) | MIT | 170MB | 50K train, 10K test (100 classes, 32x32) |
+| **MNIST** | torchvision / HuggingFace | [ylecun/mnist](https://huggingface.co/datasets/ylecun/mnist) | CC BY-SA 3.0 | 11MB | 60K train, 10K test (10 classes, 28x28) |
+
+**Official Sources:**
+- CIFAR-100: [cs.toronto.edu/~kriz/cifar.html](https://www.cs.toronto.edu/~kriz/cifar.html)
+- MNIST: [yann.lecun.com/exdb/mnist](http://yann.lecun.com/exdb/mnist/)
+
+### Download Instructions
+
+**Automatic (Recommended):** Datasets are automatically downloaded on first run:
+```bash
+pip install torch torchvision
+python main.py --debug
+```
+
+**Manual Download via HuggingFace:**
+```bash
+pip install datasets
+huggingface-cli download uoft-cs/cifar100 --repo-type dataset
+huggingface-cli download ylecun/mnist --repo-type dataset
+```
+
+**Synthetic Data (for testing only):**
+```bash
+python main.py --debug --use-synthetic
+```
+
+Note: Synthetic data is available as an explicit opt-in flag for quick testing, but real datasets should be used for meaningful continual learning experiments.
+
 ## Metrics
 
 We evaluate using standard continual learning metrics:
