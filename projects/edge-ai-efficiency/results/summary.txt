@@ -1,0 +1,35 @@
+
+======================================================================
+EDGE AI EFFICIENCY: EXPERIMENT SUMMARY
+======================================================================
+
+Dataset: cifar10
+Debug Mode: True
+Training Epochs: 3
+
+--- Baseline Results ---
+MobileNetV2-Small:
+  Accuracy: 10.00%
+  Latency: 992.47 ms
+  Parameters: 0.07M
+
+--- NAS Results ---
+
+--- Quantization Results ---
+PTQ Comparison:
+  float32: 10.00% (32-bit)
+  int8_dynamic: 10.25% (8-bit)
+  int4_simulated: 10.25% (4-bit)
+QAT Results:
+  float_accuracy: 10.00%
+  qat_accuracy: 9.75%
+
+--- Literature Comparison ---
+Reference results from papers (ImageNet):
+  MobileNetV2 (1.0): 72.0% Top-1, 3.4M params
+  MobileNetV2 (0.5): 65.4% Top-1, 1.95M params
+  EfficientNet-B0: 77.1% Top-1, 5.3M params
+  Once-for-All (OFA): Up to 80.0% Top-1 with 595M FLOPs
+  Note: Our results are on CIFAR-10, not directly comparable
+
+======================================================================

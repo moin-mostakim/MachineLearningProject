@@ -1,0 +1,16 @@
+# Edge AI Efficiency Project Requirements
+# Neural Architecture Search + Quantization-Aware Training
+
+# Core ML framework
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Scientific computing
+numpy>=1.21.0
+
+# System monitoring
+psutil>=5.8.0
+
+# Optional: For visualization
+# matplotlib>=3.5.0
+# seaborn>=0.11.0

@@ -1,0 +1,323 @@
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'uoft-cs/cifar10' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+============================================================
+ Adversarial Robustness of Vision-Language Models
+============================================================
+Dataset: cifar10
+Debug mode: True
+Device: cpu
+Epochs: 3
+Epsilon: 0.0314 (8.0/255)
+Methods: ['standard', 'adversarial', 'certified', 'dro']
+
+==================================================
+ System Information
+==================================================
+  cpu_count: 4
+  cpu_count_physical: 4
+  total_memory_gb: 16.78
+  available_memory_gb: 6.71
+  torch_version: 2.14.1+cu130
+  cuda_available: False
+==================================================
+
+
+==================================================
+Model Parameter Count
+==================================================
+Component                      Parameters
+--------------------------------------------------
+total                          11,828,034
+trainable                      11,828,034
+vision_encoder                 11,825,472
+text_encoder                        2,560
+--------------------------------------------------
+Memory (float32)                 47.31 MB
+Memory (float16)                 23.66 MB
+==================================================
+
+Loading CIFAR-10 dataset...
+Loading real CIFAR-10 from HuggingFace Hub...
+  HuggingFace URL: https://huggingface.co/datasets/cifar10
+Loading CIFAR-10 from HuggingFace Hub (split=train)...
+Generating train split:   0%|          | 0/50000 [00:00<?, ? examples/s]Generating train split:  24%|██▍       | 12100/50000 [00:00<00:00, 97033.94 examples/s]Generating train split:  57%|█████▋    | 28400/50000 [00:00<00:00, 131883.83 examples/s]Generating train split: 100%|██████████| 50000/50000 [00:00<00:00, 168953.62 examples/s]
+Generating test split:   0%|          | 0/10000 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 10000/10000 [00:00<00:00, 257969.73 examples/s]
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'uoft-cs/cifar10' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+/workspace/projects/adversarial-vlm-robustness/trainers/base.py:43: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler() if config.training.use_amp else None
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/cuda/amp/grad_scaler.py:31: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  super().__init__(
+  Loaded 1000 samples from HuggingFace
+Loading CIFAR-10 from HuggingFace Hub (split=test)...
+  Loaded 200 samples from HuggingFace
+Train batches: 32, Test batches: 7
+
+============================================================
+ Training: Standard Baseline
+============================================================
+Resource monitoring started
+[DEBUG MODE] Training for 3 epochs with 10 batches/epoch
+
+Epoch 1/3
+----------------------------------------
+/workspace/projects/adversarial-vlm-robustness/trainers/standard.py:22: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/cuda/amp/autocast_mode.py:54: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  super().__init__(
+  Batch 0/32: Loss=7.2452
+Train Loss: 3.4931, Train Acc: 0.1187
+Val Loss: 2.3027, Val Acc: 0.0750
+LR: 0.100000, Time: 2.5s
+New best validation accuracy: 0.0750
+
+Epoch 2/3
+----------------------------------------
+  Batch 0/32: Loss=2.3028
+Train Loss: 2.3026, Train Acc: 0.1219
+Val Loss: 2.3026, Val Acc: 0.0750
+LR: 0.075000, Time: 2.6s
+
+Epoch 3/3
+----------------------------------------
+  Batch 0/32: Loss=2.3026
+Train Loss: 2.3026, Train Acc: 0.1437
+Val Loss: 2.3026, Val Acc: 0.0750
+LR: 0.025000, Time: 2.9s
+
+============================================================
+ Training: Adversarial (PGD-based)
+============================================================
+[Adversarial Training] epsilon=0.0314, alpha=0.0078, steps=7
+Resource monitoring started
+[DEBUG MODE] Training for 3 epochs with 10 batches/epoch
+
+Epoch 1/3
+----------------------------------------
+/workspace/projects/adversarial-vlm-robustness/trainers/adversarial.py:54: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+  Batch 0: Loss=7.4346, Adv Acc=0.0625
+Train Loss: 4.1158, Train Acc: 0.0781
+Val Loss: 2.3026, Val Acc: 0.0950
+LR: 0.100000, Time: 17.2s
+New best validation accuracy: 0.0950
+
+Epoch 2/3
+----------------------------------------
+  Batch 0: Loss=2.3026, Adv Acc=0.1562
+Train Loss: 2.3026, Train Acc: 0.0938
+Val Loss: 2.3026, Val Acc: 0.0950
+LR: 0.075000, Time: 15.4s
+
+Epoch 3/3
+----------------------------------------
+  Batch 0: Loss=2.3026, Adv Acc=0.1250
+Train Loss: 2.3026, Train Acc: 0.0813
+Val Loss: 2.3026, Val Acc: 0.0950
+LR: 0.025000, Time: 16.0s
+
+============================================================
+ Training: Certified (Randomized Smoothing)
+============================================================
+[Certified Training] sigma=0.25
+Resource monitoring started
+[DEBUG MODE] Training for 3 epochs with 10 batches/epoch
+
+Epoch 1/3
+----------------------------------------
+/workspace/projects/adversarial-vlm-robustness/trainers/certified.py:47: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+  Batch 0/32: Loss=9.3036
+Train Loss: 3.2616, Train Acc: 0.0844
+Val Loss: 2.3027, Val Acc: 0.0900
+LR: 0.100000, Time: 3.1s
+New best validation accuracy: 0.0900
+
+Epoch 2/3
+----------------------------------------
+  Batch 0/32: Loss=2.3020
+Train Loss: 2.3025, Train Acc: 0.1062
+Val Loss: 2.3026, Val Acc: 0.0900
+LR: 0.075000, Time: 3.1s
+
+Epoch 3/3
+----------------------------------------
+  Batch 0/32: Loss=2.3025
+Train Loss: 2.3026, Train Acc: 0.1125
+Val Loss: 2.3026, Val Acc: 0.0900
+LR: 0.025000, Time: 3.1s
+
+============================================================
+ Training: Distributionally Robust Optimization
+============================================================
+[DRO Training] rho=0.1, gamma_init=1.0, inner_steps=5
+Resource monitoring started
+[DEBUG MODE] Training for 3 epochs with 10 batches/epoch
+
+Epoch 1/3
+----------------------------------------
+  Batch 0: Loss=8.6459, γ=0.9990, T=0.0026
+Train Loss: 3.0991, Train Acc: 0.1062
+Val Loss: 2.3028, Val Acc: 0.0750
+LR: 0.100000, Time: 8.4s
+New best validation accuracy: 0.0750
+
+Epoch 2/3
+----------------------------------------
+  Batch 0: Loss=2.3029, γ=0.9890, T=0.0000
+Train Loss: 2.3026, Train Acc: 0.1156
+Val Loss: 2.3026, Val Acc: 0.0750
+LR: 0.075000, Time: 8.3s
+
+Epoch 3/3
+----------------------------------------
+  Batch 0: Loss=2.3026, γ=0.9790, T=0.0000
+Train Loss: 2.3026, Train Acc: 0.1187
+Val Loss: 2.3026, Val Acc: 0.0750
+LR: 0.025000, Time: 8.3s
+
+============================================================
+ Evaluating Models
+============================================================
+
+Evaluating Standard...
+  Clean Accuracy: 0.0750
+  Adversarial Accuracy: 0.0750
+
+Evaluating Adversarial...
+  Clean Accuracy: 0.0950
+  Adversarial Accuracy: 0.0950
+
+Evaluating Certified...
+  Clean Accuracy: 0.0900
+  Adversarial Accuracy: 0.0900
+
+Evaluating DRO...
+  Clean Accuracy: 0.0750
+  Adversarial Accuracy: 0.0750
+
+============================================================
+ Evaluating Certified Accuracy
+============================================================
+
+Certifying Certified...
+  Certified Accuracy (r=0.0): 0.1100
+  Certified Accuracy (r=0.25): 0.1100
+  Certified Accuracy (r=0.5): 0.0000
+
+==========================================================================================
+ Method Comparison on CIFAR-10
+==========================================================================================
+Metric                               Standard    Adversarial      Certified            DRO
+------------------------------------------------------------------------------------------
+clean_accuracy                         0.0750         0.0950         0.0900         0.0750
+adversarial_accuracy                   0.0750         0.0950         0.0900         0.0750
+robustness_gap                         0.0000         0.0000         0.0000         0.0000
+total_samples                             200            200            200            200
+==========================================================================================
+
+
+Running quantization comparison on Adversarial model...
+
+============================================================
+ INT8 Quantization Comparison
+============================================================
+Evaluating original FP32 model...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+Evaluating dynamically quantized INT8 model...
+
+======================================================================
+ INT8 Quantization Comparison
+======================================================================
+Metric                               FP32    INT8 Dynamic        Ratio
+----------------------------------------------------------------------
+Model Size (MB)                     47.35           44.72        1.06x
+Inference Time (ms)                  3.72            3.85        0.97x
+Accuracy                           0.0950          0.0950     +0.0000
+======================================================================
+
+
+============================================================
+ Literature Comparison (CIFAR-10, ε=8/255)
+============================================================
+
+Method                       Clean Acc      PGD Acc       Certified
+-----------------------------------------------------------------
+Madry et al. (2018)              87.3%        45.8%               -
+TRADES (Zhang 2019)              84.9%        56.6%               -
+Cohen et al. (2019)              75.0%            -      0.60@r=0.5
+Wong et al. (2020)               83.3%        43.2%               -
+-----------------------------------------------------------------
+
+References:
+- Madry et al. (2018): 'Towards Deep Learning Models Resistant to Adversarial Attacks'
+- Zhang et al. (2019): 'Theoretically Principled Trade-off (TRADES)'
+- Cohen et al. (2019): 'Certified Adversarial Robustness via Randomized Smoothing'
+- Wong et al. (2020): 'Fast is Better than Free'
+============================================================
+
+
+============================================================
+ Resource Usage Summary
+============================================================
+
+Standard:
+  Duration: 9.0s
+  CPU: 332.0% mean, 395.7% max
+  Memory: 1460.0 MB mean, 1526.1 MB max
+
+Adversarial:
+  Duration: 49.0s
+  CPU: 386.6% mean, 400.5% max
+  Memory: 1614.5 MB mean, 1652.4 MB max
+
+Certified:
+  Duration: 10.0s
+  CPU: 338.2% mean, 395.8% max
+  Memory: 1674.9 MB mean, 1702.0 MB max
+
+DRO:
+  Duration: 25.0s
+  CPU: 375.2% mean, 399.9% max
+  Memory: 1784.4 MB mean, 1817.7 MB max
+
+============================================================
+ Final Summary
+============================================================
+Total training time: 93.4s
+Models trained: ['Standard', 'Adversarial', 'Certified', 'DRO']
+
+Standard:
+  Clean Accuracy: 0.0750
+  Adversarial Accuracy (PGD): 0.0750
+
+Adversarial:
+  Clean Accuracy: 0.0950
+  Adversarial Accuracy (PGD): 0.0950
+
+Certified:
+  Clean Accuracy: 0.0900
+  Adversarial Accuracy (PGD): 0.0900
+
+DRO:
+  Clean Accuracy: 0.0750
+  Adversarial Accuracy (PGD): 0.0750
+
+Certified (Certified):
+  certified_acc_r0.0: 0.1100
+  certified_acc_r0.25: 0.1100
+  certified_acc_r0.5: 0.0000
+
+============================================================
+ Experiment Complete!
+============================================================
+
+Results saved to: /workspace/projects/adversarial-vlm-robustness/results/results_20261024_103942.json
+
+Generating figures...
+Figures saved to: /workspace/projects/adversarial-vlm-robustness/figures/

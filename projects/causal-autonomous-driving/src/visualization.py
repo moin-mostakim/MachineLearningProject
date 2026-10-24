@@ -1,0 +1,134 @@
+"""Visualization utilities."""
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from typing import Dict, List, Any, Optional
+from pathlib import Path
+
+plt.style.use('seaborn-v0_8-whitegrid')
+
+
+def plot_training_curves(results: Dict[str, Dict[str, List[float]]], save_path: Optional[str] = None):
+    """Plot training curves for multiple methods."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    
+    colors = {'ERM': '#3498db', 'IRM': '#e74c3c', 'Augmentation': '#2ecc71'}
+    
+    for name, data in results.items():
+        color = colors.get(name, 'gray')
+        if 'train_losses' in data:
+            axes[0].plot(data['train_losses'], label=name, color=color, linewidth=2)
+        if 'val_accuracies' in data:
+            axes[1].plot(data['val_accuracies'], label=name, color=color, linewidth=2)
+    
+    axes[0].set_xlabel('Epoch')
+    axes[0].set_ylabel('Training Loss')
+    axes[0].set_title('Training Loss Comparison')
+    axes[0].legend()
+    
+    axes[1].set_xlabel('Epoch')
+    axes[1].set_ylabel('Validation Accuracy')
+    axes[1].set_title('Validation Accuracy Comparison')
+    axes[1].legend()
+    
+    plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    return fig
+
+
+def plot_environment_comparison(eval_results: Dict[str, Dict], save_path: Optional[str] = None):
+    """Plot per-environment accuracy for each method."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    methods = list(eval_results.keys())
+    env_names = ['Clear', 'Rain', 'Night']
+    x = np.arange(len(env_names))
+    width = 0.25
+    
+    colors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6']
+    
+    for i, method in enumerate(methods):
+        accs = [r['accuracy'] for r in eval_results[method]['per_environment']]
+        bars = ax.bar(x + i * width, accs, width, label=method, color=colors[i % len(colors)])
+        for bar, acc in zip(bars, accs):
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+                   f'{acc:.2f}', ha='center', va='bottom', fontsize=9)
+    
+    ax.set_xlabel('Environment')
+    ax.set_ylabel('Accuracy')
+    ax.set_title('Per-Environment Accuracy Comparison')
+    ax.set_xticks(x + width)
+    ax.set_xticklabels(env_names)
+    ax.legend()
+    ax.set_ylim(0, 1.1)
+    
+    plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    return fig
+
+
+def plot_method_comparison(results: Dict[str, float], published: Dict[str, float] = None,
+                          save_path: Optional[str] = None):
+    """Plot comparison bar chart."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    methods, values, colors = [], [], []
+    
+    if published:
+        for m, v in published.items():
+            if v:
+                methods.append(f"{m}\n(Published)")
+                values.append(v)
+                colors.append('#3498db')
+    
+    for m, v in results.items():
+        methods.append(f"{m}\n(Ours)")
+        values.append(v)
+        colors.append('#e74c3c')
+    
+    bars = ax.bar(methods, values, color=colors, edgecolor='black')
+    for bar, val in zip(bars, values):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+               f'{val:.3f}', ha='center', va='bottom', fontsize=10, fontweight='bold')
+    
+    ax.set_ylabel('Accuracy')
+    ax.set_title('Method Comparison: Domain Generalization')
+    ax.set_ylim(0, 1.1)
+    plt.xticks(rotation=45, ha='right')
+    
+    plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    return fig
+
+
+def plot_quantization_comparison(comparison: Dict[str, Any], save_path: Optional[str] = None):
+    """Plot FP32 vs INT8 comparison."""
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+    
+    axes[0].bar(['FP32', 'INT8'], 
+               [comparison['size']['fp32_size_mb'], comparison['size']['int8_size_mb']],
+               color=['#3498db', '#e74c3c'], edgecolor='black')
+    axes[0].set_ylabel('Size (MB)')
+    axes[0].set_title('Model Size')
+    
+    axes[1].bar(['FP32', 'INT8'],
+               [comparison['latency']['fp32']['mean_ms'], comparison['latency']['int8']['mean_ms']],
+               color=['#3498db', '#e74c3c'], edgecolor='black')
+    axes[1].set_ylabel('Latency (ms)')
+    axes[1].set_title(f"Latency (Speedup: {comparison['latency']['speedup']:.2f}x)")
+    
+    if comparison.get('accuracy'):
+        axes[2].bar(['FP32', 'INT8'],
+                   [comparison['accuracy']['fp32_metric'], comparison['accuracy']['int8_metric']],
+                   color=['#3498db', '#e74c3c'], edgecolor='black')
+        axes[2].set_ylabel('Accuracy')
+        axes[2].set_title('Accuracy')
+    
+    plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    return fig

@@ -1,0 +1,351 @@
+INFO:faiss.loader:Loading faiss with AVX512-SPR support.
+INFO:faiss.loader:Could not load library with AVX512-SPR support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx512_spr'")
+INFO:faiss.loader:Loading faiss with AVX512 support.
+INFO:faiss.loader:Could not load library with AVX512 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx512'")
+INFO:faiss.loader:Loading faiss with AVX2 support.
+INFO:faiss.loader:Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+INFO:faiss.loader:Loading faiss.
+INFO:faiss.loader:Successfully loaded faiss.
+INFO:__main__:Running in DEBUG mode with limited data
+============================================================
+CS Tutoring LLM Configuration Summary
+============================================================
+
+Dataset: code_search_net/python
+Train samples: 100
+Eval samples: 50
+
+Base Model: microsoft/codebert-base
+Generation Model: Salesforce/codet5-small
+
+Training:
+  Learning rate: 2e-05
+  Batch size: 8
+  Epochs: 1
+  Gradient accumulation: 4
+
+RAG Configuration:
+  Retriever: sentence-transformers/all-MiniLM-L6-v2
+  Retrieved docs: 3
+
+Debug mode: True
+============================================================
+
+======================================================================
+MODEL PARAMETER COUNTS
+======================================================================
+Model                          Parameters      Notes                    
+----------------------------------------------------------------------
+CodeBERT-base                  125,000,000     5 components             
+CodeT5-small                   60,000,000      3 components             
+all-MiniLM-L6-v2               22,700,000                               
+BM25                           N/A             Non-parametric statistical method
+======================================================================
+
+CodeBERT-base Breakdown:
+--------------------------------------------------
+  word_embeddings                     23,440,896
+  position_embeddings                    393,216
+  token_type_embeddings                    1,536
+  attention_per_layer                  2,359,296
+  ffn_per_layer                        4,722,432
+
+================================================================================
+LITERATURE COMPARISON
+================================================================================
+
+This work implements and compares several approaches for CS education:
+
+1. BM25 Baseline (Robertson et al., 1994)
+   - Classic probabilistic retrieval model
+   - No neural parameters, relies on term statistics
+   - Strong baseline for code search tasks
+
+2. CodeBERT (Feng et al., 2020)
+   - 125M parameters
+   - Pre-trained on bimodal data (code + natural language)
+   - MLM + Replaced Token Detection objectives
+   - Benchmark: CodeSearchNet MRR ~0.58
+
+3. CodeT5 (Wang et al., 2021)
+   - 60M parameters (small) / 220M (base)
+   - Encoder-decoder architecture
+   - Identifier-aware denoising pre-training
+   - Benchmark: Code summarization BLEU ~20
+
+4. RAG Approach (Lewis et al., 2020)
+   - Combines retrieval with generation
+   - Dense retrieval + cross-encoder reranking
+   - Provides grounded, factual explanations
+
+5. Educational AI Systems
+   - Kumar et al. (2020): BERT for educational QA
+   - AutoTutor (Graesser et al.): Intelligent tutoring systems
+   - Codex/GPT-4 for programming education
+
+Key Findings from Literature:
+- Pre-trained code models significantly outperform general-purpose models
+- RAG reduces hallucination in code explanations
+- Readability at grade 10-14 level optimal for CS education
+- Hybrid retrieval (dense + sparse) often beats either alone
+
+INFO:src.resource_monitor:GPU not available, CPU-only monitoring
+INFO:src.resource_monitor:Resource monitoring started
+INFO:__main__:
+============================================================
+INFO:__main__:Loading Dataset
+INFO:__main__:============================================================
+INFO:src.data_loader:Loading dataset: code_search_net/python
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'code_search_net' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'code_search_net' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/code_search_net/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/code-search-net/code_search_net/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/code-search-net/code_search_net/bd0cf261e357a3eb5c8fba490d23ec1a1cd59555/README.md?%2Fdatasets%2Fcode-search-net%2Fcode_search_net%2Fresolve%2Fmain%2FREADME.md=&etag=%2237a1bdb0c61a7d4227b39b995d00707f679d7ea3%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/code_search_net/resolve/bd0cf261e357a3eb5c8fba490d23ec1a1cd59555/code_search_net.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/code-search-net/code_search_net/resolve/bd0cf261e357a3eb5c8fba490d23ec1a1cd59555/code_search_net.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/code_search_net/code_search_net.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:Failed to load from HuggingFace: Invalid HF URI 'hf://datasets/code_search_net@bd0cf261e357a3eb5c8fba490d23ec1a1cd59555/.huggingface.yaml'. Repository id must be 'namespace/name', got 'code_search_net'.
+INFO:src.data_loader:Creating synthetic dataset for demonstration...
+INFO:src.data_loader:Creating synthetic CS education dataset...
+INFO:src.data_loader:Created 11 train, 2 val, 3 test synthetic samples
+INFO:__main__:Dataset: code_search_net/python
+INFO:__main__:Train: 11, Val: 2, Test: 3
+INFO:__main__:============================================================
+INFO:__main__:Running BM25 Baseline
+INFO:__main__:============================================================
+INFO:src.bm25_retriever:Building BM25 index for 16 documents...
+INFO:src.bm25_retriever:Tokenizing code corpus...
+INFO:src.bm25_retriever:Tokenizing documentation corpus...
+INFO:src.bm25_retriever:Building BM25 index for code...
+INFO:src.bm25_retriever:Building BM25 index for documentation...
+INFO:src.bm25_retriever:Index saved to data/bm25_index.pkl
+INFO:src.bm25_retriever:BM25 index built successfully
+INFO:__main__:Query: 'binary search algorithm' - Top score: 1.0000
+INFO:__main__:Query: 'how to sort an array' - Top score: 1.0000
+INFO:__main__:Query: 'recursive function example' - Top score: 0.0000
+INFO:__main__:Query: 'linked list implementation' - Top score: 1.0000
+INFO:__main__:Query: 'dynamic programming solution' - Top score: 0.5000
+INFO:__main__:BM25 Index Stats: 16 documents indexed
+INFO:src.resource_monitor:[BM25 Baseline] Memory: 6.62GB -> 6.62GB (delta: -0.01GB)
+INFO:__main__:============================================================
+INFO:__main__:Running Fine-tuned LLM
+INFO:__main__:============================================================
+INFO:__main__:Creating CodeExplanationModel...
+INFO:src.model:Loading generation model: Salesforce/codet5-small
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/commits/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/discussions?p=0 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/commits/refs%2Fpr%2F6 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/refs%2Fpr%2F6/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/refs%2Fpr%2F6/model.safetensors "HTTP/1.1 302 Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 52818.04it/s]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/revision/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+WARNING:src.model:Failed to load tokenizer with RobertaTokenizer: Input must be a List[Union[str, AddedToken]]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/revision/main "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/revision/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:src.model:Model parameters: 60,492,288
+INFO:__main__:Model parameters: 60,492,288
+INFO:__main__:Debug mode: Skipping full training, testing generation...
+INFO:__main__:Sample generation: Flan): if n  n ...
+INFO:src.resource_monitor:[Fine-tuned LLM] Memory: 6.62GB -> 7.45GB (delta: +0.83GB)
+INFO:__main__:============================================================
+INFO:__main__:Running RAG System
+INFO:__main__:============================================================
+INFO:__main__:Building RAG system...
+INFO:src.rag_system:Loading retriever: sentence-transformers/all-MiniLM-L6-v2
+INFO:sentence_transformers.base.model:No device provided, using cpu
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 27290.80it/s]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/1110a243fdf4706b3f48f1d95db1a4f5529b4d41/2_Normalize/config.json "HTTP/1.1 404 Not Found"
+INFO:src.rag_system:Loading reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+INFO:sentence_transformers.base.model:No device provided, using cpu
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L-6-v2 "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2/resolve/233902d25c440f23af6f7d6e94d2946bac0bee0a/modules.json "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2/resolve/233902d25c440f23af6f7d6e94d2946bac0bee0a/modules.json "HTTP/1.1 404 Not Found"
+INFO:sentence_transformers.base.model:No modules.json found for cross-encoder/ms-marco-MiniLM-L-6-v2, initializing a new CrossEncoder model.
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 1205.70it/s]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L-6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L-6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/cross-encoder/ms-marco-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:src.rag_system:Loading generator model...
+INFO:src.model:Loading generation model: Salesforce/codet5-small
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/commits/main "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 13534.57it/s]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/discussions?p=0 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/commits/refs%2Fpr%2F6 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/refs%2Fpr%2F6/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/Salesforce/codet5-small/resolve/refs%2Fpr%2F6/model.safetensors "HTTP/1.1 302 Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/revision/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/Salesforce/codet5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+WARNING:src.model:Failed to load tokenizer with RobertaTokenizer: Input must be a List[Union[str, AddedToken]]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/revision/main "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/revision/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/t5-small/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/google-t5/t5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:src.model:Model parameters: 60,492,288
+INFO:src.rag_system:Building indices for 16 documents...
+INFO:src.rag_system:Computing dense embeddings...
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:03<00:00,  3.20s/it]Batches: 100%|██████████| 1/1 [00:03<00:00,  3.20s/it]
+INFO:src.rag_system:Building FAISS index...
+INFO:src.rag_system:Building BM25 index...
+INFO:src.bm25_retriever:Building BM25 index for 16 documents...
+INFO:src.bm25_retriever:Tokenizing code corpus...
+INFO:src.bm25_retriever:Tokenizing documentation corpus...
+INFO:src.bm25_retriever:Building BM25 index for code...
+INFO:src.bm25_retriever:Building BM25 index for documentation...
+INFO:src.bm25_retriever:Index saved to data/bm25_index.pkl
+INFO:src.bm25_retriever:BM25 index built successfully
+INFO:src.rag_system:Index saved to data/cache/rag_index
+INFO:src.rag_system:Indices built successfully
+INFO:__main__:
+Question: How does binary search work?
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:01<00:00,  1.14s/it]Batches: 100%|██████████| 1/1 [00:01<00:00,  1.14s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.60s/it]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.60s/it]
+INFO:__main__:Answer: chemical (left + right) // 2 if... Explanation: Thischemical (left + right) // 2 if... Explanation: ...
+INFO:__main__:
+Question: Explain the quicksort algorithm
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.55s/it]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.55s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:05<00:00,  5.63s/it]Batches: 100%|██████████| 1/1 [00:05<00:00,  5.63s/it]
+INFO:__main__:Answer: employees...
+INFO:__main__:
+Question: What is recursion?
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.30s/it]Batches: 100%|██████████| 1/1 [00:02<00:00,  2.30s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:05<00:00,  5.41s/it]Batches: 100%|██████████| 1/1 [00:05<00:00,  5.41s/it]
+INFO:__main__:Answer: pont explanation for the student's question....
+INFO:src.resource_monitor:[RAG System] Memory: 7.54GB -> 9.76GB (delta: +2.22GB)
+INFO:__main__:============================================================
+INFO:__main__:Running INT8 Quantization Comparison
+INFO:__main__:============================================================
+INFO:src.model:Loading base model: microsoft/codebert-base
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/microsoft/codebert-base/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base/commits/main "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base/discussions?p=0 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base/commits/refs%2Fpr%2F9 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/microsoft/codebert-base/resolve/refs%2Fpr%2F9/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/microsoft/codebert-base/resolve/refs%2Fpr%2F9/model.safetensors "HTTP/1.1 302 Found"
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11940.01it/s]
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/models/microsoft/codebert-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:src.model:Model parameters: 125,237,379
+INFO:src.quantization:Applying dynamic quantization...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+INFO:src.quantization:Dynamic quantization complete
+INFO:src.quantization:Running full quantization comparison...
+INFO:src.quantization:Benchmarking original model...
+INFO:src.quantization:Benchmarking quantized model...
+
+======================================================================
+INT8 QUANTIZATION COMPARISON REPORT
+======================================================================
+
+## Summary
+--------------------------------------------------
+Memory Reduction: 68.8%
+Speedup Factor: 1.42x
+
+## Model Size
+--------------------------------------------------
+Metric                         Original        Quantized      
+------------------------------------------------------------
+Parameters                       125,237,379    39,037,440
+Memory (MB)                           477.75        148.92
+Compression Ratio                      1.00x         3.21x
+
+## Inference Speed (CPU)
+--------------------------------------------------
+Metric                         Original        Quantized      
+------------------------------------------------------------
+Mean Latency (ms)                    9528.71       6729.13
+P95 Latency (ms)                    10175.27       7051.49
+Throughput (samples/sec)                0.10          0.15
+
+======================================================================
+INFO:src.resource_monitor:[Quantization] Memory: 9.68GB -> 10.27GB (delta: +0.59GB)
+INFO:__main__:
+============================================================
+INFO:__main__:Running Comprehensive Evaluation
+INFO:__main__:============================================================
+INFO:absl:Using default tokenizer.
+WARNING:src.evaluator:BERTScore unavailable: No module named 'bert_score'
+
+============================================================
+EVALUATION SUMMARY
+============================================================
+retrieval_recall: 0.0000
+retrieval_precision: 0.0000
+retrieval_mrr: 0.0000
+bleu_score: 0.1739
+rouge_1: 0.0944
+rouge_2: 0.0000
+rouge_l: 0.0944
+bert_score: 0.0000
+avg_readability: 35.5107
+avg_clarity: 41.0786
+syntax_correct_rate: 1.0000
+relevance_accuracy: 0.0000
+relevance_f1: 0.0000
+INFO:src.resource_monitor:Resource monitoring stopped
+
+============================================================
+RESOURCE MONITORING REPORT
+============================================================
+
+Monitoring Duration: 673.1 seconds
+Samples Collected: 68
+
+## CPU Usage
+----------------------------------------
+Mean: 98.5%
+Max:  100.0%
+Min:  0.0%
+
+## Memory Usage
+----------------------------------------
+Mean: 61.1%
+Max:  69.1%
+Peak: 10.80 GB
+
+## GPU: Not available
+
+============================================================
+INFO:__main__:Results saved to results/results_20261024_214303.json
+
+================================================================================
+EXECUTION COMPLETE
+================================================================================
+Mode: debug
+Dataset: code_search_net
+Results saved to: results/results_20261024_214303.json
+================================================================================

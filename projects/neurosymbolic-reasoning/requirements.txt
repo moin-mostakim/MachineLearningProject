@@ -1,0 +1,11 @@
+# Neurosymbolic Reasoning System Requirements
+# Core dependencies
+torch>=2.0.0
+numpy>=1.24.0
+
+# Optional but recommended
+transformers>=4.30.0  # For BERT tokenizer
+psutil>=5.9.0  # For resource monitoring
+
+# Development
+tqdm>=4.65.0
