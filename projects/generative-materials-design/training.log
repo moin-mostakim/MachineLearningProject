@@ -1,0 +1,196 @@
+
+╔══════════════════════════════════════════════════════════════════════╗
+║     Generative AI for Inverse Design of Functional Materials        ║
+║              with Multi-Objective Optimization                       ║
+╠══════════════════════════════════════════════════════════════════════╣
+║  Dataset: QM9 (~134k molecules)                                      ║
+║  Method: VAE + Multi-Objective Optimization                          ║
+║  Objectives: HOMO, LUMO, Gap optimization                            ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+
+============================================================
+SYSTEM INFORMATION
+============================================================
+PyTorch: 2.14.1+cu130
+CUDA Available: False
+
+CPU Cores: 4
+System Memory: 15.6 GB
+============================================================
+
+======================================================================
+PARAMETER COUNT TABLE
+======================================================================
+Component                           Parameters    Size (MB)        %
+----------------------------------------------------------------------
+encoder                                231,424         0.93     15.5
+decoder                              1,112,064         4.45     74.4
+property_predictor                     151,040         0.60     10.1
+----------------------------------------------------------------------
+TOTAL                                1,494,528         5.98    100.0
+Total: 1.49M parameters
+======================================================================
+
+======================================================================
+LITERATURE COMPARISON
+======================================================================
+Method                        Validity   Uniqueness      Novelty
+----------------------------------------------------------------------
+Junction Tree VAE*              100.0%          N/A       100.0%
+GraphVAE*                        55.7%        76.0%        61.6%
+MolGAN*                          98.1%        10.4%        94.2%
+CGVAE*                          100.0%        99.6%       100.0%
+Our VAE (target)                  >90%         >80%         >90%
+----------------------------------------------------------------------
+* Results from published papers on QM9 dataset
+  - Junction Tree VAE: Jin et al., ICML 2018
+  - GraphVAE: Simonovsky & Komodakis, 2018
+  - MolGAN: De Cao & Kipf, 2018
+  - CGVAE: Liu et al., NeurIPS 2018
+======================================================================
+INFO:__main__:Output directory: outputs/run_20261024_201458
+INFO:__main__:Loading QM9 dataset...
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 1000 synthetic molecules for train
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 100 synthetic molecules for val
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 100 synthetic molecules for test
+INFO:__main__:Train: 1000 samples
+INFO:__main__:Val: 100 samples
+INFO:__main__:Test: 100 samples
+INFO:__main__:Building VAE model...
+INFO:__main__:Starting training...
+INFO:training.trainer:Starting training for 100 epochs
+INFO:training.trainer:Device: cpu
+INFO:training.trainer:Model parameters: 1,376,094
+INFO:training.trainer:Epoch 1/100 | Train Loss: 3.8554 | Val Loss: 3.6530 | LR: 0.001000 | Time: 23.3s
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/best_model.pt
+INFO:training.trainer:Epoch 2/100 | Train Loss: 3.3100 | Val Loss: 3.3822 | LR: 0.001000 | Time: 30.1s
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/best_model.pt
+INFO:training.trainer:Epoch 3/100 | Train Loss: 3.1260 | Val Loss: 3.2042 | LR: 0.000999 | Time: 33.0s
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/best_model.pt
+INFO:training.trainer:Epoch 4/100 | Train Loss: 3.1234 | Val Loss: 3.2026 | LR: 0.000998 | Time: 33.3s
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/best_model.pt
+INFO:training.trainer:Epoch 5/100 | Train Loss: 3.0921 | Val Loss: 3.2693 | LR: 0.000996 | Time: 32.2s
+INFO:training.trainer:Epoch 6/100 | Train Loss: 3.0731 | Val Loss: 3.3457 | LR: 0.000994 | Time: 33.3s
+INFO:training.trainer:Epoch 7/100 | Train Loss: 3.0600 | Val Loss: 3.3606 | LR: 0.000991 | Time: 33.2s
+INFO:training.trainer:Epoch 8/100 | Train Loss: 3.0512 | Val Loss: 3.3352 | LR: 0.000988 | Time: 33.4s
+INFO:training.trainer:Epoch 9/100 | Train Loss: 3.0408 | Val Loss: 3.2897 | LR: 0.000984 | Time: 33.2s
+INFO:training.trainer:Epoch 10/100 | Train Loss: 3.0463 | Val Loss: 3.2854 | LR: 0.000980 | Time: 33.0s
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/checkpoint_epoch_10.pt
+INFO:training.trainer:Epoch 11/100 | Train Loss: 3.0404 | Val Loss: 3.2910 | LR: 0.000976 | Time: 34.1s
+INFO:training.trainer:Epoch 12/100 | Train Loss: 3.0373 | Val Loss: 3.3006 | LR: 0.000970 | Time: 27.0s
+INFO:training.trainer:Epoch 13/100 | Train Loss: 3.0413 | Val Loss: 3.2977 | LR: 0.000965 | Time: 30.3s
+INFO:training.trainer:Epoch 14/100 | Train Loss: 3.0428 | Val Loss: 3.2914 | LR: 0.000959 | Time: 32.8s
+INFO:training.trainer:Epoch 15/100 | Train Loss: 3.0352 | Val Loss: 3.2877 | LR: 0.000952 | Time: 32.5s
+INFO:training.trainer:Epoch 16/100 | Train Loss: 3.0380 | Val Loss: 3.2798 | LR: 0.000946 | Time: 33.1s
+INFO:training.trainer:Epoch 17/100 | Train Loss: 3.0254 | Val Loss: 3.2695 | LR: 0.000938 | Time: 33.2s
+INFO:training.trainer:Epoch 18/100 | Train Loss: 3.0345 | Val Loss: 3.2621 | LR: 0.000930 | Time: 31.6s
+INFO:training.trainer:Epoch 19/100 | Train Loss: 3.0331 | Val Loss: 3.2637 | LR: 0.000922 | Time: 32.6s
+INFO:training.trainer:Early stopping at epoch 19
+INFO:training.trainer:Saved checkpoint to outputs/run_20261024_201458/checkpoints/final_model.pt
+INFO:training.trainer:Saved training history to outputs/run_20261024_201458/checkpoints/training_history.json
+INFO:utils.visualization:Saved training curves to outputs/run_20261024_201458/training_curves.png
+INFO:__main__:
+============================================================
+INFO:__main__:EVALUATION
+INFO:__main__:============================================================
+WARNING:evaluation.metrics:RDKit not available. Using heuristic validity checks.
+
+Generation Metrics:
+  validity: 0.2090
+  uniqueness: 1.0000
+  novelty: 1.0000
+  diversity: 1.0000
+  valid_count: 209
+  total_samples: 1000
+
+Property Prediction (MAE):
+  Overall MAE: 0.7554
+  Overall RMSE: 0.9597
+  Overall R²: -0.0004
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 1000 synthetic molecules for train
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 100 synthetic molecules for val
+WARNING:data.dataset:torch_geometric not available, using synthetic data
+INFO:data.dataset:Created 100 synthetic molecules for test
+INFO:__main__:
+============================================================
+INFO:__main__:MULTI-OBJECTIVE OPTIMIZATION
+INFO:__main__:============================================================
+INFO:optimization.multi_objective:Running random search baseline...
+INFO:optimization.multi_objective:Running multi-objective optimization...
+INFO:optimization.multi_objective:Generation 0: 33 Pareto solutions
+INFO:optimization.multi_objective:Generation 10: 35 Pareto solutions
+INFO:optimization.multi_objective:Generation 20: 76 Pareto solutions
+INFO:optimization.multi_objective:Generation 30: 92 Pareto solutions
+INFO:optimization.multi_objective:Generation 40: 94 Pareto solutions
+INFO:optimization.multi_objective:Running single-objective optimization (HOMO)...
+
+Random Search Baseline:
+  Mean HOMO: -0.0369
+  Mean LUMO: -0.0091
+  Mean Gap: -0.0013
+
+Multi-Objective Optimization (Pareto):
+  Pareto front size: 92
+  Mean HOMO: 73.9954
+  Mean LUMO: 221.6818
+  Mean Gap: 288.0711
+
+Single-Objective Optimization (HOMO):
+  Mean HOMO: 0.2560
+  Mean LUMO: 0.0210
+  Mean Gap: 0.0038
+INFO:__main__:
+============================================================
+INFO:__main__:INT8 QUANTIZATION COMPARISON
+INFO:__main__:============================================================
+INFO:evaluation.quantization:Starting quantization comparison...
+INFO:evaluation.quantization:Original model size: 5.25 MB
+INFO:evaluation.quantization:Quantizing model to INT8...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+INFO:evaluation.quantization:Quantized model size: 0.01 MB
+INFO:evaluation.quantization:Benchmarking original model...
+INFO:evaluation.quantization:Benchmarking quantized model...
+INFO:evaluation.quantization:Comparing accuracy...
+INFO:evaluation.quantization:
+============================================================
+INFO:evaluation.quantization:QUANTIZATION COMPARISON SUMMARY
+INFO:evaluation.quantization:============================================================
+INFO:evaluation.quantization:Model Size: 5.25 MB -> 0.01 MB (99.8% reduction)
+INFO:evaluation.quantization:Inference Time: 729.19ms -> 683.49ms (1.07x speedup)
+INFO:evaluation.quantization:MAE Degradation: 0.00%
+INFO:evaluation.quantization:============================================================
+======================================================================
+INT8 QUANTIZATION COMPARISON
+======================================================================
+Metric                                Original       Quantized
+----------------------------------------------------------------------
+Model Size (MB)                           5.25            0.01
+Inference Time (ms)                     729.19          683.49
+Property MAE                            0.7940          0.7940
+----------------------------------------------------------------------
+Compression Ratio                       488.67x
+Speedup                                   1.07x
+MAE Degradation                           0.00%
+======================================================================
+
+============================================================
+TRAINING COMPLETE
+============================================================
+Results saved to: outputs/run_20261024_201458
+
+Final Metrics Summary:
+  Validity: 0.2090
+  Uniqueness: 1.0000
+  Novelty: 1.0000
+  Property MAE: 0.7554
+
+Dataset: QM9 (synthetic data used due to torch_geometric availability)
+Method: Molecular VAE with Multi-Objective Optimization
+============================================================

@@ -1,0 +1,157 @@
+[
+  {
+    "epoch": 0,
+    "train_loss": 3.93415230512619,
+    "val_loss": 3.846160411834717,
+    "train_losses": {
+      "loss": 3.93415230512619,
+      "recon_loss": 2.2411105930805206,
+      "atom_loss": 1.6139744967222214,
+      "bond_loss": 0.6271361410617828,
+      "kl_loss": 1.8486963883042336,
+      "mo_property_loss": 3.0163441598415375,
+      "property_4_loss": 0.9330395832657814,
+      "property_5_loss": 1.0623243302106857,
+      "property_6_loss": 1.0209801942110062
+    },
+    "val_losses": {
+      "loss": 3.846160411834717,
+      "recon_loss": 2.2531492710113525,
+      "atom_loss": 1.613398790359497,
+      "bond_loss": 0.6397505402565002,
+      "kl_loss": 0.25590506196022034,
+      "mo_property_loss": 3.1348414421081543,
+      "property_4_loss": 0.8811192512512207,
+      "property_5_loss": 1.0628581047058105,
+      "property_6_loss": 1.1908639669418335
+    },
+    "learning_rate": 0.001,
+    "epoch_time": 0.36783385276794434,
+    "memory_mb": 796.99609375,
+    "gpu_memory_mb": null
+  },
+  {
+    "epoch": 1,
+    "train_loss": 3.387112706899643,
+    "val_loss": 3.558351516723633,
+    "train_losses": {
+      "loss": 3.387112706899643,
+      "recon_loss": 1.8389345556497574,
+      "atom_loss": 1.633738562464714,
+      "bond_loss": 0.20519599271938205,
+      "kl_loss": 0.3265053257346153,
+      "mo_property_loss": 3.0310551822185516,
+      "property_4_loss": 0.9464581310749054,
+      "property_5_loss": 1.0535734370350838,
+      "property_6_loss": 1.0310235992074013
+    },
+    "val_losses": {
+      "loss": 3.558351516723633,
+      "recon_loss": 1.9794950485229492,
+      "atom_loss": 1.614569067955017,
+      "bond_loss": 0.3649260103702545,
+      "kl_loss": 0.10664623975753784,
+      "mo_property_loss": 3.136383533477783,
+      "property_4_loss": 0.882764995098114,
+      "property_5_loss": 1.0604580640792847,
+      "property_6_loss": 1.1931605339050293
+    },
+    "learning_rate": 0.0009997535269026829,
+    "epoch_time": 0.3405880928039551,
+    "memory_mb": 750.125,
+    "gpu_memory_mb": null
+  },
+  {
+    "epoch": 2,
+    "train_loss": 3.208895057439804,
+    "val_loss": 3.4027206897735596,
+    "train_losses": {
+      "loss": 3.208895057439804,
+      "recon_loss": 1.6835159361362457,
+      "atom_loss": 1.6791245639324188,
+      "bond_loss": 0.004391370057419408,
+      "kl_loss": 0.22185766324400902,
+      "mo_property_loss": 3.0063867270946503,
+      "property_4_loss": 0.9225795492529869,
+      "property_5_loss": 1.0552803501486778,
+      "property_6_loss": 1.0285268127918243
+    },
+    "val_losses": {
+      "loss": 3.4027206897735596,
+      "recon_loss": 1.8236759901046753,
+      "atom_loss": 1.6100316047668457,
+      "bond_loss": 0.2136443853378296,
+      "kl_loss": 0.09010887891054153,
+      "mo_property_loss": 3.1400675773620605,
+      "property_4_loss": 0.8840898871421814,
+      "property_5_loss": 1.0635883808135986,
+      "property_6_loss": 1.1923892498016357
+    },
+    "learning_rate": 0.0009990143508499217,
+    "epoch_time": 0.3503110408782959,
+    "memory_mb": 795.8984375,
+    "gpu_memory_mb": null
+  },
+  {
+    "epoch": 3,
+    "train_loss": 3.19916895031929,
+    "val_loss": 3.4107046127319336,
+    "train_losses": {
+      "loss": 3.19916895031929,
+      "recon_loss": 1.6851802915334702,
+      "atom_loss": 1.6847859621047974,
+      "bond_loss": 0.000394323007640196,
+      "kl_loss": 0.16419155895709991,
+      "mo_property_loss": 2.99513903260231,
+      "property_4_loss": 0.9251223355531693,
+      "property_5_loss": 1.0496874898672104,
+      "property_6_loss": 1.0203293040394783
+    },
+    "val_losses": {
+      "loss": 3.4107046127319336,
+      "recon_loss": 1.8380780220031738,
+      "atom_loss": 1.6152795553207397,
+      "bond_loss": 0.22279846668243408,
+      "kl_loss": 0.053598541766405106,
+      "mo_property_loss": 3.134533405303955,
+      "property_4_loss": 0.8822000026702881,
+      "property_5_loss": 1.0612022876739502,
+      "property_6_loss": 1.1911312341690063
+    },
+    "learning_rate": 0.0009977832013192385,
+    "epoch_time": 0.3332793712615967,
+    "memory_mb": 795.4375,
+    "gpu_memory_mb": null
+  },
+  {
+    "epoch": 4,
+    "train_loss": 3.170325845479965,
+    "val_loss": 3.470621109008789,
+    "train_losses": {
+      "loss": 3.170325845479965,
+      "recon_loss": 1.6564527302980423,
+      "atom_loss": 1.655457764863968,
+      "bond_loss": 0.0009949640952982008,
+      "kl_loss": 0.12346559017896652,
+      "mo_property_loss": 3.0030530393123627,
+      "property_4_loss": 0.9205823764204979,
+      "property_5_loss": 1.051427222788334,
+      "property_6_loss": 1.0310434475541115
+    },
+    "val_losses": {
+      "loss": 3.470621109008789,
+      "recon_loss": 1.899071216583252,
+      "atom_loss": 1.612439751625061,
+      "bond_loss": 0.28663140535354614,
+      "kl_loss": 0.03022783249616623,
+      "mo_property_loss": 3.137053966522217,
+      "property_4_loss": 0.8822994828224182,
+      "property_5_loss": 1.0633143186569214,
+      "property_6_loss": 1.1914401054382324
+    },
+    "learning_rate": 0.0009960612933065818,
+    "epoch_time": 0.30911898612976074,
+    "memory_mb": 790.2734375,
+    "gpu_memory_mb": null
+  }
+]

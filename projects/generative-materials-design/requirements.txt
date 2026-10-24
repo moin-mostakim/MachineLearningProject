@@ -1,0 +1,23 @@
+# Core dependencies
+torch>=2.0.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+
+# Optional: torch_geometric for QM9 dataset
+# pip install torch-geometric
+# torch-geometric>=2.3.0
+
+# Resource monitoring
+psutil>=5.9.0
+
+# Visualization
+matplotlib>=3.5.0
+
+# Molecular chemistry (optional)
+# rdkit>=2022.03.1  # For molecule validation
+
+# Data handling
+tqdm>=4.62.0
+
+# Configuration
+pyyaml>=6.0

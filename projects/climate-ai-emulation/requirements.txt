@@ -1,0 +1,31 @@
+# Climate AI Emulation Project Dependencies
+# AI-Driven Climate Emulation and Uncertainty Quantification
+# for High-Resolution Earth System Modeling
+
+# Core ML
+torch>=2.0.0
+numpy>=1.24.0
+
+# Data processing
+scipy>=1.10.0
+scikit-learn>=1.2.0
+
+# Monitoring and utilities
+psutil>=5.9.0
+
+# Optional: For WeatherBench data
+# xarray>=2023.1.0
+# netcdf4>=1.6.0
+# h5netcdf>=1.1.0
+# dask>=2023.1.0
+
+# Optional: For advanced visualization
+# matplotlib>=3.7.0
+# cartopy>=0.21.0
+
+# Optional: For experiment tracking
+# wandb>=0.15.0
+
+# Optional: For ONNX export
+# onnx>=1.14.0
+# onnxruntime>=1.15.0
