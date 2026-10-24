@@ -46,10 +46,34 @@ multitask-dr-segmentation/
 └── checkpoints/              # Model checkpoints
 ```
 
-## Dataset
+## Datasets
 
-The framework uses synthetic retinal data mimicking the IDRiD (Indian Diabetic Retinopathy Image Dataset) challenge structure:
+The system supports real DR datasets with lesion segmentation masks. These require Kaggle API authentication.
 
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **IDRiD** | Kaggle | [diabetic-retinopathy-resized](https://www.kaggle.com/datasets/tanlikesmath/diabetic-retinopathy-resized) | Competition | ~5GB | 516 images with pixel-level annotations |
+| **APTOS 2019** | Kaggle | [aptos2019-blindness-detection](https://www.kaggle.com/c/aptos2019-blindness-detection) | Competition | ~15GB | 3,662 train (classification only) |
+| **DDR** | GitHub | [nkicsl/DDR-dataset](https://github.com/nkicsl/DDR-dataset) | Research | ~3GB | 13,673 images with lesion annotations |
+
+**Requires:** Kaggle API key (`KAGGLE_USERNAME` and `KAGGLE_KEY` environment variables)
+
+### Download Instructions
+
+**IDRiD via Kaggle:**
+```bash
+export KAGGLE_USERNAME=your_username
+export KAGGLE_KEY=your_api_key
+kaggle datasets download -d tanlikesmath/diabetic-retinopathy-resized
+unzip diabetic-retinopathy-resized.zip -d data/idrid/
+```
+
+**Synthetic Data (pipeline testing):**
+```bash
+python main.py  # Auto-generates if real data unavailable
+```
+
+### Data Details
 - **Image Size**: 512×512 RGB fundus images
 - **Lesion Types**: 4 types (MA, HE, SE, EX)
   - Microaneurysms (MA): Small red dots
@@ -57,6 +81,8 @@ The framework uses synthetic retinal data mimicking the IDRiD (Indian Diabetic R
   - Soft Exudates (SE): Fluffy white regions
   - Hard Exudates (EX): Bright yellow deposits
 - **DR Grades**: 5 classes (No DR, Mild, Moderate, Severe, Proliferative)
+
+Note: Synthetic data generates realistic lesion patterns for testing but real IDRiD data is required for valid research.
 
 ## Methods
 
