@@ -39,6 +39,11 @@ from utils.metrics import (
 )
 from utils.monitoring import ResourceMonitor, print_system_info
 from utils.quantization import compare_quantization, print_quantization_comparison
+from utils.visualization import (
+    plot_accuracy_comparison, plot_robustness_gap, 
+    plot_literature_comparison, plot_certified_accuracy,
+    plot_resource_usage
+)
 
 
 def set_seed(seed: int):
@@ -393,6 +398,23 @@ def main():
         json.dump(json_results, f, indent=2)
     
     print(f"\nResults saved to: {results_file}")
+    
+    # Generate figures
+    figures_dir = os.path.join(os.path.dirname(__file__), "figures")
+    os.makedirs(figures_dir, exist_ok=True)
+    
+    print("\nGenerating figures...")
+    try:
+        plot_accuracy_comparison(evaluation_results, figures_dir)
+        plot_robustness_gap(evaluation_results, figures_dir)
+        plot_literature_comparison(evaluation_results, figures_dir)
+        if certified_results:
+            plot_certified_accuracy(certified_results, figures_dir)
+        if resource_stats:
+            plot_resource_usage(resource_stats, figures_dir)
+        print(f"Figures saved to: {figures_dir}/")
+    except Exception as e:
+        print(f"Warning: Could not generate figures: {e}")
     
     return evaluation_results
 

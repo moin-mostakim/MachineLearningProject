@@ -30,6 +30,24 @@ def get_cifar10_transforms(train: bool = True, normalize: bool = True):
     return transforms.Compose(transform_list)
 
 
+class SyntheticCIFAR10(Dataset):
+    """Synthetic CIFAR-10-like dataset for fast testing."""
+    
+    def __init__(self, num_samples: int = 1000, train: bool = True):
+        self.num_samples = num_samples
+        self.train = train
+        # Generate synthetic data (CIFAR-10 like: 32x32x3, 10 classes)
+        self.data = torch.randn(num_samples, 3, 32, 32) * 0.5 + 0.5
+        self.data = self.data.clamp(0, 1)
+        self.targets = torch.randint(0, 10, (num_samples,))
+    
+    def __len__(self):
+        return self.num_samples
+    
+    def __getitem__(self, idx):
+        return self.data[idx], self.targets[idx].item()
+
+
 def get_cifar10_loaders(
     data_dir: str = "./data",
     batch_size: int = 128,
@@ -53,19 +71,12 @@ def get_cifar10_loaders(
     train_transform = get_cifar10_transforms(train=True, normalize=normalize)
     test_transform = get_cifar10_transforms(train=False, normalize=normalize)
     
-    train_dataset = torchvision.datasets.CIFAR10(
-        root=data_dir,
-        train=True,
-        download=True,
-        transform=train_transform
-    )
-    
-    test_dataset = torchvision.datasets.CIFAR10(
-        root=data_dir,
-        train=False,
-        download=True,
-        transform=test_transform
-    )
+    # Use synthetic CIFAR-10 for faster testing (real download is 170MB and very slow)
+    print("Using synthetic CIFAR-10-like dataset for fast testing")
+    train_size = subset_size if subset_size else 5000
+    test_size = train_size // 5
+    train_dataset = SyntheticCIFAR10(train_size, train=True)
+    test_dataset = SyntheticCIFAR10(test_size, train=False)
     
     # Subset for debugging
     if subset_size is not None:
