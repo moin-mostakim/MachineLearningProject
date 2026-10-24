@@ -116,18 +116,42 @@ All hyperparameters are documented with literature justifications in `configs/co
 | Label Smoothing | 0.1 | Accounts for ~80% inter-rater agreement in DR |
 | Warmup Epochs | 5 | Critical for ViT training stability |
 
-## Data
+## Datasets
 
-### Supported Datasets
-1. **APTOS 2019** - Place in `outputs/data/aptos2019/`
-2. **Messidor** - Place in `outputs/data/messidor/`
-3. **Synthetic** - Auto-generated if real data unavailable
+The system supports real diabetic retinopathy datasets. Due to patient privacy, these require Kaggle API authentication or direct download.
 
-### Synthetic Data
-When real datasets are unavailable, the system generates synthetic fundus-like images with:
-- Realistic fundus structure (optic disc, macula, vessels)
-- Grade-appropriate lesion simulation
-- Class imbalance matching real distribution
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **APTOS 2019** | Kaggle | [aptos2019-blindness-detection](https://www.kaggle.com/c/aptos2019-blindness-detection) | Competition | ~15GB | 3,662 train, 1,928 test |
+| **Messidor-2** | ADCIS | [adcis.net/en/third-party/messidor2](http://www.adcis.net/en/third-party/messidor2/) | Research | ~2GB | 1,748 images |
+| **EyePACS** | Kaggle | [diabetic-retinopathy-detection](https://www.kaggle.com/c/diabetic-retinopathy-detection) | Competition | ~89GB | 35,126 train, 53,576 test |
+
+**Requires:** Kaggle API key (`KAGGLE_USERNAME` and `KAGGLE_KEY` environment variables)
+
+### Download Instructions
+
+**APTOS 2019 via Kaggle (Recommended):**
+```bash
+# Set up Kaggle API credentials
+export KAGGLE_USERNAME=your_username
+export KAGGLE_KEY=your_api_key
+
+# Download dataset
+pip install kaggle
+kaggle competitions download -c aptos2019-blindness-detection
+unzip aptos2019-blindness-detection.zip -d outputs/data/aptos2019/
+```
+
+**Messidor-2 (Direct Download):**
+1. Register at [adcis.net](http://www.adcis.net/en/third-party/messidor2/)
+2. Download and extract to `outputs/data/messidor/`
+
+**Synthetic Data (for pipeline testing only):**
+```bash
+python experiments/train.py  # Auto-generates synthetic if real data unavailable
+```
+
+Note: Synthetic data generates fundus-like images for testing the pipeline but should NOT be used for meaningful experiments. Real datasets are required for valid DR detection research.
 
 ## INT8 Quantization
 
