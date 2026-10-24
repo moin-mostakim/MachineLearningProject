@@ -180,17 +180,26 @@ class QuantizationManager:
         device = next(model.parameters()).device
         sample_input = sample_input.to(device)
         
+        # Create attention mask if needed
+        attention_mask = torch.ones_like(sample_input)
+        
         # Warmup
         with torch.no_grad():
             for _ in range(warmup_iterations):
-                _ = model(sample_input)
+                try:
+                    _ = model(sample_input, attention_mask)
+                except TypeError:
+                    _ = model(sample_input)
         
         # Benchmark
         times = []
         with torch.no_grad():
             for _ in range(num_iterations):
                 start = time.perf_counter()
-                _ = model(sample_input)
+                try:
+                    _ = model(sample_input, attention_mask)
+                except TypeError:
+                    _ = model(sample_input)
                 end = time.perf_counter()
                 times.append((end - start) * 1000)  # Convert to ms
         
