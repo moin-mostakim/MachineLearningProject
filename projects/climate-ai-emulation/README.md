@@ -111,17 +111,46 @@ config.training.learning_rate = 1e-4
 3. **GraphCast** (Lam et al., 2023): Graph neural network on icosahedral mesh
 4. **FourCastNet** (Pathak et al., 2022): Fourier neural operators for weather
 
-## Results
+## Experimental Results
 
-Results are saved to `outputs/experiment_results.json` including:
-- Baseline performance
-- Neural network metrics
-- Ensemble uncertainty metrics
-- Quantization comparison
+**Dataset**: Synthetic Climate Data (realistic spatiotemporal patterns)
+**Ran on Real Data**: No (uses physically-motivated synthetic data)
+**Training**: 10 epochs on CPU
+
+### Model Parameters
+
+| Model | Parameters | Description |
+|-------|------------|-------------|
+| U-Net | 1,570,050 | Encoder-decoder with attention gates |
+| ConvLSTM | ~1.2M | Convolutional LSTM for temporal modeling |
+
+### Baseline Performance (Test Set)
+
+| Method | RMSE | ACC | Notes |
+|--------|------|-----|-------|
+| Persistence | 1.216 | 0.262 | Predicts current state |
+| Climatology | 1.000 | 0.000 | Predicts mean |
+| Linear Regression | 0.949 | 0.265 | Ridge with spatial features |
+
+### Neural Network Performance (Test Set)
+
+| Model | RMSE | ACC | CRPS | Coverage@90 |
+|-------|------|-----|------|-------------|
+| U-Net (single) | 1.674 | 0.010 | 1.187 | 0.208 |
+| U-Net (ensemble) | 1.455 | 0.115 | 0.910 | 0.687 |
+
+### Uncertainty Quantification
+
+| Method | Calibration Error | Sharpness | Coverage@50 | Coverage@90 |
+|--------|-------------------|-----------|-------------|-------------|
+| MC Dropout | 0.428 | 0.275 | 0.088 | 0.208 |
+| Deep Ensemble | 0.105 | 1.308 | 0.416 | 0.687 |
+
+*Note: Results on synthetic data demonstrate methodology. Deep Ensemble shows better calibration (lower error, coverage closer to nominal).*
 
 ## Quantization
 
-INT8 quantization reduces model size by ~4x with minimal accuracy loss:
+INT8 dynamic quantization is supported for deployment:
 
 ```python
 from utils.quantization import quantize_for_deployment
@@ -129,15 +158,23 @@ from utils.quantization import quantize_for_deployment
 quantized_model, metrics = quantize_for_deployment(model, method="dynamic")
 ```
 
+Expected compression: ~4x size reduction with minimal accuracy loss.
+
 ## Datasets
 
-The system supports multiple climate/weather datasets. Due to the large size of ERA5 data, this project provides synthetic data for quick testing while documenting how to use real data.
+This project uses realistic **synthetic climate data** for experiments. The synthetic data generator creates spatiotemporal patterns with:
+- Spatial correlations (Gaussian random fields with ~1000km correlation length)
+- Temporal autocorrelation (AR(1) process, ρ ≈ 0.85-0.95)
+- Multi-scale patterns (synoptic + mesoscale)
+- 7 atmospheric channels (t2m, u10, v10, z500, t500, z850, t850)
 
-| Dataset | Source | URL | License | Resolution | Size |
-|---------|--------|-----|---------|------------|------|
-| **WeatherBench2** | Google Research | [github.com/google-research/weatherbench2](https://github.com/google-research/weatherbench2) | Apache 2.0 | 5.625°, 2.8125°, 1.40625° | ~100GB+ |
-| **ERA5** | ECMWF Copernicus | [cds.climate.copernicus.eu](https://cds.climate.copernicus.eu/) | Copernicus License | 0.25° native | ~500TB total |
-| **WeatherBench (original)** | Pangeo | [pangeo-data/WeatherBench](https://github.com/pangeo-data/WeatherBench) | CC BY 4.0 | Multiple | ~10GB |
+**Note**: While HuggingFace hosts ERA5 derivatives, most require authentication or have access issues. The synthetic data provides a functional pipeline for methodology development.
+
+| Dataset | Source | Status | License | Notes |
+|---------|--------|--------|---------|-------|
+| **Synthetic** | This project | **Available** | MIT | Realistic spatiotemporal patterns |
+| **WeatherBench2** | Google Research | Requires setup | Apache 2.0 | Large (~100GB+) |
+| **ERA5** | ECMWF CDS | Requires registration | Copernicus | Official source |
 
 ### Download Instructions
 

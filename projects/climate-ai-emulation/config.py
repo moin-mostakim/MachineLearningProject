@@ -161,8 +161,8 @@ class TrainingConfig:
     beta2: float = 0.999
     
     # Training duration
-    epochs: int = 100
-    early_stopping_patience: int = 15  # Stop if no improvement
+    epochs: int = 10  # Reduced for CPU training
+    early_stopping_patience: int = 5  # Stop if no improvement
     
     # Loss function
     # MSE standard for regression; can weight by variable importance
@@ -241,9 +241,9 @@ class ExperimentConfig:
     name: str = "climate_emulation_v1"
     
     # Debug mode (reduced data and epochs)
-    debug: bool = True
-    debug_samples: int = 50  # Number of samples in debug mode
-    debug_epochs: int = 3  # Reduced for faster testing on CPU
+    debug: bool = False  # Run full experiment
+    debug_samples: int = 200  # Number of samples for CPU-friendly training
+    debug_epochs: int = 5  # Reduced epochs for CPU training
     
     # Logging
     log_dir: str = "logs"
