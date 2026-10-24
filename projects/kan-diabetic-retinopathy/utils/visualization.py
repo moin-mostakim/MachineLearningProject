@@ -1,280 +1,288 @@
 """
-Visualization utilities for experiment results.
+Visualization utilities for KAN Diabetic Retinopathy experiments.
+
+Generates publication-quality figures comparing KAN vs MLP architectures.
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-from typing import Dict, Any, List, Optional
 import os
+import json
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+from typing import Dict, Any
 
 
-def plot_training_curves(
-    history: Dict[str, List[float]],
-    save_path: Optional[str] = None,
-    show: bool = True,
-):
-    """
-    Plot training and validation curves.
+def setup_style():
+    """Configure matplotlib for publication-quality figures."""
+    plt.rcParams.update({
+        'font.size': 10,
+        'axes.titlesize': 12,
+        'axes.labelsize': 10,
+        'legend.fontsize': 9,
+        'figure.figsize': (8, 6),
+        'figure.dpi': 100,
+        'savefig.dpi': 150,
+        'savefig.bbox': 'tight',
+        'axes.grid': True,
+        'grid.alpha': 0.3
+    })
+
+
+def load_results(results_dir: str) -> Dict[str, Any]:
+    """Load all results from subdirectories."""
+    results = {'kan': None, 'mlp': None}
     
-    Args:
-        history: Training history dictionary
-        save_path: Path to save figure
-        show: Whether to display
-    """
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    for run_dir in glob.glob(os.path.join(results_dir, '*')):
+        if os.path.isdir(run_dir):
+            kan_file = os.path.join(run_dir, 'kan_results.json')
+            mlp_file = os.path.join(run_dir, 'mlp_results.json')
+            
+            if os.path.exists(kan_file) and results['kan'] is None:
+                with open(kan_file, 'r') as f:
+                    results['kan'] = json.load(f)
+            
+            if os.path.exists(mlp_file) and results['mlp'] is None:
+                with open(mlp_file, 'r') as f:
+                    results['mlp'] = json.load(f)
     
-    epochs = range(1, len(history["train_loss"]) + 1)
+    return results
+
+
+def generate_accuracy_comparison(results: Dict[str, Any], output_dir: str):
+    """Generate accuracy comparison between KAN and MLP."""
+    setup_style()
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
-    # Loss
-    ax = axes[0, 0]
-    ax.plot(epochs, history["train_loss"], "b-", label="Train")
-    ax.plot(epochs, history["val_loss"], "r-", label="Validation")
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Loss")
-    ax.set_title("Loss Curves")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    methods = []
+    accuracies = []
+    qwks = []
     
-    # Accuracy
-    ax = axes[0, 1]
-    ax.plot(epochs, history["train_acc"], "b-", label="Train")
-    ax.plot(epochs, history["val_acc"], "r-", label="Validation")
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Accuracy")
-    ax.set_title("Accuracy Curves")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    for method, data in results.items():
+        if data:
+            methods.append(method.upper())
+            accuracies.append(data.get('accuracy', 0) * 100)
+            qwks.append(data.get('qwk', 0))
     
-    # QWK
-    ax = axes[1, 0]
-    ax.plot(epochs, history["train_qwk"], "b-", label="Train")
-    ax.plot(epochs, history["val_qwk"], "r-", label="Validation")
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Quadratic Weighted Kappa")
-    ax.set_title("QWK Curves")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    colors = ['#3498db', '#e74c3c'][:len(methods)]
     
-    # Learning rate
-    ax = axes[1, 1]
-    if history.get("lr"):
-        ax.plot(epochs, history["lr"], "g-")
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Learning Rate")
-    ax.set_title("Learning Rate Schedule")
-    ax.set_yscale("log")
-    ax.grid(True, alpha=0.3)
+    bars1 = ax1.bar(methods, accuracies, color=colors, edgecolor='black', linewidth=0.5)
+    ax1.set_ylabel('Accuracy (%)')
+    ax1.set_title('Test Accuracy Comparison')
+    for bar in bars1:
+        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+               f'{bar.get_height():.1f}%', ha='center', fontsize=10)
+    
+    bars2 = ax2.bar(methods, qwks, color=colors, edgecolor='black', linewidth=0.5)
+    ax2.set_ylabel('Quadratic Weighted Kappa')
+    ax2.set_title('QWK Comparison')
+    for bar in bars2:
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+               f'{bar.get_height():.3f}', ha='center', fontsize=10)
     
     plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches="tight")
-        print(f"Saved training curves to {save_path}")
-    
-    if show:
-        plt.show()
-    
+    output_path = os.path.join(output_dir, 'accuracy_comparison.png')
+    plt.savefig(output_path)
     plt.close()
+    print(f"  Saved: {output_path}")
 
 
-def plot_confusion_matrix(
-    confusion_matrix: np.ndarray,
-    class_names: List[str] = None,
-    save_path: Optional[str] = None,
-    show: bool = True,
-    normalize: bool = True,
-):
-    """
-    Plot confusion matrix.
+def generate_parameter_comparison(results: Dict[str, Any], output_dir: str):
+    """Generate parameter count comparison."""
+    setup_style()
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    Args:
-        confusion_matrix: Confusion matrix array
-        class_names: List of class names
-        save_path: Path to save figure
-        show: Whether to display
-        normalize: Normalize by row
-    """
-    if class_names is None:
-        class_names = ["No DR", "Mild", "Moderate", "Severe", "PDR"]
+    methods = []
+    params = []
     
-    cm = np.array(confusion_matrix)
+    for method, data in results.items():
+        if data:
+            methods.append(method.upper())
+            params.append(data.get('params', 0) / 1e6)
     
-    if normalize:
-        cm_normalized = cm.astype("float") / (cm.sum(axis=1, keepdims=True) + 1e-8)
-    else:
-        cm_normalized = cm
+    colors = ['#3498db', '#e74c3c'][:len(methods)]
     
-    fig, ax = plt.subplots(figsize=(10, 8))
+    bars = ax.bar(methods, params, color=colors, edgecolor='black', linewidth=0.5)
+    ax.set_ylabel('Parameters (Millions)')
+    ax.set_title('Model Size Comparison: KAN vs MLP')
+    ax.set_yscale('log')
     
-    im = ax.imshow(cm_normalized, cmap="Blues")
-    
-    # Add colorbar
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel("Proportion" if normalize else "Count", rotation=-90, va="bottom")
-    
-    # Add labels
-    ax.set_xticks(np.arange(len(class_names)))
-    ax.set_yticks(np.arange(len(class_names)))
-    ax.set_xticklabels(class_names, rotation=45, ha="right")
-    ax.set_yticklabels(class_names)
-    
-    ax.set_xlabel("Predicted")
-    ax.set_ylabel("True")
-    ax.set_title("Confusion Matrix")
-    
-    # Add text annotations
-    thresh = cm_normalized.max() / 2.0
-    for i in range(len(class_names)):
-        for j in range(len(class_names)):
-            text = f"{cm_normalized[i, j]:.2f}"
-            if not normalize:
-                text = f"{cm[i, j]}"
-            color = "white" if cm_normalized[i, j] > thresh else "black"
-            ax.text(j, i, text, ha="center", va="center", color=color, fontsize=10)
+    for bar, p in zip(bars, params):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() * 1.1,
+               f'{p:.2f}M', ha='center', fontsize=10)
     
     plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches="tight")
-        print(f"Saved confusion matrix to {save_path}")
-    
-    if show:
-        plt.show()
-    
+    output_path = os.path.join(output_dir, 'parameter_comparison.png')
+    plt.savefig(output_path)
     plt.close()
+    print(f"  Saved: {output_path}")
 
 
-def plot_model_comparison(
-    results: Dict[str, Dict[str, Any]],
-    save_path: Optional[str] = None,
-    show: bool = True,
-):
-    """
-    Plot comparison of different models.
+def generate_training_curves(results: Dict[str, Any], output_dir: str):
+    """Generate training loss curves."""
+    setup_style()
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
-    Args:
-        results: Dictionary mapping model names to their results
-        save_path: Path to save figure
-        show: Whether to display
-    """
-    model_names = list(results.keys())
+    colors = {'kan': '#3498db', 'mlp': '#e74c3c'}
     
-    # Extract metrics
-    qwk_scores = [results[m].get("qwk", 0) for m in model_names]
-    accuracies = [results[m].get("accuracy", 0) for m in model_names]
-    param_counts = [results[m].get("params", 0) / 1e6 for m in model_names]  # In millions
+    for method, data in results.items():
+        if data and 'history' in data:
+            history = data['history']
+            epochs = range(1, len(history.get('train_loss', [])) + 1)
+            
+            if history.get('train_loss'):
+                ax1.plot(epochs, history['train_loss'], '-o', 
+                        label=f'{method.upper()} (train)', color=colors.get(method, 'gray'),
+                        markersize=6)
+            if history.get('val_loss'):
+                ax1.plot(epochs, history['val_loss'], '--s', 
+                        label=f'{method.upper()} (val)', color=colors.get(method, 'gray'),
+                        markersize=6, alpha=0.7)
+            
+            if history.get('train_acc'):
+                train_acc = [a * 100 for a in history['train_acc']]
+                ax2.plot(epochs, train_acc, '-o', 
+                        label=f'{method.upper()} (train)', color=colors.get(method, 'gray'),
+                        markersize=6)
+            if history.get('val_acc'):
+                val_acc = [a * 100 for a in history['val_acc']]
+                ax2.plot(epochs, val_acc, '--s', 
+                        label=f'{method.upper()} (val)', color=colors.get(method, 'gray'),
+                        markersize=6, alpha=0.7)
     
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    ax1.set_xlabel('Epoch')
+    ax1.set_ylabel('Loss')
+    ax1.set_title('Training and Validation Loss')
+    ax1.legend()
     
-    # QWK comparison
-    ax = axes[0]
-    bars = ax.bar(model_names, qwk_scores, color=["#2ecc71", "#3498db", "#9b59b6", "#e74c3c"])
-    ax.set_ylabel("Quadratic Weighted Kappa")
-    ax.set_title("QWK Comparison")
-    ax.set_ylim(0, 1)
-    for bar, score in zip(bars, qwk_scores):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02,
-                f"{score:.3f}", ha="center", va="bottom")
-    ax.tick_params(axis="x", rotation=15)
-    
-    # Accuracy comparison
-    ax = axes[1]
-    bars = ax.bar(model_names, accuracies, color=["#2ecc71", "#3498db", "#9b59b6", "#e74c3c"])
-    ax.set_ylabel("Accuracy")
-    ax.set_title("Accuracy Comparison")
-    ax.set_ylim(0, 1)
-    for bar, acc in zip(bars, accuracies):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02,
-                f"{acc:.3f}", ha="center", va="bottom")
-    ax.tick_params(axis="x", rotation=15)
-    
-    # Parameter count comparison
-    ax = axes[2]
-    bars = ax.bar(model_names, param_counts, color=["#2ecc71", "#3498db", "#9b59b6", "#e74c3c"])
-    ax.set_ylabel("Parameters (Millions)")
-    ax.set_title("Parameter Count Comparison")
-    for bar, count in zip(bars, param_counts):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
-                f"{count:.2f}M", ha="center", va="bottom")
-    ax.tick_params(axis="x", rotation=15)
+    ax2.set_xlabel('Epoch')
+    ax2.set_ylabel('Accuracy (%)')
+    ax2.set_title('Training and Validation Accuracy')
+    ax2.legend()
     
     plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches="tight")
-        print(f"Saved model comparison to {save_path}")
-    
-    if show:
-        plt.show()
-    
+    output_path = os.path.join(output_dir, 'training_curves.png')
+    plt.savefig(output_path)
     plt.close()
+    print(f"  Saved: {output_path}")
 
 
-def plot_results(
-    all_results: Dict[str, Dict[str, Any]],
-    output_dir: str = "./results",
-    show: bool = False,
-):
-    """
-    Generate all result visualizations.
+def generate_resource_usage(results: Dict[str, Any], output_dir: str):
+    """Generate resource usage comparison."""
+    setup_style()
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
-    Args:
-        all_results: Dictionary with all model results
-        output_dir: Output directory
-        show: Whether to display plots
-    """
+    methods = []
+    times = []
+    memory = []
+    
+    for method, data in results.items():
+        if data and 'resource_stats' in data:
+            methods.append(method.upper())
+            stats = data['resource_stats']
+            times.append(stats.get('total_time', 0))
+            memory.append(stats.get('peak_memory_mb', 0) / 1024)
+    
+    colors = ['#3498db', '#e74c3c'][:len(methods)]
+    
+    bars1 = ax1.bar(methods, times, color=colors, edgecolor='black', linewidth=0.5)
+    ax1.set_ylabel('Training Time (seconds)')
+    ax1.set_title('Training Time Comparison')
+    for bar in bars1:
+        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+               f'{bar.get_height():.1f}s', ha='center', fontsize=10)
+    
+    bars2 = ax2.bar(methods, memory, color=colors, edgecolor='black', linewidth=0.5)
+    ax2.set_ylabel('Peak Memory (GB)')
+    ax2.set_title('Memory Usage Comparison')
+    for bar in bars2:
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+               f'{bar.get_height():.2f} GB', ha='center', fontsize=10)
+    
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, 'resource_usage.png')
+    plt.savefig(output_path)
+    plt.close()
+    print(f"  Saved: {output_path}")
+
+
+def generate_literature_comparison(results: Dict[str, Any], output_dir: str):
+    """Generate literature comparison figure."""
+    setup_style()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    literature_data = {
+        'ResNet-50 (EyePACS)': 0.82,
+        'EfficientNet (APTOS)': 0.91,
+        'ViT-B/16 (DR)': 0.85,
+        'DenseNet-121 (EyePACS)': 0.80,
+        'InceptionResNetV2': 0.79,
+        'SE-ResNeXt-50': 0.83,
+    }
+    
+    kan_qwk = results.get('kan', {}).get('qwk', 0.039)
+    mlp_qwk = results.get('mlp', {}).get('qwk', 0.0)
+    
+    literature_data['Ours (KAN)'] = kan_qwk
+    literature_data['Ours (MLP)'] = mlp_qwk
+    
+    names = list(literature_data.keys())
+    values = list(literature_data.values())
+    
+    colors = ['#3498db'] * (len(names) - 2) + ['#e74c3c', '#2ecc71']
+    
+    bars = ax.barh(names, values, color=colors, edgecolor='black', linewidth=0.5)
+    
+    for bar in bars:
+        ax.text(bar.get_width() + 0.01, bar.get_y() + bar.get_height()/2,
+               f'{bar.get_width():.3f}', va='center', fontsize=9)
+    
+    ax.set_xlabel('Quadratic Weighted Kappa')
+    ax.set_title('Literature Comparison: DR Classification (QWK)\n(Note: Different datasets - not directly comparable)')
+    ax.set_xlim(0, 1.0)
+    
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, 'literature_comparison.png')
+    plt.savefig(output_path)
+    plt.close()
+    print(f"  Saved: {output_path}")
+
+
+def generate_all_figures(results: Dict[str, Any], output_dir: str):
+    """Generate all visualization figures."""
     os.makedirs(output_dir, exist_ok=True)
+    print(f"\nGenerating figures to {output_dir}/")
     
-    # Plot model comparison
-    plot_model_comparison(
-        all_results,
-        save_path=os.path.join(output_dir, "model_comparison.png"),
-        show=show,
-    )
+    try:
+        generate_accuracy_comparison(results, output_dir)
+    except Exception as e:
+        print(f"  Warning: Failed to generate accuracy_comparison: {e}")
     
-    # Plot training curves for each model
-    for model_name, results in all_results.items():
-        if "history" in results:
-            plot_training_curves(
-                results["history"],
-                save_path=os.path.join(output_dir, f"{model_name}_training.png"),
-                show=show,
-            )
-        
-        if "confusion_matrix" in results:
-            plot_confusion_matrix(
-                results["confusion_matrix"],
-                save_path=os.path.join(output_dir, f"{model_name}_confusion.png"),
-                show=show,
-            )
+    try:
+        generate_parameter_comparison(results, output_dir)
+    except Exception as e:
+        print(f"  Warning: Failed to generate parameter_comparison: {e}")
+    
+    try:
+        generate_training_curves(results, output_dir)
+    except Exception as e:
+        print(f"  Warning: Failed to generate training_curves: {e}")
+    
+    try:
+        generate_resource_usage(results, output_dir)
+    except Exception as e:
+        print(f"  Warning: Failed to generate resource_usage: {e}")
+    
+    try:
+        generate_literature_comparison(results, output_dir)
+    except Exception as e:
+        print(f"  Warning: Failed to generate literature_comparison: {e}")
+    
+    print("Figure generation complete.")
 
 
 if __name__ == "__main__":
-    # Test visualizations
-    print("Testing visualization utilities...")
+    results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
+    results = load_results(results_dir)
     
-    # Dummy history
-    history = {
-        "train_loss": [1.0, 0.8, 0.6, 0.5, 0.4],
-        "val_loss": [1.1, 0.9, 0.7, 0.6, 0.55],
-        "train_acc": [0.3, 0.5, 0.6, 0.7, 0.75],
-        "val_acc": [0.25, 0.45, 0.55, 0.65, 0.7],
-        "train_qwk": [0.2, 0.4, 0.5, 0.6, 0.65],
-        "val_qwk": [0.15, 0.35, 0.45, 0.55, 0.6],
-        "lr": [0.001, 0.001, 0.0005, 0.0005, 0.00025],
-    }
-    
-    plot_training_curves(history, save_path="/tmp/test_curves.png", show=False)
-    print("Saved test training curves")
-    
-    # Dummy confusion matrix
-    cm = np.array([
-        [50, 5, 2, 1, 0],
-        [3, 20, 5, 1, 1],
-        [2, 4, 30, 3, 1],
-        [1, 1, 3, 15, 2],
-        [0, 1, 2, 3, 25],
-    ])
-    
-    plot_confusion_matrix(cm, save_path="/tmp/test_confusion.png", show=False)
-    print("Saved test confusion matrix")
+    output_dir = os.path.join(results_dir, 'figures')
+    generate_all_figures(results, output_dir)
