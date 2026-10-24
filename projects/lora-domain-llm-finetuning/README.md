@@ -11,13 +11,33 @@ This project implements an **Adaptive LoRA** approach that:
 2. Uses an optimized alpha-to-rank ratio for better gradient flow
 3. Includes dropout regularization for improved generalization
 
-## Dataset
+## Datasets
 
-**WikiText-2** (Merity et al., 2017) - Standard language modeling benchmark
-- Source: Hugging Face Hub (`wikitext/wikitext-2-raw-v1`)
-- No authentication required
-- Train/Val/Test splits available
-- ~2M tokens from Wikipedia articles
+The system uses WikiText-2 from HuggingFace Hub, the standard benchmark for language modeling.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **WikiText-2** | HuggingFace Hub | [wikitext](https://huggingface.co/datasets/wikitext) | CC BY-SA 3.0 | ~13MB | 2.08M tokens (train: 36,718 lines, val: 3,760, test: 4,358) |
+
+**Official Source:**
+- WikiText: [blog.salesforceairesearch.com/the-wikitext-long-term-dependency-language-modeling-dataset](https://blog.salesforceairesearch.com/the-wikitext-long-term-dependency-language-modeling-dataset/)
+- Reference: Merity et al. (2017) "Pointer Sentinel Mixture Models"
+
+### Download Instructions
+
+**Automatic (Recommended):** Dataset downloads automatically on first run:
+```bash
+pip install datasets transformers
+python main.py --debug
+```
+
+**Manual Download via HuggingFace:**
+```bash
+pip install datasets
+python -c "from datasets import load_dataset; ds = load_dataset('wikitext', 'wikitext-2-raw-v1')"
+```
+
+The dataset is loaded directly from HuggingFace Hub (`wikitext/wikitext-2-raw-v1`) - no authentication required.
 
 ## Method
 
