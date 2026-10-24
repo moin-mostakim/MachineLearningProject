@@ -1,0 +1,46 @@
+{
+  "image_encoder": {
+    "model_name": "microsoft/resnet-18",
+    "hidden_dim": 512,
+    "pretrained": true,
+    "freeze_backbone": true
+  },
+  "clinical_encoder": {
+    "input_dim": 10,
+    "hidden_dims": [
+      64,
+      32
+    ],
+    "output_dim": 32,
+    "dropout": 0.3
+  },
+  "fusion": {
+    "fusion_type": "attention",
+    "hidden_dim": 128,
+    "num_heads": 4,
+    "dropout": 0.2
+  },
+  "training": {
+    "num_epochs": 3,
+    "batch_size": 8,
+    "num_workers": 0,
+    "early_stopping_patience": 5,
+    "seed": 42,
+    "optimizer": {
+      "name": "AdamW",
+      "learning_rate": 0.0001,
+      "weight_decay": 0.01,
+      "beta1": 0.9,
+      "beta2": 0.999
+    }
+  },
+  "data": {
+    "dataset_name": "alzheimers_synthetic",
+    "image_size": 32,
+    "train_split": 0.7,
+    "val_split": 0.15,
+    "test_split": 0.15,
+    "max_samples": 100
+  },
+  "num_classes": 3
+}
