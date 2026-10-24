@@ -41,7 +41,7 @@
       ],
       "benchmark": {
         "accuracy": 10.0,
-        "latency_ms": 1.5318995698362414,
+        "latency_ms": 992.4708095497044,
         "params": 70474,
         "flops": 17515530
       }
