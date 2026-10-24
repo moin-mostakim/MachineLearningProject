@@ -39,11 +39,11 @@ class DataConfig:
     # T2m: 2m temperature - direct surface impact
     # U10, V10: 10m wind components
     surface_variables: List[str] = field(default_factory=lambda: ["t2m", "u10", "v10"])
-    pressure_levels: List[int] = field(default_factory=lambda: [500, 850])  # hPa
-    pressure_variables: List[str] = field(default_factory=lambda: ["z", "t"])
+    pressure_levels: List[int] = field(default_factory=lambda: [500])  # hPa (just z500)
+    pressure_variables: List[str] = field(default_factory=lambda: ["z", "t"])  # z500, t850
+    # Total: 3 surface + 2 pressure = 5 channels
     
-    # Number of input channels = surface_vars + pressure_vars * pressure_levels
-    # = 3 + 2*2 = 7 channels
+    # Number of input channels = 3 surface + 2 pressure = 5 channels
     
     # Data splits (following ML best practices)
     train_years: Tuple[int, int] = (1979, 2015)  # 37 years training

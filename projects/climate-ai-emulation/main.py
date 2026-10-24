@@ -38,7 +38,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PROJECT_ROOT)
 
 from config import get_config, Config
-from data.dataset import create_dataloaders, SyntheticClimateDataset
+from data.dataset import create_dataloaders, WeatherBench2Dataset, DATASET_CONFIG
 from models.baselines import (
     PersistenceBaseline,
     ClimatologyBaseline,
@@ -533,7 +533,7 @@ def main():
     print(f"Input time steps: {config.data.input_time_steps}")
     print(f"Forecast lead time: {config.data.forecast_lead_time_hours}h")
     
-    train_loader, val_loader, test_loader = create_dataloaders(config)
+    train_loader, val_loader, test_loader = create_dataloaders(config, use_real_data=True)
     
     print(f"Train batches: {len(train_loader)}")
     print(f"Val batches: {len(val_loader)}")

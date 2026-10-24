@@ -2,12 +2,14 @@
 
 from .dataset import (
     SyntheticClimateDataset,
-    WeatherBenchDataset,
-    create_dataloaders
+    WeatherBench2Dataset,
+    create_dataloaders,
+    DATASET_CONFIG
 )
 
 __all__ = [
     'SyntheticClimateDataset',
-    'WeatherBenchDataset', 
-    'create_dataloaders'
+    'WeatherBench2Dataset', 
+    'create_dataloaders',
+    'DATASET_CONFIG'
 ]

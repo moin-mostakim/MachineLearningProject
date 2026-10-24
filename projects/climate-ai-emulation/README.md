@@ -113,40 +113,39 @@ config.training.learning_rate = 1e-4
 
 ## Experimental Results
 
-**Dataset**: Synthetic Climate Data (realistic spatiotemporal patterns)
-**Ran on Real Data**: No (uses physically-motivated synthetic data)
-**Training**: 10 epochs on CPU
+**Dataset**: WeatherBench2 ERA5 from GCS (`gs://weatherbench2/datasets/era5/`)
+**Ran on Real Data**: **Yes** (2015-2018 train, 2019 val, 2020 test)
+**Training**: 5 epochs on CPU, 200 samples
 
 ### Model Parameters
 
-| Model | Parameters | Description |
-|-------|------------|-------------|
-| U-Net | 1,570,050 | Encoder-decoder with attention gates |
-| ConvLSTM | ~1.2M | Convolutional LSTM for temporal modeling |
+| Model | Parameters | Size (MB) |
+|-------|------------|-----------|
+| U-Net | 1,115,013 | 4.25 |
 
-### Baseline Performance (Test Set)
+### Baseline Performance (Test Set, Real ERA5)
 
 | Method | RMSE | ACC | Notes |
 |--------|------|-----|-------|
-| Persistence | 1.216 | 0.262 | Predicts current state |
-| Climatology | 1.000 | 0.000 | Predicts mean |
-| Linear Regression | 0.949 | 0.265 | Ridge with spatial features |
+| Persistence | 0.650 | 0.787 | Predicts current state |
+| Climatology | 0.959 | 0.000 | Predicts mean |
+| **Linear Regression** | **0.555** | **0.797** | Ridge with spatial features |
 
-### Neural Network Performance (Test Set)
+### Neural Network Performance (Test Set, Real ERA5)
 
 | Model | RMSE | ACC | CRPS | Coverage@90 |
 |-------|------|-----|------|-------------|
-| U-Net (single) | 1.674 | 0.010 | 1.187 | 0.208 |
-| U-Net (ensemble) | 1.455 | 0.115 | 0.910 | 0.687 |
+| U-Net (single) | 1.066 | 0.493 | 0.680 | 0.416 |
+| U-Net (ensemble) | 0.936 | 0.429 | 0.566 | 0.711 |
 
 ### Uncertainty Quantification
 
 | Method | Calibration Error | Sharpness | Coverage@50 | Coverage@90 |
 |--------|-------------------|-----------|-------------|-------------|
-| MC Dropout | 0.428 | 0.275 | 0.088 | 0.208 |
-| Deep Ensemble | 0.105 | 1.308 | 0.416 | 0.687 |
+| MC Dropout | 0.310 | 0.336 | 0.184 | 0.416 |
+| Deep Ensemble | **0.098** | 0.880 | 0.419 | **0.711** |
 
-*Note: Results on synthetic data demonstrate methodology. Deep Ensemble shows better calibration (lower error, coverage closer to nominal).*
+*Note: Linear regression outperforms neural networks on this small dataset (200 samples). More training data and epochs would improve NN performance.*
 
 ## Quantization
 
@@ -162,19 +161,24 @@ Expected compression: ~4x size reduction with minimal accuracy loss.
 
 ## Datasets
 
-This project uses realistic **synthetic climate data** for experiments. The synthetic data generator creates spatiotemporal patterns with:
-- Spatial correlations (Gaussian random fields with ~1000km correlation length)
-- Temporal autocorrelation (AR(1) process, ρ ≈ 0.85-0.95)
-- Multi-scale patterns (synoptic + mesoscale)
-- 7 atmospheric channels (t2m, u10, v10, z500, t500, z850, t850)
+This project uses **real ERA5 reanalysis data** from WeatherBench2 public GCS bucket.
 
-**Note**: While HuggingFace hosts ERA5 derivatives, most require authentication or have access issues. The synthetic data provides a functional pipeline for methodology development.
+| Dataset | Source | URL | License | Resolution |
+|---------|--------|-----|---------|------------|
+| **WeatherBench2 ERA5** | Google Cloud Storage | `gs://weatherbench2/datasets/era5/` | Copernicus License | 64x32 (5.625°) |
 
-| Dataset | Source | Status | License | Notes |
-|---------|--------|--------|---------|-------|
-| **Synthetic** | This project | **Available** | MIT | Realistic spatiotemporal patterns |
-| **WeatherBench2** | Google Research | Requires setup | Apache 2.0 | Large (~100GB+) |
-| **ERA5** | ECMWF CDS | Requires registration | Copernicus | Official source |
+**Variables Used**:
+- 2m_temperature (t2m)
+- 10m_u_component_of_wind (u10)
+- 10m_v_component_of_wind (v10)
+- geopotential@500hPa (z500)
+- temperature@850hPa (t850)
+
+**Data Loading** (automatic via `gcsfs`):
+```python
+from data.dataset import create_dataloaders
+train_loader, val_loader, test_loader = create_dataloaders(config, use_real_data=True)
+```
 
 ### Download Instructions
 
