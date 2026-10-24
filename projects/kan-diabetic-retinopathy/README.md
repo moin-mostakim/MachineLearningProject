@@ -23,11 +23,35 @@ Based on Liu et al. (2024), KAN replaces fixed activation functions with learnab
 - **Architecture**: `output = scale_base * base_fn(x) + scale_spline * spline(x)`
 - **Efficiency**: 2-4x fewer parameters than equivalent MLPs while maintaining accuracy
 
-### Dataset
+## Datasets
 
-- **Primary**: APTOS 2019 Blindness Detection Challenge
-- **Synthetic**: DR-like fundus images with severity-correlated features
-- **Classes**: 5-level DR grading (No DR, Mild, Moderate, Severe, Proliferative)
+The system supports real diabetic retinopathy datasets. Due to patient privacy, these require Kaggle API authentication.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **APTOS 2019** | Kaggle | [aptos2019-blindness-detection](https://www.kaggle.com/c/aptos2019-blindness-detection) | Competition | ~15GB | 3,662 train, 1,928 test |
+| **EyePACS** | Kaggle | [diabetic-retinopathy-detection](https://www.kaggle.com/c/diabetic-retinopathy-detection) | Competition | ~89GB | 35,126 train |
+
+**Classes**: 5-level DR grading (No DR, Mild, Moderate, Severe, Proliferative)
+
+**Requires:** Kaggle API key (`KAGGLE_USERNAME` and `KAGGLE_KEY` environment variables)
+
+### Download Instructions
+
+**APTOS 2019 via Kaggle:**
+```bash
+export KAGGLE_USERNAME=your_username
+export KAGGLE_KEY=your_api_key
+kaggle competitions download -c aptos2019-blindness-detection
+unzip aptos2019-blindness-detection.zip -d data/aptos2019/
+```
+
+**Synthetic Data (pipeline testing only):**
+```bash
+python main.py --debug  # Auto-generates synthetic if real data unavailable
+```
+
+Note: Synthetic data is for pipeline testing only. Real APTOS 2019 data is required for valid DR research.
 
 ## Evaluation Metrics
 
