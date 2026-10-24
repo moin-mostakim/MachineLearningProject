@@ -37,7 +37,7 @@ def load_model(model_type, checkpoint_path=None, device=None):
     model = build_model(model_type)
     
     if checkpoint_path and os.path.exists(checkpoint_path):
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
         model.load_state_dict(checkpoint['model_state_dict'])
         print(f"Loaded model from {checkpoint_path}")
         print(f"  Epoch: {checkpoint.get('epoch', 'N/A')}")
@@ -222,7 +222,7 @@ def run_full_evaluation():
                 }
                 if comparison_data:
                     plot_model_comparison(
-                        comparison_data, metric,
+                        comparison_data,
                         save_path=os.path.join(config.FIGURES_DIR, f'comparison_{metric}.png')
                     )
     

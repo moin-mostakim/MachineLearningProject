@@ -1,0 +1,1554 @@
+{
+  "train_loss": [
+    1.7919931888580323,
+    1.757131540775299,
+    1.6497129917144775,
+    1.5946735262870788,
+    1.6034200668334961,
+    1.5081944584846496,
+    1.4676247000694276,
+    1.4891432404518128,
+    1.3823368310928346,
+    1.3821815729141236
+  ],
+  "val_loss": [
+    1.8247197568416595,
+    1.8656053841114044,
+    1.8125573694705963,
+    1.7841103971004486,
+    1.7420240640640259,
+    2.087261885404587,
+    1.855342298746109,
+    2.001488506793976,
+    1.802942305803299,
+    1.6342330873012543
+  ],
+  "train_metrics": [
+    {
+      "cls_accuracy": 0.425,
+      "cls_kappa": 0.026548672566371834,
+      "cls_f1_macro": 0.22717391304347828,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.5,
+      "cls_recall_Moderate": 0.21428571428571427,
+      "cls_f1_Moderate": 0.3,
+      "cls_precision_Severe": 0.4666666666666667,
+      "cls_recall_Severe": 0.875,
+      "cls_f1_Severe": 0.6086956521739131,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0022272979840636253,
+      "seg_iou_Microaneurysms": 0.0011156853288412094,
+      "seg_precision_Microaneurysms": 0.00112035998608917,
+      "seg_recall_Microaneurysms": 0.30967122316360474,
+      "seg_dice_Hemorrhages": 0.021076513454318047,
+      "seg_iou_Hemorrhages": 0.011099254712462425,
+      "seg_precision_Hemorrhages": 0.011429824866354465,
+      "seg_recall_Hemorrhages": 0.6584977507591248,
+      "seg_dice_Soft_Exudates": 0.0031698334496468306,
+      "seg_iou_Soft_Exudates": 0.0015952863031998277,
+      "seg_precision_Soft_Exudates": 0.0016010061372071505,
+      "seg_recall_Soft_Exudates": 0.8755547538399696,
+      "seg_dice_Hard_Exudates": 0.010567867197096348,
+      "seg_iou_Hard_Exudates": 0.005347989499568939,
+      "seg_precision_Hard_Exudates": 0.00838747713714838,
+      "seg_recall_Hard_Exudates": 0.034109972417354584,
+      "seg_dice_mean": 0.00926037784665823,
+      "seg_iou_mean": 0.004789554048329592,
+      "seg_precision_mean": 0.005634666886180639,
+      "seg_recall_mean": 0.46945842504501345,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          8
+        ],
+        [
+          0,
+          0,
+          4,
+          3,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          14
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.375,
+      "cls_kappa": -0.03846153846153855,
+      "cls_f1_macro": 0.20222222222222222,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.4,
+      "cls_recall_Moderate": 0.26666666666666666,
+      "cls_f1_Moderate": 0.32,
+      "cls_precision_Severe": 0.36666666666666664,
+      "cls_recall_Severe": 0.7333333333333333,
+      "cls_f1_Severe": 0.4888888888888889,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.001826808205805719,
+      "seg_iou_Microaneurysms": 0.0009148578974418342,
+      "seg_precision_Microaneurysms": 0.0009208297124132514,
+      "seg_recall_Microaneurysms": 0.18448297679424286,
+      "seg_dice_Hemorrhages": 0.021527599543333054,
+      "seg_iou_Hemorrhages": 0.011317558586597443,
+      "seg_precision_Hemorrhages": 0.01172269694507122,
+      "seg_recall_Hemorrhages": 0.6259193420410156,
+      "seg_dice_Soft_Exudates": 0.003354752901941538,
+      "seg_iou_Soft_Exudates": 0.0016886957455426455,
+      "seg_precision_Soft_Exudates": 0.0016959309577941895,
+      "seg_recall_Soft_Exudates": 0.8282557733356952,
+      "seg_dice_Hard_Exudates": 0.008664097636938095,
+      "seg_iou_Hard_Exudates": 0.004395603202283382,
+      "seg_precision_Hard_Exudates": 0.010660657659173012,
+      "seg_recall_Hard_Exudates": 0.012705659493803978,
+      "seg_dice_mean": 0.0088433139026165,
+      "seg_iou_mean": 0.004579178988933563,
+      "seg_precision_mean": 0.006250028498470783,
+      "seg_recall_mean": 0.4128409379161894,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          4,
+          11
+        ],
+        [
+          0,
+          0,
+          0,
+          4,
+          11
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.45,
+      "cls_kappa": 0.07327586206896552,
+      "cls_f1_macro": 0.256578947368421,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.47058823529411764,
+      "cls_recall_Moderate": 0.5333333333333333,
+      "cls_f1_Moderate": 0.5,
+      "cls_precision_Severe": 0.43478260869565216,
+      "cls_recall_Severe": 0.6666666666666666,
+      "cls_f1_Severe": 0.5263157894736842,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.000968281994573772,
+      "seg_iou_Microaneurysms": 0.0004845956282224506,
+      "seg_precision_Microaneurysms": 0.0004909524577669799,
+      "seg_recall_Microaneurysms": 0.05579380318522453,
+      "seg_dice_Hemorrhages": 0.02100408636033535,
+      "seg_iou_Hemorrhages": 0.010988565161824226,
+      "seg_precision_Hemorrhages": 0.011562155559659004,
+      "seg_recall_Hemorrhages": 0.5497485995292664,
+      "seg_dice_Soft_Exudates": 0.003412824124097824,
+      "seg_iou_Soft_Exudates": 0.0017195288091897964,
+      "seg_precision_Soft_Exudates": 0.0017298698658123612,
+      "seg_recall_Soft_Exudates": 0.7905969850718975,
+      "seg_dice_Hard_Exudates": 0.006641339510679245,
+      "seg_iou_Hard_Exudates": 0.003401684807613492,
+      "seg_precision_Hard_Exudates": 0.012696306221187115,
+      "seg_recall_Hard_Exudates": 0.009407423436641693,
+      "seg_dice_mean": 0.008006632328033447,
+      "seg_iou_mean": 0.0041485936380922794,
+      "seg_precision_mean": 0.006619821302592754,
+      "seg_recall_mean": 0.3513867028057575,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          8,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          5,
+          10
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.425,
+      "cls_kappa": -0.055837563451776706,
+      "cls_f1_macro": 0.23901808785529716,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.46153846153846156,
+      "cls_recall_Moderate": 0.42857142857142855,
+      "cls_f1_Moderate": 0.4444444444444444,
+      "cls_precision_Severe": 0.4074074074074074,
+      "cls_recall_Severe": 0.6875,
+      "cls_f1_Severe": 0.5116279069767442,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0006275696796365082,
+      "seg_iou_Microaneurysms": 0.0003140287008136511,
+      "seg_precision_Microaneurysms": 0.0003210912982467562,
+      "seg_recall_Microaneurysms": 0.024401340633630753,
+      "seg_dice_Hemorrhages": 0.019121307879686356,
+      "seg_iou_Hemorrhages": 0.009994943626224995,
+      "seg_precision_Hemorrhages": 0.011019209399819374,
+      "seg_recall_Hemorrhages": 0.37939319014549255,
+      "seg_dice_Soft_Exudates": 0.0032571437768638134,
+      "seg_iou_Soft_Exudates": 0.0016418255399912596,
+      "seg_precision_Soft_Exudates": 0.0016564640682190657,
+      "seg_recall_Soft_Exudates": 0.7409418571740389,
+      "seg_dice_Hard_Exudates": 0.006628272123634815,
+      "seg_iou_Hard_Exudates": 0.003401790978386998,
+      "seg_precision_Hard_Exudates": 0.01826060563325882,
+      "seg_recall_Hard_Exudates": 0.008821274153888226,
+      "seg_dice_mean": 0.007408573292195797,
+      "seg_iou_mean": 0.003838147269561887,
+      "seg_precision_mean": 0.00781434215605259,
+      "seg_recall_mean": 0.2883894155267626,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          5,
+          11
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.525,
+      "cls_kappa": 0.08133971291866027,
+      "cls_f1_macro": 0.290009250693802,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.6666666666666666,
+      "cls_recall_Moderate": 0.42857142857142855,
+      "cls_f1_Moderate": 0.5217391304347826,
+      "cls_precision_Severe": 0.4838709677419355,
+      "cls_recall_Severe": 0.9375,
+      "cls_f1_Severe": 0.6382978723404256,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0005409034201875329,
+      "seg_iou_Microaneurysms": 0.0002707117819227278,
+      "seg_precision_Microaneurysms": 0.0002792996820062399,
+      "seg_recall_Microaneurysms": 0.01464896835386753,
+      "seg_dice_Hemorrhages": 0.01679605059325695,
+      "seg_iou_Hemorrhages": 0.008713768795132637,
+      "seg_precision_Hemorrhages": 0.009869876317679882,
+      "seg_recall_Hemorrhages": 0.23681488633155823,
+      "seg_dice_Soft_Exudates": 0.003125527175143361,
+      "seg_iou_Soft_Exudates": 0.0015753296902403235,
+      "seg_precision_Soft_Exudates": 0.0015918590361252427,
+      "seg_recall_Soft_Exudates": 0.7202512629330158,
+      "seg_dice_Hard_Exudates": 0.004612141288816929,
+      "seg_iou_Hard_Exudates": 0.002341684652492404,
+      "seg_precision_Hard_Exudates": 0.019873257726430893,
+      "seg_recall_Hard_Exudates": 0.0036915973760187626,
+      "seg_dice_mean": 0.006268655881285667,
+      "seg_iou_mean": 0.0032253738027065992,
+      "seg_precision_mean": 0.007903573103249073,
+      "seg_recall_mean": 0.24385167874861507,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          15
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.425,
+      "cls_kappa": -0.13871635610766053,
+      "cls_f1_macro": 0.2376068376068376,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.5454545454545454,
+      "cls_recall_Moderate": 0.4,
+      "cls_f1_Moderate": 0.46153846153846156,
+      "cls_precision_Severe": 0.3793103448275862,
+      "cls_recall_Severe": 0.6875,
+      "cls_f1_Severe": 0.4888888888888889,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0005569019122049212,
+      "seg_iou_Microaneurysms": 0.000278741295915097,
+      "seg_precision_Microaneurysms": 0.0002888709423132241,
+      "seg_recall_Microaneurysms": 0.013753538019955158,
+      "seg_dice_Hemorrhages": 0.013299776241183281,
+      "seg_iou_Hemorrhages": 0.006811697036027908,
+      "seg_precision_Hemorrhages": 0.008340022526681423,
+      "seg_recall_Hemorrhages": 0.14361479878425598,
+      "seg_dice_Soft_Exudates": 0.003384232521057129,
+      "seg_iou_Soft_Exudates": 0.0017073641065508127,
+      "seg_precision_Soft_Exudates": 0.0017306189984083176,
+      "seg_recall_Soft_Exudates": 0.714752759039402,
+      "seg_dice_Hard_Exudates": 0.0022219992242753506,
+      "seg_iou_Hard_Exudates": 0.0011243384797126055,
+      "seg_precision_Hard_Exudates": 0.012648822739720345,
+      "seg_recall_Hard_Exudates": 0.004158642143011093,
+      "seg_dice_mean": 0.004865727853029966,
+      "seg_iou_mean": 0.0024805350694805384,
+      "seg_precision_mean": 0.005752083845436573,
+      "seg_recall_mean": 0.21906993449665607,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          5,
+          11
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.4,
+      "cls_kappa": -0.15217391304347827,
+      "cls_f1_macro": 0.23310810810810811,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.4444444444444444,
+      "cls_recall_Moderate": 0.5714285714285714,
+      "cls_f1_Moderate": 0.5,
+      "cls_precision_Severe": 0.38095238095238093,
+      "cls_recall_Severe": 0.5,
+      "cls_f1_Severe": 0.43243243243243246,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.00037826967309229076,
+      "seg_iou_Microaneurysms": 0.00018926244229078293,
+      "seg_precision_Microaneurysms": 0.00020168717310298234,
+      "seg_recall_Microaneurysms": 0.005570732057094574,
+      "seg_dice_Hemorrhages": 0.012490151450037956,
+      "seg_iou_Hemorrhages": 0.00640708114951849,
+      "seg_precision_Hemorrhages": 0.009163836017251015,
+      "seg_recall_Hemorrhages": 0.09659051150083542,
+      "seg_dice_Soft_Exudates": 0.003501923056319356,
+      "seg_iou_Soft_Exudates": 0.0017695173155516386,
+      "seg_precision_Soft_Exudates": 0.0018057016422972083,
+      "seg_recall_Soft_Exudates": 0.7011349169537425,
+      "seg_dice_Hard_Exudates": 0.004403948783874512,
+      "seg_iou_Hard_Exudates": 0.002255371306091547,
+      "seg_precision_Hard_Exudates": 0.023467790335416794,
+      "seg_recall_Hard_Exudates": 0.003022451652213931,
+      "seg_dice_mean": 0.005193573422729969,
+      "seg_iou_mean": 0.0026553082279860973,
+      "seg_precision_mean": 0.008659753948450089,
+      "seg_recall_mean": 0.2015796530409716,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          8,
+          6
+        ],
+        [
+          0,
+          0,
+          1,
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.4,
+      "cls_kappa": 0.0625,
+      "cls_f1_macro": 0.225,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.4,
+      "cls_recall_Moderate": 0.4,
+      "cls_f1_Moderate": 0.4,
+      "cls_precision_Severe": 0.4,
+      "cls_recall_Severe": 0.6666666666666666,
+      "cls_f1_Severe": 0.5,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0007660341216251254,
+      "seg_iou_Microaneurysms": 0.00038359593600034714,
+      "seg_precision_Microaneurysms": 0.0004123473190702498,
+      "seg_recall_Microaneurysms": 0.008206969127058983,
+      "seg_dice_Hemorrhages": 0.013164108619093895,
+      "seg_iou_Hemorrhages": 0.006696449127048254,
+      "seg_precision_Hemorrhages": 0.009332560934126377,
+      "seg_recall_Hemorrhages": 0.073979452252388,
+      "seg_dice_Soft_Exudates": 0.0039035300724208355,
+      "seg_iou_Soft_Exudates": 0.001973974285647273,
+      "seg_precision_Soft_Exudates": 0.002027148148044944,
+      "seg_recall_Soft_Exudates": 0.6580158142372966,
+      "seg_dice_Hard_Exudates": 0.00580862071365118,
+      "seg_iou_Hard_Exudates": 0.002966036554425955,
+      "seg_precision_Hard_Exudates": 0.03360491755884141,
+      "seg_recall_Hard_Exudates": 0.0061796498484909534,
+      "seg_dice_mean": 0.005910573527216911,
+      "seg_iou_mean": 0.0030050138011574745,
+      "seg_precision_mean": 0.011344243490020745,
+      "seg_recall_mean": 0.18659547136630864,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          5,
+          10
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.475,
+      "cls_kappa": 0.016759776536312887,
+      "cls_f1_macro": 0.2714987714987715,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.47368421052631576,
+      "cls_recall_Moderate": 0.6428571428571429,
+      "cls_f1_Moderate": 0.5454545454545454,
+      "cls_precision_Severe": 0.47619047619047616,
+      "cls_recall_Severe": 0.625,
+      "cls_f1_Severe": 0.5405405405405406,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0004628371389117092,
+      "seg_iou_Microaneurysms": 0.00023187762417364866,
+      "seg_precision_Microaneurysms": 0.0002595614059828222,
+      "seg_recall_Microaneurysms": 0.003360471222549677,
+      "seg_dice_Hemorrhages": 0.01301971822977066,
+      "seg_iou_Hemorrhages": 0.006628089584410191,
+      "seg_precision_Hemorrhages": 0.009953074157238007,
+      "seg_recall_Hemorrhages": 0.06130492687225342,
+      "seg_dice_Soft_Exudates": 0.0034315171651542187,
+      "seg_iou_Soft_Exudates": 0.0017369069391861558,
+      "seg_precision_Soft_Exudates": 0.0017985865706577897,
+      "seg_recall_Soft_Exudates": 0.664759760722518,
+      "seg_dice_Hard_Exudates": 0.007070497609674931,
+      "seg_iou_Hard_Exudates": 0.003647646401077509,
+      "seg_precision_Hard_Exudates": 0.032604291394818574,
+      "seg_recall_Hard_Exudates": 0.011966186575591564,
+      "seg_dice_mean": 0.005996142514050007,
+      "seg_iou_mean": 0.003061130177229643,
+      "seg_precision_mean": 0.011153878382174298,
+      "seg_recall_mean": 0.18534783634822816,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          4,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          9,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          10
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.6,
+      "cls_kappa": 0.09999999999999998,
+      "cls_f1_macro": 0.34353146853146854,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.75,
+      "cls_recall_Moderate": 0.6428571428571429,
+      "cls_f1_Moderate": 0.6923076923076923,
+      "cls_precision_Severe": 0.5357142857142857,
+      "cls_recall_Severe": 0.9375,
+      "cls_f1_Severe": 0.6818181818181818,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.00010336217383155599,
+      "seg_iou_Microaneurysms": 5.174770558369346e-05,
+      "seg_precision_Microaneurysms": 6.824378215242177e-05,
+      "seg_recall_Microaneurysms": 0.0005938530084677041,
+      "seg_dice_Hemorrhages": 0.015395918861031532,
+      "seg_iou_Hemorrhages": 0.00783826969563961,
+      "seg_precision_Hemorrhages": 0.013448270037770271,
+      "seg_recall_Hemorrhages": 0.059751201421022415,
+      "seg_dice_Soft_Exudates": 0.00255008228123188,
+      "seg_iou_Soft_Exudates": 0.0012814777437597513,
+      "seg_precision_Soft_Exudates": 0.001357855973765254,
+      "seg_recall_Soft_Exudates": 0.6091225416399538,
+      "seg_dice_Hard_Exudates": 0.006581881549209356,
+      "seg_iou_Hard_Exudates": 0.00347364810295403,
+      "seg_precision_Hard_Exudates": 0.045034819608554245,
+      "seg_recall_Hard_Exudates": 0.004825529642403126,
+      "seg_dice_mean": 0.006157811265438795,
+      "seg_iou_mean": 0.0031612857710570097,
+      "seg_precision_mean": 0.014977297350560548,
+      "seg_recall_mean": 0.16857328142796177,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          9,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          15
+        ]
+      ]
+    }
+  ],
+  "val_metrics": [
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.125,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.23076923076923078,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.375,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0017416010377928615,
+      "seg_iou_Microaneurysms": 0.0008720984915271401,
+      "seg_precision_Microaneurysms": 0.0008720984915271401,
+      "seg_recall_Microaneurysms": 1.0,
+      "seg_dice_Hemorrhages": 0.07692307692307693,
+      "seg_iou_Hemorrhages": 0.07692307692307693,
+      "seg_precision_Hemorrhages": 0.07692307692307693,
+      "seg_recall_Hemorrhages": 0.07692307692307693,
+      "seg_dice_Soft_Exudates": 0.0050190286710858345,
+      "seg_iou_Soft_Exudates": 0.0025223952252417803,
+      "seg_precision_Soft_Exudates": 0.0025223952252417803,
+      "seg_recall_Soft_Exudates": 1.0,
+      "seg_dice_Hard_Exudates": 0.0,
+      "seg_iou_Hard_Exudates": 0.0,
+      "seg_precision_Hard_Exudates": 0.0,
+      "seg_recall_Hard_Exudates": 0.0,
+      "seg_dice_mean": 0.020920926657988906,
+      "seg_iou_mean": 0.020079392659961462,
+      "seg_precision_mean": 0.020079392659961462,
+      "seg_recall_mean": 0.5192307692307692,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.07692307692307693,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.047619047619047616,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.07692307692307693,
+      "cls_recall_Mild": 1.0,
+      "cls_f1_Mild": 0.14285714285714285,
+      "cls_precision_Moderate": 0.0,
+      "cls_recall_Moderate": 0.0,
+      "cls_f1_Moderate": 0.0,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0017416010377928615,
+      "seg_iou_Microaneurysms": 0.0008720984915271401,
+      "seg_precision_Microaneurysms": 0.0008720984915271401,
+      "seg_recall_Microaneurysms": 1.0,
+      "seg_dice_Hemorrhages": 0.07692307692307693,
+      "seg_iou_Hemorrhages": 0.07692307692307693,
+      "seg_precision_Hemorrhages": 0.07692307692307693,
+      "seg_recall_Hemorrhages": 0.07692307692307693,
+      "seg_dice_Soft_Exudates": 0.0050674122758209705,
+      "seg_iou_Soft_Exudates": 0.0025466717779636383,
+      "seg_precision_Soft_Exudates": 0.002550282748416066,
+      "seg_recall_Soft_Exudates": 0.8509505803768451,
+      "seg_dice_Hard_Exudates": 0.0,
+      "seg_iou_Hard_Exudates": 0.0,
+      "seg_precision_Hard_Exudates": 0.0,
+      "seg_recall_Hard_Exudates": 0.0,
+      "seg_dice_mean": 0.02093302255917269,
+      "seg_iou_mean": 0.020085461798141926,
+      "seg_precision_mean": 0.020086364540755033,
+      "seg_recall_mean": 0.4819684143249805,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          9,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          0
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.07692307692307693,
+      "cls_kappa": -0.2491103202846976,
+      "cls_f1_macro": 0.07407407407407407,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.125,
+      "cls_recall_Mild": 1.0,
+      "cls_f1_Mild": 0.2222222222222222,
+      "cls_precision_Moderate": 0.0,
+      "cls_recall_Moderate": 0.0,
+      "cls_f1_Moderate": 0.0,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0016545577673241496,
+      "seg_iou_Microaneurysms": 0.0008284630021080375,
+      "seg_precision_Microaneurysms": 0.000828713527880609,
+      "seg_recall_Microaneurysms": 0.7962809205055237,
+      "seg_dice_Hemorrhages": 0.0035883886739611626,
+      "seg_iou_Hemorrhages": 0.0018057191045954823,
+      "seg_precision_Hemorrhages": 0.0020203369203954935,
+      "seg_recall_Hemorrhages": 0.11335062959159796,
+      "seg_dice_Soft_Exudates": 0.0049338191747665405,
+      "seg_iou_Soft_Exudates": 0.0024787955917418003,
+      "seg_precision_Soft_Exudates": 0.0024881698191165924,
+      "seg_recall_Soft_Exudates": 0.7148835475628192,
+      "seg_dice_Hard_Exudates": 0.00012917393178213388,
+      "seg_iou_Hard_Exudates": 6.464124453486875e-05,
+      "seg_precision_Hard_Exudates": 0.025641025975346565,
+      "seg_recall_Hard_Exudates": 6.475006375694647e-05,
+      "seg_dice_mean": 0.0025764848105609417,
+      "seg_iou_mean": 0.0012944047339260578,
+      "seg_precision_mean": 0.007744561415165663,
+      "seg_recall_mean": 0.4061449619309244,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          4,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          0
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.07692307692307693,
+      "cls_kappa": -0.12598425196850394,
+      "cls_f1_macro": 0.05555555555555555,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.1111111111111111,
+      "cls_recall_Moderate": 0.3333333333333333,
+      "cls_f1_Moderate": 0.16666666666666666,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0012504971818998456,
+      "seg_iou_Microaneurysms": 0.0006260517984628677,
+      "seg_precision_Microaneurysms": 0.0006288260919973254,
+      "seg_recall_Microaneurysms": 0.17213422060012817,
+      "seg_dice_Hemorrhages": 0.007243976928293705,
+      "seg_iou_Hemorrhages": 0.003654825035482645,
+      "seg_precision_Hemorrhages": 0.003768805880099535,
+      "seg_recall_Hemorrhages": 0.26311464034594023,
+      "seg_dice_Soft_Exudates": 0.004989050328731537,
+      "seg_iou_Soft_Exudates": 0.002506482182070613,
+      "seg_precision_Soft_Exudates": 0.002517883200198412,
+      "seg_recall_Soft_Exudates": 0.6781684183157407,
+      "seg_dice_Hard_Exudates": 0.0010060849599540234,
+      "seg_iou_Hard_Exudates": 0.0005051371408626437,
+      "seg_precision_Hard_Exudates": 0.002541143912822008,
+      "seg_recall_Hard_Exudates": 0.0034698417875915766,
+      "seg_dice_mean": 0.003622402437031269,
+      "seg_iou_mean": 0.001823124010115862,
+      "seg_precision_mean": 0.0023641646839678288,
+      "seg_recall_mean": 0.27922178026235017,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.15384615384615385,
+      "cls_kappa": -0.1389728096676739,
+      "cls_f1_macro": 0.1619047619047619,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.16666666666666666,
+      "cls_recall_Mild": 1.0,
+      "cls_f1_Mild": 0.2857142857142857,
+      "cls_precision_Moderate": 0.14285714285714285,
+      "cls_recall_Moderate": 0.3333333333333333,
+      "cls_f1_Moderate": 0.2,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0007833646377548575,
+      "seg_iou_Microaneurysms": 0.0003920595336239785,
+      "seg_precision_Microaneurysms": 0.00039585394551977515,
+      "seg_recall_Microaneurysms": 0.05931927636265755,
+      "seg_dice_Hemorrhages": 0.007135731168091297,
+      "seg_iou_Hemorrhages": 0.0035985035356134176,
+      "seg_precision_Hemorrhages": 0.0036940318532288074,
+      "seg_recall_Hemorrhages": 0.26735680607649,
+      "seg_dice_Soft_Exudates": 0.005006519611924887,
+      "seg_iou_Soft_Exudates": 0.0025157954078167677,
+      "seg_precision_Soft_Exudates": 0.002528921002522111,
+      "seg_recall_Soft_Exudates": 0.6444353014230728,
+      "seg_dice_Hard_Exudates": 0.0014785565435886383,
+      "seg_iou_Hard_Exudates": 0.000742148666176945,
+      "seg_precision_Hard_Exudates": 0.0020776817109435797,
+      "seg_recall_Hard_Exudates": 0.006057672202587128,
+      "seg_dice_mean": 0.0036010430194437504,
+      "seg_iou_mean": 0.0018121267203241587,
+      "seg_precision_mean": 0.0021741222590208054,
+      "seg_recall_mean": 0.24429226401620185,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.030701754385965008,
+      "cls_f1_macro": 0.13333333333333333,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.25,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.4,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0004996891366317868,
+      "seg_iou_Microaneurysms": 0.00024996750289574265,
+      "seg_precision_Microaneurysms": 0.00025483884382992983,
+      "seg_recall_Microaneurysms": 0.025187047198414803,
+      "seg_dice_Hemorrhages": 0.005601728335022926,
+      "seg_iou_Hemorrhages": 0.0028198203071951866,
+      "seg_precision_Hemorrhages": 0.002936511766165495,
+      "seg_recall_Hemorrhages": 0.1916943906018367,
+      "seg_dice_Soft_Exudates": 0.005510846618562937,
+      "seg_iou_Soft_Exudates": 0.0027714495081454515,
+      "seg_precision_Soft_Exudates": 0.0027910510543733835,
+      "seg_recall_Soft_Exudates": 0.6008399621798441,
+      "seg_dice_Hard_Exudates": 0.0009718379587866366,
+      "seg_iou_Hard_Exudates": 0.00048776654875837266,
+      "seg_precision_Hard_Exudates": 0.0022303108125925064,
+      "seg_recall_Hard_Exudates": 0.0013262901920825243,
+      "seg_dice_mean": 0.0031460255850106478,
+      "seg_iou_mean": 0.0015822510467842221,
+      "seg_precision_mean": 0.002053178148344159,
+      "seg_recall_mean": 0.20476192254304454,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.125,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.23076923076923078,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.375,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0006742884870618582,
+      "seg_iou_Microaneurysms": 0.0003373848448973149,
+      "seg_precision_Microaneurysms": 0.00034820608561858535,
+      "seg_recall_Microaneurysms": 0.017262039706110954,
+      "seg_dice_Hemorrhages": 0.0063308170065283775,
+      "seg_iou_Hemorrhages": 0.0031891772523522377,
+      "seg_precision_Hemorrhages": 0.003382554743438959,
+      "seg_recall_Hemorrhages": 0.17623738572001457,
+      "seg_dice_Soft_Exudates": 0.0060248058289289474,
+      "seg_iou_Soft_Exudates": 0.0030332563910633326,
+      "seg_precision_Soft_Exudates": 0.003064832417294383,
+      "seg_recall_Soft_Exudates": 0.5428104853400817,
+      "seg_dice_Hard_Exudates": 0.0017550868215039372,
+      "seg_iou_Hard_Exudates": 0.0008848999859765172,
+      "seg_precision_Hard_Exudates": 0.006797455251216888,
+      "seg_recall_Hard_Exudates": 0.0017147907055914402,
+      "seg_dice_mean": 0.0036962495651096106,
+      "seg_iou_mean": 0.0018611795967444777,
+      "seg_precision_mean": 0.00339826219715178,
+      "seg_recall_mean": 0.18450617536794967,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.125,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.23076923076923078,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.375,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.00026343518402427435,
+      "seg_iou_Microaneurysms": 0.0001319435250479728,
+      "seg_precision_Microaneurysms": 0.00017170330102089792,
+      "seg_recall_Microaneurysms": 0.0005656108842231333,
+      "seg_dice_Hemorrhages": 0.007013553753495216,
+      "seg_iou_Hemorrhages": 0.003531144466251135,
+      "seg_precision_Hemorrhages": 0.003971804399043322,
+      "seg_recall_Hemorrhages": 0.13477798837881821,
+      "seg_dice_Soft_Exudates": 0.004692739807069302,
+      "seg_iou_Soft_Exudates": 0.0023578975815325975,
+      "seg_precision_Soft_Exudates": 0.0024228221736848354,
+      "seg_recall_Soft_Exudates": 0.41146255141267407,
+      "seg_dice_Hard_Exudates": 0.00025813112733885646,
+      "seg_iou_Hard_Exudates": 0.0001292824890697375,
+      "seg_precision_Hard_Exudates": 0.038461538461538464,
+      "seg_recall_Hard_Exudates": 0.00012950012751389295,
+      "seg_dice_mean": 0.003056964837014675,
+      "seg_iou_mean": 0.0015375670045614243,
+      "seg_precision_mean": 0.01125696708382188,
+      "seg_recall_mean": 0.13673391270080731,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.125,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.23076923076923078,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.375,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0006438040873035789,
+      "seg_iou_Microaneurysms": 0.00032273592660203576,
+      "seg_precision_Microaneurysms": 0.0004985002451576293,
+      "seg_recall_Microaneurysms": 0.004228614736348391,
+      "seg_dice_Hemorrhages": 0.008516828529536724,
+      "seg_iou_Hemorrhages": 0.004298960790038109,
+      "seg_precision_Hemorrhages": 0.004889416042715311,
+      "seg_recall_Hemorrhages": 0.1380367221740576,
+      "seg_dice_Soft_Exudates": 0.004514758009463549,
+      "seg_iou_Soft_Exudates": 0.002274987054988742,
+      "seg_precision_Soft_Exudates": 0.0023517312947660685,
+      "seg_recall_Soft_Exudates": 0.37597856384057265,
+      "seg_dice_Hard_Exudates": 0.0,
+      "seg_iou_Hard_Exudates": 0.0,
+      "seg_precision_Hard_Exudates": 0.0,
+      "seg_recall_Hard_Exudates": 0.0,
+      "seg_dice_mean": 0.0034188474528491497,
+      "seg_iou_mean": 0.0017241709865629673,
+      "seg_precision_mean": 0.0019349118956597522,
+      "seg_recall_mean": 0.12956097518774468,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "cls_accuracy": 0.23076923076923078,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.125,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.23076923076923078,
+      "cls_recall_Moderate": 1.0,
+      "cls_f1_Moderate": 0.375,
+      "cls_auc": NaN,
+      "seg_dice_Microaneurysms": 0.0,
+      "seg_iou_Microaneurysms": 0.0,
+      "seg_precision_Microaneurysms": 0.0,
+      "seg_recall_Microaneurysms": 0.0,
+      "seg_dice_Hemorrhages": 0.009208085015416145,
+      "seg_iou_Hemorrhages": 0.0046457890421152115,
+      "seg_precision_Hemorrhages": 0.005497693549841642,
+      "seg_recall_Hemorrhages": 0.1320839346601413,
+      "seg_dice_Soft_Exudates": 0.003313377732411027,
+      "seg_iou_Soft_Exudates": 0.001661766553297639,
+      "seg_precision_Soft_Exudates": 0.0017396335024386644,
+      "seg_recall_Soft_Exudates": 0.3555372477724002,
+      "seg_dice_Hard_Exudates": 0.0,
+      "seg_iou_Hard_Exudates": 0.0,
+      "seg_precision_Hard_Exudates": 0.0,
+      "seg_recall_Hard_Exudates": 0.0,
+      "seg_dice_mean": 0.003130365628749132,
+      "seg_iou_mean": 0.0015768888406455517,
+      "seg_precision_mean": 0.0018093317630700767,
+      "seg_recall_mean": 0.12190529560813537,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    }
+  ],
+  "lr": [
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    5e-05,
+    5e-05
+  ],
+  "task_weights": [
+    [
+      0.9990019202232361,
+      0.9990110993385315
+    ],
+    [
+      0.9980104565620422,
+      0.9980396032333374
+    ],
+    [
+      0.9970302581787109,
+      0.9971174001693726
+    ],
+    [
+      0.996066153049469,
+      0.9962940812110901
+    ],
+    [
+      0.9951211810112,
+      0.9954788684844971
+    ],
+    [
+      0.9941918849945068,
+      0.9947184920310974
+    ],
+    [
+      0.9932767748832703,
+      0.9941097497940063
+    ],
+    [
+      0.9923768639564514,
+      0.9934955835342407
+    ],
+    [
+      0.9914869070053101,
+      0.9929710626602173
+    ],
+    [
+      0.9910462498664856,
+      0.9927403926849365
+    ]
+  ]
+}

@@ -213,7 +213,7 @@ def train_model(model_type='multitask', weighting_strategy='uncertainty', device
                                    patience=config.SCHEDULER_PATIENCE)
     
     # Data
-    train_loader, val_loader, _ = get_dataloaders()
+    train_loader, val_loader, _ = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
     
     # Monitoring
     monitor = ResourceMonitor()
@@ -300,9 +300,12 @@ def run_all_experiments():
     # Set seed
     set_seed(config.SEED)
     
-    # Generate synthetic data
-    print("\n[1/5] Generating synthetic dataset...")
-    create_synthetic_dataset()
+    # Generate synthetic data (only if not using HuggingFace)
+    if not config.USE_HUGGINGFACE:
+        print("\n[1/5] Generating synthetic dataset...")
+        create_synthetic_dataset()
+    else:
+        print("\n[1/5] Using real IDRiD dataset from HuggingFace...")
     
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -347,7 +350,7 @@ def run_all_experiments():
     )
     
     # Save segmentation examples
-    _, _, test_loader = get_dataloaders()
+    _, _, test_loader = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
     mtl_model.eval()
     save_segmentation_examples(test_loader, mtl_model, num_examples=3, 
                                save_dir=config.FIGURES_DIR)

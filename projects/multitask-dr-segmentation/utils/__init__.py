@@ -9,11 +9,12 @@ from utils.quantization import (
     run_quantization_analysis
 )
 from utils.visualization import (
-    create_segmentation_overlay,
     plot_training_curves,
     plot_confusion_matrix,
+    save_segmentation_examples,
+    create_literature_comparison_table,
     plot_model_comparison,
-    save_segmentation_examples
+    generate_all_figures
 )
 
 __all__ = [
@@ -21,6 +22,6 @@ __all__ = [
     'ClassificationMetrics', 'SegmentationMetrics', 'MultiTaskMetrics',
     'ResourceMonitor', 'TrainingLogger',
     'apply_dynamic_quantization', 'compare_quantization', 'run_quantization_analysis',
-    'create_segmentation_overlay', 'plot_training_curves', 'plot_confusion_matrix',
-    'plot_model_comparison', 'save_segmentation_examples'
+    'plot_training_curves', 'plot_confusion_matrix', 'save_segmentation_examples',
+    'create_literature_comparison_table', 'plot_model_comparison', 'generate_all_figures'
 ]

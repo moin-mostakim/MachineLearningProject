@@ -8,7 +8,8 @@ import os
 import json
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import Dict, Any, List
+import torch
+from typing import Dict, Any, List, Optional
 
 
 def setup_style():
@@ -285,6 +286,231 @@ def generate_all_figures(results: Dict[str, Any], output_dir: str):
         print(f"  Warning: Failed to generate literature_comparison: {e}")
     
     print("Figure generation complete.")
+
+
+def plot_training_curves(history: Dict[str, Any], save_path: str):
+    """Plot training curves from history dictionary."""
+    setup_style()
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    
+    train_loss = history.get('train_loss', [])
+    val_loss = history.get('val_loss', [])
+    epochs = range(1, len(train_loss) + 1) if train_loss else []
+    
+    if train_loss:
+        axes[0, 0].plot(epochs, train_loss, 'b-o', label='Train Loss', markersize=4)
+        axes[0, 0].plot(epochs, val_loss, 'r-s', label='Val Loss', markersize=4)
+        axes[0, 0].set_xlabel('Epoch')
+        axes[0, 0].set_ylabel('Loss')
+        axes[0, 0].set_title('Training and Validation Loss')
+        axes[0, 0].legend()
+    
+    train_metrics = history.get('train_metrics', [])
+    val_metrics = history.get('val_metrics', [])
+    
+    if train_metrics:
+        epochs = range(1, len(train_metrics) + 1)
+        train_acc = [m.get('cls_accuracy', 0) for m in train_metrics]
+        val_acc = [m.get('cls_accuracy', 0) for m in val_metrics]
+        axes[0, 1].plot(epochs, train_acc, 'b-o', label='Train', markersize=4)
+        axes[0, 1].plot(epochs, val_acc, 'r-s', label='Val', markersize=4)
+        axes[0, 1].set_xlabel('Epoch')
+        axes[0, 1].set_ylabel('Accuracy')
+        axes[0, 1].set_title('Classification Accuracy')
+        axes[0, 1].legend()
+    
+    if train_metrics:
+        train_kappa = [m.get('cls_kappa', 0) for m in train_metrics]
+        val_kappa = [m.get('cls_kappa', 0) for m in val_metrics]
+        axes[1, 0].plot(epochs, train_kappa, 'b-o', label='Train', markersize=4)
+        axes[1, 0].plot(epochs, val_kappa, 'r-s', label='Val', markersize=4)
+        axes[1, 0].set_xlabel('Epoch')
+        axes[1, 0].set_ylabel('Quadratic Weighted Kappa')
+        axes[1, 0].set_title('Classification Kappa')
+        axes[1, 0].legend()
+    
+    if train_metrics:
+        train_dice = [m.get('seg_dice_mean', 0) for m in train_metrics]
+        val_dice = [m.get('seg_dice_mean', 0) for m in val_metrics]
+        axes[1, 1].plot(epochs, train_dice, 'b-o', label='Train', markersize=4)
+        axes[1, 1].plot(epochs, val_dice, 'r-s', label='Val', markersize=4)
+        axes[1, 1].set_xlabel('Epoch')
+        axes[1, 1].set_ylabel('Mean Dice')
+        axes[1, 1].set_title('Segmentation Dice')
+        axes[1, 1].legend()
+    
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+    print(f"  Saved: {save_path}")
+
+
+def plot_confusion_matrix(cm: np.ndarray, save_path: str, 
+                          classes: Optional[List[str]] = None):
+    """Plot and save confusion matrix."""
+    setup_style()
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    if cm is None:
+        cm = np.zeros((5, 5))
+    
+    cm = np.array(cm)
+    if classes is None:
+        classes = ['No DR', 'Mild', 'Moderate', 'Severe', 'Prolif.'][:cm.shape[0]]
+    
+    im = ax.imshow(cm, cmap='Blues')
+    
+    ax.set_xticks(np.arange(len(classes)))
+    ax.set_yticks(np.arange(len(classes)))
+    ax.set_xticklabels(classes)
+    ax.set_yticklabels(classes)
+    
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, int(cm[i, j]), ha="center", va="center", 
+                   color="white" if cm[i, j] > cm.max() / 2 else "black")
+    
+    ax.set_xlabel('Predicted')
+    ax.set_ylabel('True')
+    ax.set_title('Confusion Matrix')
+    plt.colorbar(im, ax=ax)
+    
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+    print(f"  Saved: {save_path}")
+
+
+def save_segmentation_examples(dataloader, model, num_examples: int = 3,
+                               save_dir: str = 'figures', device: str = 'cpu'):
+    """Save segmentation prediction examples."""
+    setup_style()
+    
+    model.eval()
+    model = model.to(device)
+    
+    batch = next(iter(dataloader))
+    images = batch['image'][:num_examples].to(device)
+    masks = batch['mask'][:num_examples].cpu().numpy()
+    
+    with torch.no_grad():
+        outputs = model(images)
+        pred_masks = outputs['segmentation'].cpu().numpy()
+    
+    images = images.cpu().numpy()
+    
+    lesion_names = ['Microaneurysms', 'Hemorrhages', 'Soft Exudates', 'Hard Exudates']
+    
+    for idx in range(min(num_examples, len(images))):
+        fig, axes = plt.subplots(3, 4, figsize=(16, 12))
+        
+        img = images[idx].transpose(1, 2, 0)
+        img = (img * [0.229, 0.224, 0.225]) + [0.485, 0.456, 0.406]
+        img = np.clip(img, 0, 1)
+        
+        for j in range(4):
+            axes[0, j].imshow(img)
+            axes[0, j].set_title(f'Input ({lesion_names[j]})')
+            axes[0, j].axis('off')
+            
+            axes[1, j].imshow(masks[idx, j], cmap='gray', vmin=0, vmax=1)
+            axes[1, j].set_title(f'Ground Truth')
+            axes[1, j].axis('off')
+            
+            pred = (pred_masks[idx, j] > 0.5).astype(float)
+            axes[2, j].imshow(pred, cmap='gray', vmin=0, vmax=1)
+            axes[2, j].set_title(f'Prediction')
+            axes[2, j].axis('off')
+        
+        plt.tight_layout()
+        save_path = os.path.join(save_dir, f'segmentation_example_{idx}.png')
+        plt.savefig(save_path)
+        plt.close()
+        print(f"  Saved: {save_path}")
+
+
+def create_literature_comparison_table(metrics: Dict[str, Any], save_path: str):
+    """Create literature comparison figure."""
+    setup_style()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    literature = {
+        'VRT (Porwal 2019)': {'kappa': 0.85, 'dice': None},
+        'DeepDR (Hua 2020)': {'kappa': 0.78, 'dice': 0.52},
+        'MTL-DR (Zhou 2019)': {'kappa': 0.76, 'dice': 0.48},
+        'Attention U-Net (2018)': {'kappa': None, 'dice': 0.58},
+    }
+    
+    our_kappa = metrics.get('cls_kappa', 0) if metrics else 0
+    our_dice = metrics.get('seg_dice_mean', 0) if metrics else 0
+    literature['Ours (Multi-task)'] = {'kappa': our_kappa, 'dice': our_dice}
+    
+    methods = list(literature.keys())
+    kappas = [literature[m]['kappa'] if literature[m]['kappa'] else 0 for m in methods]
+    dices = [literature[m]['dice'] if literature[m]['dice'] else 0 for m in methods]
+    
+    x = np.arange(len(methods))
+    width = 0.35
+    
+    colors_k = ['#3498db'] * (len(methods) - 1) + ['#e74c3c']
+    colors_d = ['#2ecc71'] * (len(methods) - 1) + ['#f39c12']
+    
+    ax.bar(x - width/2, kappas, width, label='Kappa', color=colors_k)
+    ax.bar(x + width/2, dices, width, label='Dice', color=colors_d)
+    
+    ax.set_ylabel('Score')
+    ax.set_title('Literature Comparison (IDRiD Challenge)\n*Note: Different datasets/splits')
+    ax.set_xticks(x)
+    ax.set_xticklabels(methods, rotation=25, ha='right')
+    ax.legend()
+    ax.set_ylim(0, 1.0)
+    
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+    print(f"  Saved: {save_path}")
+
+
+def plot_model_comparison(results: Dict[str, Any], save_path: str):
+    """Plot comparison of multiple models.
+    
+    Args:
+        results: Dict mapping model name to either a metrics dict or a single value
+        save_path: Path to save the figure
+    """
+    setup_style()
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    model_names = list(results.keys())
+    values = []
+    
+    for name in model_names:
+        val = results[name]
+        if isinstance(val, dict):
+            for metric in ['cls_kappa', 'cls_accuracy', 'seg_dice_mean', 'seg_iou_mean']:
+                if metric in val:
+                    values.append(val[metric])
+                    break
+            else:
+                values.append(0)
+        else:
+            values.append(float(val) if val else 0)
+    
+    colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12'][:len(model_names)]
+    bars = ax.bar(model_names, values, color=colors)
+    
+    ax.set_ylabel('Score')
+    ax.set_title('Model Comparison')
+    ax.tick_params(axis='x', rotation=15)
+    
+    for bar, val in zip(bars, values):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+               f'{val:.4f}', ha='center', fontsize=9)
+    
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+    print(f"  Saved: {save_path}")
 
 
 if __name__ == "__main__":

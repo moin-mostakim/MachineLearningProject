@@ -43,11 +43,12 @@ import os
 # =============================================================================
 # Dataset Configuration
 # =============================================================================
-DATASET_NAME = "IDRiD_Synthetic"  # Using synthetic data mimicking IDRiD structure
+DATASET_NAME = "IDRiD"  # Real IDRiD dataset from HuggingFace
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-NUM_TRAIN_SAMPLES = 200  # Synthetic training samples
+NUM_TRAIN_SAMPLES = 200  # Synthetic training samples (when using synthetic)
 NUM_VAL_SAMPLES = 50     # Synthetic validation samples
 NUM_TEST_SAMPLES = 50    # Synthetic test samples
+USE_HUGGINGFACE = True   # Use real IDRiD dataset from HuggingFace
 
 # =============================================================================
 # Image Configuration
@@ -80,12 +81,12 @@ DROPOUT_RATE = 0.3        # Dropout for regularization
 # Training Configuration
 # =============================================================================
 BATCH_SIZE = 4           # Batch size (memory constrained)
-NUM_EPOCHS = 50          # Training epochs
+NUM_EPOCHS = 10          # Training epochs (reduced for CPU)
 LEARNING_RATE = 1e-4     # Initial learning rate
 WEIGHT_DECAY = 1e-5      # L2 regularization
-SCHEDULER_PATIENCE = 5   # LR scheduler patience
+SCHEDULER_PATIENCE = 3   # LR scheduler patience
 SCHEDULER_FACTOR = 0.5   # LR reduction factor
-EARLY_STOPPING_PATIENCE = 10  # Early stopping patience
+EARLY_STOPPING_PATIENCE = 5  # Early stopping patience
 
 # =============================================================================
 # Multi-Task Learning Configuration
@@ -121,7 +122,7 @@ SEGMENTATION_METRICS = ["dice", "iou", "precision", "recall"]
 # =============================================================================
 # Debug Mode Configuration
 # =============================================================================
-DEBUG_MODE = True        # Enable debug mode
+DEBUG_MODE = False       # Disable debug mode for real training
 DEBUG_SAMPLES = 10       # Number of samples in debug mode
 DEBUG_EPOCHS = 2         # Number of epochs in debug mode
 

@@ -48,29 +48,33 @@ multitask-dr-segmentation/
 
 ## Datasets
 
-The system supports real DR datasets with lesion segmentation masks. These require Kaggle API authentication.
+This project uses the **IDRiD dataset from HuggingFace** (no Kaggle authentication required).
 
-| Dataset | Source | URL | License | Size | Samples |
-|---------|--------|-----|---------|------|---------|
-| **IDRiD** | Kaggle | [diabetic-retinopathy-resized](https://www.kaggle.com/datasets/tanlikesmath/diabetic-retinopathy-resized) | Competition | ~5GB | 516 images with pixel-level annotations |
-| **APTOS 2019** | Kaggle | [aptos2019-blindness-detection](https://www.kaggle.com/c/aptos2019-blindness-detection) | Competition | ~15GB | 3,662 train (classification only) |
-| **DDR** | GitHub | [nkicsl/DDR-dataset](https://github.com/nkicsl/DDR-dataset) | Research | ~3GB | 13,673 images with lesion annotations |
+| Dataset | Source | URL | License | Samples |
+|---------|--------|-----|---------|---------|
+| **IDRiD** | HuggingFace | [MahsaTorki/IDRiD_Dataset](https://huggingface.co/datasets/MahsaTorki/IDRiD_Dataset) | CC BY 4.0 | 54 train + 27 test with pixel-level annotations |
 
-**Requires:** Kaggle API key (`KAGGLE_USERNAME` and `KAGGLE_KEY` environment variables)
+The IDRiD (Indian Diabetic Retinopathy Image Dataset) contains:
+- **Training**: 54 fundus images with lesion segmentation masks (split 41/13 for train/val)
+- **Testing**: 27 fundus images with lesion segmentation masks
+- **Lesion Types**: Microaneurysms (MA), Hemorrhages (HE), Hard Exudates (EX), Soft Exudates (SE)
+- **Classification**: 5-class DR grading (0-4)
+- **Original Source**: IEEE DataPort IDRiD Challenge 2018
 
-### Download Instructions
+### Data Loading
 
-**IDRiD via Kaggle:**
-```bash
-export KAGGLE_USERNAME=your_username
-export KAGGLE_KEY=your_api_key
-kaggle datasets download -d tanlikesmath/diabetic-retinopathy-resized
-unzip diabetic-retinopathy-resized.zip -d data/idrid/
+The dataset is automatically downloaded from HuggingFace on first run:
+
+```python
+from data.dataset import get_dataloaders
+
+# Load real IDRiD data
+train_loader, val_loader, test_loader = get_dataloaders(use_huggingface=True)
 ```
 
 **Synthetic Data (pipeline testing):**
 ```bash
-python main.py  # Auto-generates if real data unavailable
+python main.py --generate-data  # Generates synthetic fundus images
 ```
 
 ### Data Details
@@ -157,6 +161,45 @@ All hyperparameters are in `config.py` with detailed justifications:
 | DROPOUT_RATE | 0.3 | Regularization for small datasets |
 | FOCAL_GAMMA | 2.0 | Standard focal loss setting |
 
+## Experimental Results
+
+**Dataset**: IDRiD from HuggingFace (41 train / 13 val / 27 test images)
+**Ran on Real Data**: Yes
+
+### Model Parameters
+
+| Model | Parameters | Size (MB) |
+|-------|------------|-----------|
+| Classification-only | 16,062,021 | 61.27 |
+| Segmentation-only (U-Net) | 20,103,812 | 76.69 |
+| **Multi-task (Ours)** | **20,268,683** | **77.32** |
+
+Parameter efficiency: 44.0% reduction vs. running both baselines separately
+
+### Classification Performance (Test Set)
+
+| Model | Accuracy | Kappa | F1 (macro) | AUC |
+|-------|----------|-------|------------|-----|
+| Classification-only | 0.1111 | 0.0150 | 0.0462 | 0.568 |
+| **Multi-task (Ours)** | **0.1111** | **0.0000** | **0.0400** | **0.568** |
+
+### Segmentation Performance (Test Set - Mean Dice)
+
+| Model | MA | HE | SE | EX | Mean |
+|-------|-----|-----|-----|-----|------|
+| Segmentation-only | 0.0002 | 0.0029 | 0.0006 | 0.0103 | 0.0035 |
+| **Multi-task (Ours)** | **0.0004** | **0.0157** | **0.0023** | **0.0121** | **0.0076** |
+
+*Note: Performance limited by small dataset (41 training images) and training from scratch without pretrained weights.*
+
+### INT8 Quantization
+
+| Model | FP32 Size | INT8 Size | Reduction | FP32 Latency | INT8 Latency |
+|-------|-----------|-----------|-----------|--------------|--------------|
+| Classification | 61.32 MB | 60.69 MB | 1.0% | 12.5 ms | 12.4 ms |
+| Segmentation | 76.74 MB | 76.74 MB | 0.0% | 22.9 ms | 23.3 ms |
+| Multi-task | 77.37 MB | 76.74 MB | 0.8% | 23.0 ms | 23.2 ms |
+
 ## Literature Comparison
 
 | Method | Type | Kappa | Mean Dice |
@@ -165,7 +208,9 @@ All hyperparameters are in `config.py` with detailed justifications:
 | DeepDR (Hua et al., 2020) | Multi-task | 0.7800 | 0.5200 |
 | MTL-DR (Zhou et al., 2019) | Multi-task | 0.7600 | 0.4800 |
 | Attention U-Net (Oktay, 2018) | Segmentation | - | 0.5800 |
-| **Ours (Multi-task)** | Multi-task | TBD | TBD |
+| **Ours (Multi-task)** | Multi-task | 0.0000 | 0.0076 |
+
+*Note: Our results use a minimal training setup (41 images, no pretrained encoder). Published methods use full datasets (5000+ images) with pretrained ImageNet encoders. Direct comparison is not meaningful.*
 
 ## References
 
@@ -181,25 +226,12 @@ All hyperparameters are in `config.py` with detailed justifications:
 
 6. Lin, T.Y., et al. (2017). "Focal Loss for Dense Object Detection." ICCV.
 
-## Model Parameter Comparison
+## Model Architecture
 
-| Model | Parameters | Size (MB) |
-|-------|------------|-----------|
-| Classification-only | ~7.5M | ~30 |
-| Segmentation-only (U-Net) | ~10.2M | ~41 |
-| Multi-task (Ours) | ~11.8M | ~47 |
-
-Multi-task model achieves parameter efficiency by sharing encoder weights, saving ~33% compared to running both baselines separately.
-
-## INT8 Quantization
-
-Quantization reduces model size by ~75% with minimal accuracy loss:
-
-| Model | FP32 Size | INT8 Size | Reduction |
-|-------|-----------|-----------|-----------|
-| Classification | ~30 MB | ~7.5 MB | 75% |
-| Segmentation | ~41 MB | ~10 MB | 75% |
-| Multi-task | ~47 MB | ~12 MB | 75% |
+### Component Breakdown (Multi-task)
+- **Encoder**: 15,897,152 params (60.64 MB) - Shared ResNet-style backbone
+- **Segmentation Decoder**: 4,206,660 params (16.05 MB) - U-Net style decoder
+- **Classification Head**: 164,869 params (0.63 MB) - MLP classifier
 
 ## License
 
