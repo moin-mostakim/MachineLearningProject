@@ -18,6 +18,7 @@ import sys
 import json
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime
 from typing import Dict, List
 
@@ -415,11 +416,110 @@ def main():
     # Save results
     save_results(results)
     
+    # Generate figures
+    generate_figures(results)
+    
     print("\n" + "=" * 60)
     print("EXPERIMENT COMPLETE")
     print("=" * 60)
     
     return results
+
+
+def generate_figures(results: Dict):
+    """Generate visualization figures from results."""
+    os.makedirs("figures", exist_ok=True)
+    
+    methods = list(results.keys())
+    
+    try:
+        # Figure 1: Average accuracy comparison
+        fig, ax = plt.subplots(figsize=(8, 5))
+        avg_accs = []
+        for m in methods:
+            if 'metrics' in results[m]:
+                avg_accs.append(results[m]['metrics'].get('average_accuracy', 0))
+            else:
+                avg_accs.append(0)
+        colors = ['steelblue', 'coral', 'green'][:len(methods)]
+        bars = ax.bar(methods, avg_accs, color=colors, edgecolor='black')
+        ax.set_xlabel('Method')
+        ax.set_ylabel('Average Accuracy (%)')
+        ax.set_title('Continual Learning: Average Accuracy Comparison')
+        for bar in bars:
+            h = bar.get_height()
+            ax.annotate(f'{h:.1f}%', xy=(bar.get_x() + bar.get_width()/2, h),
+                       xytext=(0, 3), textcoords="offset points", ha='center', va='bottom')
+        plt.tight_layout()
+        plt.savefig('figures/accuracy_comparison.png', dpi=150)
+        plt.close()
+        
+        # Figure 2: Forgetting comparison
+        fig, ax = plt.subplots(figsize=(8, 5))
+        forgetting = []
+        for m in methods:
+            if 'metrics' in results[m]:
+                forgetting.append(results[m]['metrics'].get('forgetting', 0))
+            else:
+                forgetting.append(0)
+        colors = ['red' if f > 10 else 'orange' if f > 5 else 'green' for f in forgetting]
+        bars = ax.bar(methods, forgetting, color=colors, edgecolor='black')
+        ax.set_xlabel('Method')
+        ax.set_ylabel('Average Forgetting (%)')
+        ax.set_title('Continual Learning: Forgetting Analysis')
+        for bar in bars:
+            h = bar.get_height()
+            ax.annotate(f'{h:.1f}%', xy=(bar.get_x() + bar.get_width()/2, h),
+                       xytext=(0, 3), textcoords="offset points", ha='center', va='bottom')
+        plt.tight_layout()
+        plt.savefig('figures/forgetting_comparison.png', dpi=150)
+        plt.close()
+        
+        # Figure 3: Parameter growth
+        fig, ax = plt.subplots(figsize=(10, 5))
+        for method in methods:
+            if 'param_history' in results[method]:
+                ph = results[method]['param_history']
+                if isinstance(ph, dict):
+                    params = [ph[k]['total'] for k in sorted(ph.keys())]
+                else:
+                    params = ph
+                ax.plot(range(len(params)), params, 'o-', label=method, linewidth=2, markersize=8)
+        ax.set_xlabel('Task')
+        ax.set_ylabel('Total Parameters')
+        ax.set_title('Parameter Growth Across Tasks')
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+        plt.tight_layout()
+        plt.savefig('figures/parameter_growth.png', dpi=150)
+        plt.close()
+        
+        # Figure 4: Accuracy matrix (for first method)
+        if methods and 'accuracy_matrix' in results[methods[0]]:
+            matrix = results[methods[0]]['accuracy_matrix']
+            if matrix:
+                n_tasks = len(matrix)
+                mat = np.zeros((n_tasks, n_tasks))
+                for i, row in enumerate(matrix):
+                    for j, val in enumerate(row):
+                        if val is not None and val > 0:
+                            mat[i, j] = val
+                
+                fig, ax = plt.subplots(figsize=(8, 6))
+                im = ax.imshow(mat, cmap='Blues')
+                ax.set_xlabel('Task (evaluated)')
+                ax.set_ylabel('After training task')
+                ax.set_title(f'Accuracy Matrix: {methods[0].upper()}')
+                plt.colorbar(im, ax=ax, label='Accuracy (%)')
+                ax.set_xticks(range(n_tasks))
+                ax.set_yticks(range(n_tasks))
+                plt.tight_layout()
+                plt.savefig('figures/accuracy_matrix.png', dpi=150)
+                plt.close()
+        
+        print(f"\nFigures saved to: figures/")
+    except Exception as e:
+        print(f"\nWarning: Could not generate figures: {e}")
 
 
 if __name__ == "__main__":

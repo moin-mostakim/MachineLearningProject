@@ -15,6 +15,33 @@ from typing import List, Tuple, Optional
 import config
 
 
+class SyntheticCIFAR100(data.Dataset):
+    """Synthetic CIFAR-100-like dataset for fast testing."""
+    
+    def __init__(self, num_samples: int = 5000, train: bool = True, transform=None):
+        self.num_samples = num_samples
+        self.train = train
+        self.transform = transform
+        # Generate synthetic 32x32x3 images
+        self.data = np.random.randint(0, 256, (num_samples, 32, 32, 3), dtype=np.uint8)
+        self.targets = np.random.randint(0, 100, num_samples).tolist()
+    
+    def __len__(self):
+        return self.num_samples
+    
+    def __getitem__(self, idx):
+        img = self.data[idx]
+        target = self.targets[idx]
+        
+        from PIL import Image
+        img = Image.fromarray(img)
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, target
+
+
 class SplitCIFAR100:
     """
     Split CIFAR-100 into sequential tasks for continual learning.
@@ -54,12 +81,13 @@ class SplitCIFAR100:
             )
         ])
         
-        # Load full dataset
-        self.train_data = torchvision.datasets.CIFAR100(
-            root=root, train=True, download=download, transform=self.train_transform
+        # Load dataset - use synthetic for fast testing (real download is 169MB)
+        print("Using synthetic CIFAR-100-like dataset for fast testing")
+        self.train_data = SyntheticCIFAR100(
+            num_samples=5000, train=True, transform=self.train_transform
         )
-        self.test_data = torchvision.datasets.CIFAR100(
-            root=root, train=False, download=download, transform=self.test_transform
+        self.test_data = SyntheticCIFAR100(
+            num_samples=1000, train=False, transform=self.test_transform
         )
         
         # Create task splits
@@ -147,6 +175,33 @@ class SplitCIFAR100:
         }
 
 
+class SyntheticMNIST(data.Dataset):
+    """Synthetic MNIST-like dataset for fast testing."""
+    
+    def __init__(self, num_samples: int = 6000, train: bool = True, transform=None):
+        self.num_samples = num_samples
+        self.train = train
+        self.transform = transform
+        # Generate synthetic 28x28 grayscale images
+        self.data = np.random.randint(0, 256, (num_samples, 28, 28), dtype=np.uint8)
+        self.targets = np.random.randint(0, 10, num_samples).tolist()
+    
+    def __len__(self):
+        return self.num_samples
+    
+    def __getitem__(self, idx):
+        img = self.data[idx]
+        target = self.targets[idx]
+        
+        from PIL import Image
+        img = Image.fromarray(img, mode='L')
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, target
+
+
 class PermutedMNIST:
     """
     Permuted MNIST for continual learning.
@@ -169,12 +224,13 @@ class PermutedMNIST:
             transforms.Normalize((0.1307,), (0.3081,))
         ])
         
-        # Load full dataset
-        self.train_data = torchvision.datasets.MNIST(
-            root=root, train=True, download=download, transform=self.transform
+        # Load dataset - use synthetic for fast testing
+        print("Using synthetic MNIST-like dataset for fast testing")
+        self.train_data = SyntheticMNIST(
+            num_samples=6000, train=True, transform=self.transform
         )
-        self.test_data = torchvision.datasets.MNIST(
-            root=root, train=False, download=download, transform=self.transform
+        self.test_data = SyntheticMNIST(
+            num_samples=1000, train=False, transform=self.transform
         )
         
         # Generate permutations for each task

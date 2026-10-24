@@ -357,9 +357,13 @@ class EWC(ContinualLearner):
                 }
             else:
                 for n in fisher:
-                    self.online_fisher[n] = (
-                        self.gamma * self.online_fisher[n] + fisher[n]
-                    )
+                    if n in self.online_fisher:
+                        self.online_fisher[n] = (
+                            self.gamma * self.online_fisher[n] + fisher[n]
+                        )
+                    else:
+                        # New parameter (e.g., new task head)
+                        self.online_fisher[n] = fisher[n]
                 self.online_params = {
                     n: p.detach().clone()
                     for n, p in self.model.named_parameters()
