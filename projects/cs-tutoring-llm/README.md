@@ -11,9 +11,43 @@ This project implements and compares multiple approaches for automated CS tutori
 3. **RAG System** - Retrieval-Augmented Generation combining dense retrieval with generation
 4. **INT8 Quantization** - Efficient inference with quantized models
 
-## Dataset
+## Datasets
 
-Uses **CodeSearchNet** (Husain et al., 2019) - a large-scale benchmark with 6M functions across 6 programming languages. For this project, we focus on Python code snippets with their documentation strings.
+The system uses CodeSearchNet from HuggingFace, the standard benchmark for code search and understanding.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **CodeSearchNet** | HuggingFace Hub | [code_search_net](https://huggingface.co/datasets/code_search_net) | MIT | ~2GB | 6M functions (Python: 500K+, JS: 300K+, etc.) |
+
+**Official Source:**
+- GitHub: [github.com/github/CodeSearchNet](https://github.com/github/CodeSearchNet)
+- Reference: Husain et al. (2019) "CodeSearchNet Challenge: Evaluating the State of Semantic Code Search"
+
+### Dataset Details
+
+CodeSearchNet contains code-docstring pairs from 6 programming languages:
+- Python (~500K functions)
+- JavaScript (~300K functions)
+- Java (~500K functions)
+- Go (~300K functions)
+- Ruby (~50K functions)
+- PHP (~500K functions)
+
+For this project, we focus on **Python** code snippets with their documentation strings.
+
+### Download Instructions
+
+**Automatic (Recommended):** Dataset downloads automatically on first run:
+```bash
+pip install datasets transformers
+python main.py --mode debug
+```
+
+**Manual Download via HuggingFace:**
+```bash
+pip install datasets
+python -c "from datasets import load_dataset; ds = load_dataset('code_search_net', 'python')"
+```
 
 ## Architecture
 
