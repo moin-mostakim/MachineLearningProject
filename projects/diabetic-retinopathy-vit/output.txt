@@ -1,0 +1,374 @@
+
+======================================================================
+ Adaptive Multi-Scale Explainable Vision Transformer
+ with Lesion-Aware Attention for Early DR Grading
+======================================================================
+
+Running in DEBUG mode
+Device: cpu
+Epochs: 1
+
+Loading data...
+Generating synthetic fundus data for train split...
+Generated 80 synthetic fundus images for train
+Generating synthetic fundus data for val split...
+Generated 10 synthetic fundus images for val
+Generating synthetic fundus data for test split...
+Generated 10 synthetic fundus images for test
+Train samples: 80
+Val samples: 10
+Test samples: 10
+Class distribution: {0: 39, 1: 9, 2: 23, 3: 7, 4: 2}
+
+Creating models...
+
+======================================================================
+ Model Parameter Comparison
+======================================================================
+Model                             Total Params       Trainable    Size (MB)
+----------------------------------------------------------------------
+ResNet50                            24,559,685      24,559,685        93.69
+ViT_Baseline                        14,569,733      14,569,733        55.58
+MultiScale_LesionViT                18,467,648      18,467,648        70.45
+======================================================================
+
+
+======================================================================
+ Training: ResNet50
+======================================================================
+
+
+Epoch 1/1
+----------------------------------------
+Training:   0%|          | 0/10 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Training:   0%|          | 0/10 [00:00<?, ?it/s, loss=1.87]Training:  10%|█         | 1/10 [00:00<00:07,  1.20it/s, loss=1.87]Training:  10%|█         | 1/10 [00:01<00:07,  1.20it/s, loss=2.11]Training:  20%|██        | 2/10 [00:01<00:05,  1.50it/s, loss=2.11]                                                                   Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation:  50%|█████     | 1/2 [00:00<00:00,  7.26it/s]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+Train Loss: 1.9914, Train QWK: -0.2941
+Val Loss: 2.1807, Val QWK: 0.6154
+Val Accuracy: 0.8000
+Epoch time: 1.6s
+Saved best model with QWK: 0.6154
+
+======================================================================
+ Training: ViT_Baseline
+======================================================================
+
+
+Epoch 1/1
+----------------------------------------
+Training:   0%|          | 0/10 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Training:   0%|          | 0/10 [00:00<?, ?it/s, loss=2.16]Training:  10%|█         | 1/10 [00:00<00:05,  1.66it/s, loss=2.16]Training:  10%|█         | 1/10 [00:01<00:05,  1.66it/s, loss=2.19]Training:  20%|██        | 2/10 [00:01<00:04,  1.71it/s, loss=2.19]                                                                   Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation: 100%|██████████| 2/2 [00:00<00:00, 17.00it/s]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+Train Loss: 2.1739, Train QWK: 0.0925
+Val Loss: 2.3903, Val QWK: 0.0000
+Val Accuracy: 0.1000
+Epoch time: 1.3s
+
+======================================================================
+ Training: MultiScale_LesionViT
+======================================================================
+
+
+Epoch 1/1
+----------------------------------------
+Training:   0%|          | 0/10 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Training:   0%|          | 0/10 [00:12<?, ?it/s, loss=2.4]Training:  10%|█         | 1/10 [00:12<01:48, 12.08s/it, loss=2.4]Training:  10%|█         | 1/10 [00:22<01:48, 12.08s/it, loss=2.07]Training:  20%|██        | 2/10 [00:22<01:29, 11.16s/it, loss=2.07]                                                                   Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation:  50%|█████     | 1/2 [00:03<00:03,  3.04s/it]Validation: 100%|██████████| 2/2 [00:03<00:00,  1.58s/it]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+Train Loss: 2.2335, Train QWK: -0.1266
+Val Loss: 2.1328, Val QWK: 0.0000
+Val Accuracy: 0.1000
+Epoch time: 26.2s
+
+======================================================================
+ Evaluating: ResNet50
+======================================================================
+
+Loaded best checkpoint from epoch 1
+Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation:  50%|█████     | 1/2 [00:00<00:00,  6.04it/s]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+==================================================
+ ResNet50 Test Results
+==================================================
+
+Primary Metric:
+  quadratic_weighted_kappa: 0.6154
+
+Secondary Metrics:
+  accuracy: 0.8000
+  auc_macro: nan
+  f1_macro: 0.2500
+
+Clinical Metrics (Referable DR: grade >= 2):
+  sensitivity_referable: 0.0000
+  specificity_referable: 1.0000
+  auc_referable: 0.7500
+
+Per-Class Accuracy:
+  No DR: 1.0000
+  Mild: 0.0000
+  Moderate: 0.0000
+  Severe: 0.0000
+  Proliferative: 0.0000
+==================================================
+
+
+======================================================================
+ Evaluating: ViT_Baseline
+======================================================================
+
+Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation:  50%|█████     | 1/2 [00:00<00:00,  9.48it/s]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+==================================================
+ ViT_Baseline Test Results
+==================================================
+
+Primary Metric:
+  quadratic_weighted_kappa: 0.0000
+
+Secondary Metrics:
+  accuracy: 0.1000
+  auc_macro: nan
+  f1_macro: 0.0606
+
+Clinical Metrics (Referable DR: grade >= 2):
+  sensitivity_referable: 1.0000
+  specificity_referable: 0.0000
+  auc_referable: 0.8750
+
+Per-Class Accuracy:
+  No DR: 0.0000
+  Mild: 0.0000
+  Moderate: 1.0000
+  Severe: 0.0000
+  Proliferative: 0.0000
+==================================================
+
+
+======================================================================
+ Evaluating: MultiScale_LesionViT
+======================================================================
+
+Validation:   0%|          | 0/2 [00:00<?, ?it/s]/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Validation:  50%|█████     | 1/2 [00:03<00:03,  3.11s/it]Validation: 100%|██████████| 2/2 [00:03<00:00,  1.60s/it]                                                         /home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/workspace/projects/diabetic-retinopathy-vit/src/visualization/attention_viz.py:449: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  fig = plt.figure(figsize=(16, 12))
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+
+==================================================
+ MultiScale_LesionViT Test Results
+==================================================
+
+Primary Metric:
+  quadratic_weighted_kappa: 0.0000
+
+Secondary Metrics:
+  accuracy: 0.1000
+  auc_macro: nan
+  f1_macro: 0.0606
+
+Clinical Metrics (Referable DR: grade >= 2):
+  sensitivity_referable: 1.0000
+  specificity_referable: 0.0000
+  auc_referable: 0.3125
+
+Per-Class Accuracy:
+  No DR: 0.0000
+  Mild: 0.0000
+  Moderate: 0.0000
+  Severe: 1.0000
+  Proliferative: 0.0000
+==================================================
+
+
+Generating visualizations for ResNet50...
+Saved explainability report to outputs/figures/ResNet50_sample_0_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_1_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_2_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_3_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_4_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_5_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_6_explainability.png
+Saved explainability report to outputs/figures/ResNet50_sample_7_explainability.png
+
+Generating visualizations for ViT_Baseline...
+Saved explainability report to outputs/figures/ViT_Baseline_sample_0_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_1_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_2_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_3_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_4_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_5_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_6_explainability.png
+Saved explainability report to outputs/figures/ViT_Baseline_sample_7_explainability.png
+
+Generating visualizations for MultiScale_LesionViT...
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_0_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_0_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_1_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_1_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_2_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_2_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_3_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_3_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_4_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_4_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_5_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_5_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_6_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_6_lesion_attention.png
+Saved explainability report to outputs/figures/MultiScale_LesionViT_sample_7_explainability.png
+Saved lesion attention to outputs/figures/MultiScale_LesionViT_sample_7_lesion_attention.png
+
+======================================================================
+ INT8 Quantization Comparison
+======================================================================
+
+Quantizing ResNet50...
+Benchmarking FP32 model...
+Applying dynamic INT8 quantization...
+
+======================================================================
+ INT8 Quantization Comparison
+======================================================================
+
+Model Size (MB):
+  FP32:          93.99 MB
+  INT8 Dynamic:  90.99 MB
+
+Parameter Count:
+  Total:         24,559,685
+  Trainable:     24,559,685
+
+Inference Speed (CPU, batch=1):
+  FP32:          22.28 ms (±0.67)
+  INT8 Dynamic:  22.71 ms (±1.96)
+
+Summary:
+  Size Reduction: 3.2%
+  Speedup:        0.98x
+======================================================================
+
+
+Quantizing ViT_Baseline...
+Benchmarking FP32 model...
+Applying dynamic INT8 quantization...
+
+======================================================================
+ INT8 Quantization Comparison
+======================================================================
+
+Model Size (MB):
+  FP32:          55.61 MB
+  INT8 Dynamic:  15.13 MB
+
+Parameter Count:
+  Total:         14,569,733
+  Trainable:     14,569,733
+
+Inference Speed (CPU, batch=1):
+  FP32:          13.38 ms (±0.49)
+  INT8 Dynamic:  10.19 ms (±0.77)
+
+Summary:
+  Size Reduction: 72.8%
+  Speedup:        1.31x
+======================================================================
+
+
+Quantizing MultiScale_LesionViT...
+Benchmarking FP32 model...
+Applying dynamic INT8 quantization...
+
+======================================================================
+ INT8 Quantization Comparison
+======================================================================
+
+Model Size (MB):
+  FP32:          70.52 MB
+  INT8 Dynamic:  20.60 MB
+
+Parameter Count:
+  Total:         18,467,648
+  Trainable:     18,467,648
+
+Inference Speed (CPU, batch=1):
+  FP32:          181.55 ms (±24.61)
+  INT8 Dynamic:  160.74 ms (±3.66)
+
+Summary:
+  Size Reduction: 70.8%
+  Speedup:        1.13x
+======================================================================
+
+Saved training curves to outputs/figures/training_curves.png
+
+Results saved to outputs/results.json
+
+======================================================================
+ Final Results Summary
+======================================================================
+
+Test Set Performance (Quadratic Weighted Kappa):
+  ResNet50: QWK=0.6154, Accuracy=0.8000
+  ViT_Baseline: QWK=0.0000, Accuracy=0.1000
+  MultiScale_LesionViT: QWK=0.0000, Accuracy=0.1000
+
+======================================================================
+ Training Complete!
+======================================================================
+
