@@ -1,0 +1,20 @@
+{
+  "ERM": {
+    "model_name": "ERM",
+    "total_params": 225924,
+    "trainable_params": 225924,
+    "size_mb": 0.8618316650390625
+  },
+  "IRM": {
+    "model_name": "IRM",
+    "total_params": 225925,
+    "trainable_params": 225925,
+    "size_mb": 0.8618354797363281
+  },
+  "Augmentation": {
+    "model_name": "Augmentation",
+    "total_params": 225924,
+    "trainable_params": 225924,
+    "size_mb": 0.8618316650390625
+  }
+}
