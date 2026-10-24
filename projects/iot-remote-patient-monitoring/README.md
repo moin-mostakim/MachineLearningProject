@@ -77,14 +77,39 @@ Customize the simulation:
 python main.py --num-patients 50 --duration-hours 12 --debug
 ```
 
-## Dataset
+## Datasets
 
-The system generates simulated IoT sensor data based on vital sign distributions from:
+The system supports both simulated data and real clinical datasets from PhysioNet.
 
-- **MIMIC-III** (Johnson et al., 2016): Critical care database with ~40,000 ICU stays
-- **PhysioNet** (Goldberger et al., 2000): Open access physiological signal databases
+| Dataset | Source | URL | License | Size | Access |
+|---------|--------|-----|---------|------|--------|
+| **MIMIC-III Demo** | PhysioNet | [mimic-iii-demo](https://physionet.org/content/mimiciii-demo/) | PhysioNet License | ~50MB | Open (no credentials) |
+| **MIMIC-III Full** | PhysioNet | [mimic-iii](https://physionet.org/content/mimiciii/) | Credentialed | ~6GB | Requires CITI training |
+| **eICU-CRD** | PhysioNet | [eicu-crd](https://physionet.org/content/eicu-crd/) | Credentialed | ~3GB | Requires CITI training |
+| **WFDB Vital Signs** | PhysioNet | [mimicdb](https://physionet.org/content/mimicdb/) | Open | ~250MB | Direct download |
 
-Vital sign ranges and anomaly patterns are calibrated to match real clinical data characteristics.
+**Reference**: Johnson et al. (2016) "MIMIC-III, a freely accessible critical care database"
+
+### Download Instructions
+
+**MIMIC-III Demo (Recommended for testing):**
+```bash
+# No credentials required
+pip install wfdb
+wget -r -N -c https://physionet.org/files/mimiciii-demo/1.4/
+```
+
+**MIMIC-III Full (Requires credentials):**
+1. Complete CITI training at [physionet.org](https://physionet.org/register/)
+2. Request access to MIMIC-III
+3. Download via PhysioNet credentials
+
+**Simulated Data (default):**
+```bash
+python main.py --debug  # Uses synthetic data calibrated to MIMIC-III distributions
+```
+
+The system generates simulated IoT sensor data calibrated to MIMIC-III vital sign distributions. Simulated data is suitable for algorithm development; real PhysioNet data is recommended for clinical validation.
 
 ### Simulated Vital Signs
 
