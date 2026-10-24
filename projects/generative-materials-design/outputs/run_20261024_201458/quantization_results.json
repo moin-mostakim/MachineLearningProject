@@ -1,0 +1,31 @@
+{
+  "quantization_successful": true,
+  "size_comparison": {
+    "original_mb": 5.249382019042969,
+    "quantized_mb": 0.0107421875,
+    "compression_ratio": 488.6697443181818,
+    "size_reduction_percent": 99.79536281678432
+  },
+  "timing_comparison": {
+    "original": {
+      "mean_ms": 729.1869646593841,
+      "min_ms": 677.1810899990669,
+      "max_ms": 821.8893629964441,
+      "std_ms": 30.03099273902186
+    },
+    "quantized": {
+      "mean_ms": 683.4912757401617,
+      "min_ms": 47.1115930013184,
+      "max_ms": 827.0813579983951,
+      "std_ms": 122.10344121958751
+    },
+    "speedup": 1.0668562870385405
+  },
+  "accuracy_comparison": {
+    "original_mae": 0.7940349578857422,
+    "quantized_mae": 0.7940359711647034,
+    "mae_degradation": 1.0132789611816406e-06,
+    "mae_degradation_percent": 0.00012761137760465059,
+    "prediction_difference": 3.2950625609373674e-05
+  }
+}
