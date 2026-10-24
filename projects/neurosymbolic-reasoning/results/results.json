@@ -1,0 +1,143 @@
+{
+  "config": {
+    "model": {
+      "encoder_type": "transformer",
+      "hidden_dim": 256,
+      "num_layers": 4,
+      "num_heads": 8,
+      "intermediate_dim": 1024,
+      "max_seq_length": 256,
+      "vocab_size": 30522,
+      "symbolic_reasoning_depth": 3,
+      "num_predicates": 64,
+      "num_rules": 128,
+      "rule_confidence_threshold": 0.7,
+      "kg_embed_dim": 128,
+      "kg_num_relations": 32,
+      "kg_margin": 1.0,
+      "dropout": 0.1,
+      "layer_norm_eps": 1e-06
+    },
+    "training": {
+      "learning_rate": 0.0001,
+      "weight_decay": 0.01,
+      "warmup_steps": 500,
+      "max_grad_norm": 1.0,
+      "batch_size": 8,
+      "eval_batch_size": 64,
+      "num_epochs": 2,
+      "early_stopping_patience": 5,
+      "reasoning_loss_weight": 1.0,
+      "kg_loss_weight": 0.3,
+      "symbolic_loss_weight": 0.2,
+      "save_every_n_epochs": 1,
+      "keep_n_checkpoints": 3
+    },
+    "data": {
+      "dataset_name": "sciq",
+      "data_dir": "data",
+      "train_file": "train.json",
+      "val_file": "val.json",
+      "test_file": "test.json",
+      "max_samples": 100,
+      "num_workers": 4,
+      "shuffle_train": true,
+      "kg_file": "knowledge_graph.json",
+      "build_kg_from_data": true
+    },
+    "experiment": {
+      "experiment_name": "neurosymbolic_reasoning",
+      "seed": 42,
+      "device": "cuda",
+      "debug_mode": true,
+      "quantization_mode": "int8",
+      "log_dir": "logs",
+      "results_dir": "results",
+      "checkpoint_dir": "checkpoints",
+      "log_every_n_steps": 5,
+      "monitor_resources": true,
+      "memory_threshold_gb": 8.0
+    }
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.878416657447815,
+      "train_accuracy": 0.28,
+      "val_loss": 1.857409656047821,
+      "val_accuracy": 0.27
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.844693477337177,
+      "train_accuracy": 0.29,
+      "val_loss": 1.8459486365318298,
+      "val_accuracy": 0.27
+    }
+  ],
+  "final_results": {
+    "neurosymbolic": {
+      "accuracy": 0.2,
+      "hypothesis_validity_rate": 0.47478152096271514,
+      "accuracy_by_type": {
+        "unknown": 0.2
+      },
+      "rule_activation_rate": 0.11390568688511848,
+      "avg_reasoning_depth": 3.0,
+      "rule_confidence_mean": 0.49991852045059204,
+      "kg_consistency": 0.0,
+      "entity_coverage": 0.0,
+      "num_samples": 100,
+      "num_correct": 20
+    },
+    "neural_baseline": {
+      "accuracy": 0.22,
+      "hypothesis_validity_rate": 0.0,
+      "accuracy_by_type": {
+        "unknown": 0.22
+      },
+      "rule_activation_rate": 0.0,
+      "avg_reasoning_depth": 0.0,
+      "rule_confidence_mean": 0.0,
+      "kg_consistency": 0.0,
+      "entity_coverage": 0.0,
+      "num_samples": 100,
+      "num_correct": 22
+    },
+    "rule_baseline": {
+      "accuracy": 0.95,
+      "hypothesis_validity_rate": 0.0,
+      "accuracy_by_type": {
+        "unknown": 0.95
+      },
+      "rule_activation_rate": 0.0,
+      "avg_reasoning_depth": 0.0,
+      "rule_confidence_mean": 0.0,
+      "kg_consistency": 0.0,
+      "entity_coverage": 0.0,
+      "num_samples": 100,
+      "num_correct": 95
+    }
+  },
+  "resource_usage": {
+    "duration_seconds": 10.010666608810425,
+    "cpu_percent_mean": 68.8,
+    "cpu_percent_max": 85.4,
+    "cpu_memory_mb_mean": 2221.5600142045455,
+    "cpu_memory_mb_max": 2535.68359375,
+    "gpu_memory_mb_mean": 0.0,
+    "gpu_memory_mb_max": 0.0,
+    "gpu_utilization_mean": 0.0,
+    "gpu_utilization_max": 0.0,
+    "num_samples": 11
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "torch_version": "2.14.1+cu130",
+    "cuda_available": false,
+    "cuda_version": "",
+    "gpu_name": "",
+    "cpu_count": 4,
+    "total_memory_gb": 15.628128051757812
+  }
+}
