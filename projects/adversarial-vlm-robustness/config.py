@@ -14,11 +14,26 @@ import torch
 
 @dataclass
 class DataConfig:
-    """Dataset configuration."""
+    """Dataset configuration.
+    
+    Datasets:
+    ---------
+    CIFAR-10: Standard benchmark for image classification
+    - Source: torchvision (auto-download)
+    - URL: https://www.cs.toronto.edu/~kriz/cifar.html
+    - HuggingFace: https://huggingface.co/datasets/cifar10
+    - License: MIT-like (research use)
+    - Size: ~170MB (60,000 32x32 color images in 10 classes)
+    """
     dataset: str = "cifar10"  # Options: cifar10, flickr8k
     data_dir: str = "./data"
     batch_size: int = 128
     num_workers: int = 4
+    use_synthetic: bool = False  # Set True only for quick testing without download
+    
+    # Dataset URLs for reference
+    dataset_url: str = "https://www.cs.toronto.edu/~kriz/cifar.html"
+    dataset_hf: str = "https://huggingface.co/datasets/cifar10"
     
     # CIFAR-10 text labels for VLM setup
     cifar10_labels: List[str] = field(default_factory=lambda: [

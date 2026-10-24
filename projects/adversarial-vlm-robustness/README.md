@@ -38,12 +38,46 @@ adversarial-vlm-robustness/
     └── quantization.py     # INT8 quantization
 ```
 
-## Dataset
+## Datasets
 
-**CIFAR-10** with text labels for Vision-Language Model training:
-- 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck
-- 50,000 training images, 10,000 test images
-- 32x32 RGB images
+### CIFAR-10 (Primary Dataset)
+
+| Attribute | Value |
+|-----------|-------|
+| **Name** | CIFAR-10 |
+| **Source** | torchvision (auto-download) |
+| **Official URL** | https://www.cs.toronto.edu/~kriz/cifar.html |
+| **HuggingFace** | https://huggingface.co/datasets/cifar10 |
+| **License** | MIT-like (research use) |
+| **Size** | ~170MB |
+| **Train Samples** | 50,000 |
+| **Test Samples** | 10,000 |
+| **Image Size** | 32×32 RGB |
+| **Classes** | 10 (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck) |
+
+### Download Instructions
+
+The dataset downloads automatically when running the experiment:
+
+```bash
+# Real CIFAR-10 (default - downloads automatically)
+python main.py --debug
+
+# Synthetic data for quick testing (no download)
+python main.py --debug --use-synthetic
+```
+
+Manual download:
+```python
+import torchvision
+torchvision.datasets.CIFAR10(root='./data', download=True)
+```
+
+Or via HuggingFace:
+```python
+from datasets import load_dataset
+dataset = load_dataset("cifar10")
+```
 
 ## Methods
 
