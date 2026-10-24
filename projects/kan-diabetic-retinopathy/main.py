@@ -24,7 +24,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from config import Config, get_config, LITERATURE_REFERENCES
-from data.dataset import get_data_loaders, create_synthetic_dataset
+from data.dataset import get_data_loaders
 from models import MLPClassifier, CNNClassifier, KANClassifier, HybridCNNKAN
 from models.hybrid_model import HybridCNNMLP
 from utils.training import Trainer, create_optimizer, create_scheduler, evaluate
@@ -417,20 +417,21 @@ def main():
     print("LOADING DATA")
     print("=" * 60)
     
-    num_samples = config.experiment.debug_samples if config.experiment.debug_mode else 1000
+    # Use subset for CPU training, full dataset for GPU
+    max_samples = 500 if device.type == 'cpu' else None
+    if config.experiment.debug_mode:
+        max_samples = config.experiment.debug_samples
     
     train_loader, val_loader, test_loader, class_weights = get_data_loaders(
-        num_samples=num_samples,
         image_size=config.data.image_size,
         batch_size=config.data.batch_size,
-        train_split=config.data.train_split,
-        val_split=config.data.val_split,
-        num_workers=0,  # Use 0 for debugging
+        num_workers=0,  # Use 0 for faster startup
+        max_samples=max_samples,
+        use_synthetic=False,  # Use real APTOS data from HuggingFace
         seed=config.training.seed,
     )
     
-    print(f"Dataset: Synthetic DR-like data")
-    print(f"Total samples: {num_samples}")
+    print(f"Dataset: HuggingFace APTOS 2019 (sngsfydy/aptos)")
     print(f"Train batches: {len(train_loader)}")
     print(f"Val batches: {len(val_loader)}")
     print(f"Test batches: {len(test_loader)}")

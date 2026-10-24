@@ -177,8 +177,8 @@ class HybridConfig:
 class TrainingConfig:
     """Training configuration."""
     
-    epochs: int = 50
-    # Standard for medical imaging with pretrained models
+    epochs: int = 5
+    # Reduced for CPU training (use 50+ for GPU with full dataset)
     # Gulshan et al. trained for ~100 epochs
     
     learning_rate: float = 1e-4
@@ -197,8 +197,8 @@ class TrainingConfig:
     # Options: cosine, step, plateau
     # Cosine annealing works well with pretrained models
     
-    warmup_epochs: int = 5
-    # Learning rate warmup for stability
+    warmup_epochs: int = 1
+    # Learning rate warmup for stability (reduced for short training)
     
     label_smoothing: float = 0.1
     # Label smoothing helps with calibration
@@ -248,7 +248,7 @@ class ExperimentConfig:
     
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
-    debug_mode: bool = True
+    debug_mode: bool = False
     # Debug: fewer epochs, smaller batches, verbose logging
     
     debug_epochs: int = 3
