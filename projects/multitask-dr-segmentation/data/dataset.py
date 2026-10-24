@@ -286,7 +286,7 @@ class DRMultiTaskDataset(Dataset):
 
 
 class RandomAugmentation:
-    """Random augmentation for training."""
+    """Enhanced random augmentation for medical imaging."""
     
     def __init__(self, p=0.5):
         self.p = p
@@ -306,12 +306,42 @@ class RandomAugmentation:
             masks = np.rot90(masks, k, axes=(1, 2)).copy()
         
         if np.random.random() < self.p:
-            brightness = np.random.uniform(0.9, 1.1)
-            contrast = np.random.uniform(0.9, 1.1)
+            brightness = np.random.uniform(0.85, 1.15)
+            contrast = np.random.uniform(0.85, 1.15)
             image = (image - 0.5) * contrast + 0.5 + (brightness - 1)
             image = np.clip(image, 0, 1)
         
+        if np.random.random() < 0.3:
+            saturation = np.random.uniform(0.8, 1.2)
+            gray = np.mean(image, axis=2, keepdims=True)
+            image = gray + saturation * (image - gray)
+            image = np.clip(image, 0, 1)
+        
         return image, masks
+
+
+def compute_class_weights(dataset):
+    """Compute class weights for imbalanced dataset."""
+    grades = []
+    for sample in dataset.samples:
+        if isinstance(sample, dict):
+            grades.append(sample['grade'])
+        else:
+            grades.append(sample[1])
+    
+    grades = np.array(grades)
+    unique, counts = np.unique(grades, return_counts=True)
+    
+    total = len(grades)
+    weights = total / (len(unique) * counts)
+    
+    weight_dict = dict(zip(unique, weights))
+    full_weights = np.ones(config.NUM_CLASSES)
+    for cls, w in weight_dict.items():
+        if cls < len(full_weights):
+            full_weights[cls] = w
+    
+    return torch.FloatTensor(full_weights)
 
 
 def get_dataloaders(data_dir=None, use_huggingface=True):
@@ -322,7 +352,7 @@ def get_dataloaders(data_dir=None, use_huggingface=True):
         use_huggingface: If True, use real IDRiD from HuggingFace; else use synthetic
     
     Returns:
-        train_loader, val_loader, test_loader
+        train_loader, val_loader, test_loader, class_weights
     """
     eff_config = config.get_effective_config()
     
@@ -346,6 +376,9 @@ def get_dataloaders(data_dir=None, use_huggingface=True):
             transform=None,
             download=True
         )
+        
+        class_weights = compute_class_weights(train_dataset)
+        print(f"Class weights: {class_weights.tolist()}")
     else:
         if data_dir is None:
             data_dir = config.DATA_DIR
@@ -357,6 +390,7 @@ def get_dataloaders(data_dir=None, use_huggingface=True):
         )
         val_dataset = DRMultiTaskDataset(data_dir, split="val")
         test_dataset = DRMultiTaskDataset(data_dir, split="test")
+        class_weights = torch.ones(config.NUM_CLASSES)
     
     train_loader = DataLoader(
         train_dataset,
@@ -383,7 +417,7 @@ def get_dataloaders(data_dir=None, use_huggingface=True):
         pin_memory=True
     )
     
-    return train_loader, val_loader, test_loader
+    return train_loader, val_loader, test_loader, class_weights
 
 
 if __name__ == "__main__":

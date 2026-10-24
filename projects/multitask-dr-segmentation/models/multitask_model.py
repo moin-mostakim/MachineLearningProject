@@ -19,16 +19,16 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
-from models.encoder import SharedEncoder, count_parameters
+from models.encoder import SharedEncoder, PretrainedResNetEncoder, get_encoder, count_parameters
 from models.decoder import SegmentationDecoder, ClassificationHead
 
 
 class ClassificationOnlyModel(nn.Module):
     """Baseline: Classification-only model for DR grading."""
     
-    def __init__(self):
+    def __init__(self, pretrained=True):
         super().__init__()
-        self.encoder = SharedEncoder()
+        self.encoder = get_encoder(pretrained=pretrained)
         self.classifier = ClassificationHead()
     
     def forward(self, x):
@@ -40,10 +40,10 @@ class ClassificationOnlyModel(nn.Module):
 class SegmentationOnlyModel(nn.Module):
     """Baseline: U-Net style segmentation-only model."""
     
-    def __init__(self):
+    def __init__(self, pretrained=True):
         super().__init__()
-        self.encoder = SharedEncoder()
-        self.decoder = SegmentationDecoder()
+        self.encoder = get_encoder(pretrained=pretrained)
+        self.decoder = SegmentationDecoder(encoder_channels=self.encoder.channels)
     
     def forward(self, x):
         features, bottleneck = self.encoder(x)
@@ -62,16 +62,16 @@ class MultiTaskModel(nn.Module):
     - Optional learned task weights for balancing losses
     """
     
-    def __init__(self, use_uncertainty_weights=True):
+    def __init__(self, use_uncertainty_weights=True, pretrained=True):
         super().__init__()
         
         self.use_uncertainty_weights = use_uncertainty_weights
         
-        # Shared encoder
-        self.encoder = SharedEncoder()
+        # Shared encoder (pretrained for transfer learning)
+        self.encoder = get_encoder(pretrained=pretrained)
         
         # Task-specific heads
-        self.seg_decoder = SegmentationDecoder()
+        self.seg_decoder = SegmentationDecoder(encoder_channels=self.encoder.channels)
         self.classifier = ClassificationHead()
         
         # Learned uncertainty weights (log variance)
@@ -188,21 +188,22 @@ class TaskWeightingModule(nn.Module):
         return torch.tensor(0.0)
 
 
-def build_model(model_type='multitask', weighting_strategy='uncertainty'):
+def build_model(model_type='multitask', weighting_strategy='uncertainty', pretrained=True):
     """
     Factory function to build models.
     
     Args:
         model_type: 'classification', 'segmentation', or 'multitask'
         weighting_strategy: Task weighting strategy for multitask
+        pretrained: Use ImageNet-pretrained encoder (recommended for small datasets)
     """
     if model_type == 'classification':
-        model = ClassificationOnlyModel()
+        model = ClassificationOnlyModel(pretrained=pretrained)
     elif model_type == 'segmentation':
-        model = SegmentationOnlyModel()
+        model = SegmentationOnlyModel(pretrained=pretrained)
     elif model_type == 'multitask':
         use_uncertainty = weighting_strategy == 'uncertainty'
-        model = MultiTaskModel(use_uncertainty_weights=use_uncertainty)
+        model = MultiTaskModel(use_uncertainty_weights=use_uncertainty, pretrained=pretrained)
     else:
         raise ValueError(f"Unknown model type: {model_type}")
     

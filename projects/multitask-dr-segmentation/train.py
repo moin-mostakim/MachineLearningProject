@@ -183,19 +183,25 @@ def train_model(model_type='multitask', weighting_strategy='uncertainty', device
     print(f"Epochs: {eff_config['num_epochs']}")
     print(f"Batch Size: {eff_config['batch_size']}")
     
-    # Build model
-    model = build_model(model_type, weighting_strategy)
+    # Data (load first to get class weights)
+    train_loader, val_loader, _, class_weights = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
+    class_weights = class_weights.to(device)
+    
+    # Build model with pretrained encoder
+    pretrained = getattr(config, 'USE_PRETRAINED_ENCODER', True)
+    model = build_model(model_type, weighting_strategy, pretrained=pretrained)
     model = model.to(device)
     
     # Count parameters
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"Trainable Parameters: {total_params:,}")
     
-    # Loss function
+    # Loss function with class weights for imbalanced data
+    use_weights = getattr(config, 'USE_CLASS_WEIGHTS', True)
     if model_type == 'multitask':
-        criterion = MultiTaskLoss(strategy=weighting_strategy)
+        criterion = MultiTaskLoss(strategy=weighting_strategy, class_weights=class_weights if use_weights else None)
     elif model_type == 'classification':
-        criterion = FocalLoss()
+        criterion = FocalLoss(alpha=class_weights if use_weights else None)
     else:
         criterion = DiceBCELoss()
     criterion = criterion.to(device) if hasattr(criterion, 'to') else criterion
@@ -211,9 +217,6 @@ def train_model(model_type='multitask', weighting_strategy='uncertainty', device
     # Scheduler
     scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=config.SCHEDULER_FACTOR,
                                    patience=config.SCHEDULER_PATIENCE)
-    
-    # Data
-    train_loader, val_loader, _ = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
     
     # Monitoring
     monitor = ResourceMonitor()
@@ -350,7 +353,7 @@ def run_all_experiments():
     )
     
     # Save segmentation examples
-    _, _, test_loader = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
+    _, _, test_loader, _ = get_dataloaders(use_huggingface=config.USE_HUGGINGFACE)
     mtl_model.eval()
     save_segmentation_examples(test_loader, mtl_model, num_examples=3, 
                                save_dir=config.FIGURES_DIR)

@@ -81,12 +81,13 @@ DROPOUT_RATE = 0.3        # Dropout for regularization
 # Training Configuration
 # =============================================================================
 BATCH_SIZE = 4           # Batch size (memory constrained)
-NUM_EPOCHS = 10          # Training epochs (reduced for CPU)
+NUM_EPOCHS = 20          # Training epochs (increased for better convergence)
 LEARNING_RATE = 1e-4     # Initial learning rate
 WEIGHT_DECAY = 1e-5      # L2 regularization
 SCHEDULER_PATIENCE = 3   # LR scheduler patience
 SCHEDULER_FACTOR = 0.5   # LR reduction factor
-EARLY_STOPPING_PATIENCE = 5  # Early stopping patience
+EARLY_STOPPING_PATIENCE = 7  # Early stopping patience
+USE_CLASS_WEIGHTS = True # Weight loss by class frequency (imbalanced dataset)
 
 # =============================================================================
 # Multi-Task Learning Configuration
@@ -125,6 +126,11 @@ SEGMENTATION_METRICS = ["dice", "iou", "precision", "recall"]
 DEBUG_MODE = False       # Disable debug mode for real training
 DEBUG_SAMPLES = 10       # Number of samples in debug mode
 DEBUG_EPOCHS = 2         # Number of epochs in debug mode
+
+# =============================================================================
+# Model Configuration
+# =============================================================================
+USE_PRETRAINED_ENCODER = True  # Use ImageNet-pretrained ResNet34
 
 # =============================================================================
 # Resource Monitoring

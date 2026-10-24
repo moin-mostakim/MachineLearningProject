@@ -111,14 +111,14 @@ class MultiTaskLoss(nn.Module):
     - gradnorm: Gradient normalization (Chen et al., 2018)
     """
     
-    def __init__(self, strategy='fixed'):
+    def __init__(self, strategy='fixed', class_weights=None):
         super().__init__()
         
         self.strategy = strategy
         
-        # Individual losses
+        # Individual losses with class weights for classification
         self.seg_loss = DiceBCELoss()
-        self.cls_loss = FocalLoss()
+        self.cls_loss = FocalLoss(alpha=class_weights)
         
         # Learnable parameters for different strategies
         if strategy == 'uncertainty':

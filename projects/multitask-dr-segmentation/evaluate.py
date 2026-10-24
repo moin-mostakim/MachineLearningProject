@@ -151,7 +151,7 @@ def run_full_evaluation():
     print(f"Device: {device}")
     
     # Get test data
-    _, _, test_loader = get_dataloaders()
+    _, _, test_loader, _ = get_dataloaders()
     
     results = {}
     

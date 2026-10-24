@@ -1,0 +1,692 @@
+
+================================================================================
+MULTI-TASK LEARNING FRAMEWORK
+Joint Lesion Segmentation and Diabetic Retinopathy Grading
+================================================================================
+
+Configuration:
+  Debug Mode: False
+  Image Size: 256x256
+  Batch Size: 4
+  Epochs: 10
+  Task Weighting: uncertainty
+  Seed: 42
+
+Running full training and evaluation pipeline...
+
+======================================================================
+MULTI-TASK LEARNING FOR DR GRADING AND LESION SEGMENTATION
+======================================================================
+
+[1/5] Using real IDRiD dataset from HuggingFace...
+
+[2/5] Training classification-only baseline...
+
+======================================================================
+TRAINING: CLASSIFICATION MODEL
+======================================================================
+Device: cpu
+Debug Mode: False
+Epochs: 10
+Batch Size: 4
+Trainable Parameters: 16,062,021
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 1
+----------------------------------------
+  Train Loss: 0.9882
+  Val Loss:   1.0686
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.0769
+  Epoch Time: 8.5s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 2
+----------------------------------------
+  Train Loss: 0.9043
+  Val Loss:   1.0596
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.0769
+  Epoch Time: 8.5s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 3
+----------------------------------------
+  Train Loss: 0.8671
+  Val Loss:   1.0031
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.0769
+  Epoch Time: 8.3s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 4
+----------------------------------------
+  Train Loss: 0.8298
+  Val Loss:   0.6899
+  Learning Rate: 0.000100
+  Val Kappa:  0.0307
+  Val Acc:    0.2308
+  Epoch Time: 8.3s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 5
+----------------------------------------
+  Train Loss: 0.7890
+  Val Loss:   0.6280
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Epoch Time: 9.0s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 6
+----------------------------------------
+  Train Loss: 0.7098
+  Val Loss:   0.7048
+  Learning Rate: 0.000100
+  Val Kappa:  0.0307
+  Val Acc:    0.2308
+  Epoch Time: 8.5s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 7
+----------------------------------------
+  Train Loss: 0.6446
+  Val Loss:   0.6955
+  Learning Rate: 0.000100
+  Val Kappa:  -0.0833
+  Val Acc:    0.2308
+  Epoch Time: 8.7s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 8
+----------------------------------------
+  Train Loss: 0.6312
+  Val Loss:   0.5948
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Epoch Time: 8.4s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 9
+----------------------------------------
+  Train Loss: 0.6063
+  Val Loss:   0.7360
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Epoch Time: 8.5s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 10
+----------------------------------------
+  Train Loss: 0.6280
+  Val Loss:   0.6208
+  Learning Rate: 0.000100
+  Val Kappa:  -0.2278
+  Val Acc:    0.2308
+  Epoch Time: 8.8s
+
+============================================================
+RESOURCE MONITORING SUMMARY
+============================================================
+
+Device: cpu
+
+Training Statistics:
+  Total epochs: 10
+  Total samples: 410
+  Avg epoch time: 8.54s
+  Total time: 85.45s
+  Throughput: 4.8 samples/sec
+
+CPU Memory:
+  Peak: 1.24 GB
+History saved to /workspace/projects/multitask-dr-segmentation/experiments/classification_uncertainty_history.json
+
+[3/5] Training segmentation-only baseline (U-Net)...
+
+======================================================================
+TRAINING: SEGMENTATION MODEL
+======================================================================
+Device: cpu
+Debug Mode: False
+Epochs: 10
+Batch Size: 4
+Trainable Parameters: 20,103,812
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+
+Epoch 1
+----------------------------------------
+  Train Loss: 0.8176
+  Val Loss:   0.8487
+  Learning Rate: 0.000100
+  Val Dice:   0.0818
+  Epoch Time: 11.0s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 2
+----------------------------------------
+  Train Loss: 0.8050
+  Val Loss:   0.8426
+  Learning Rate: 0.000100
+  Val Dice:   0.0818
+  Epoch Time: 11.0s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 3
+----------------------------------------
+  Train Loss: 0.7929
+  Val Loss:   0.8305
+  Learning Rate: 0.000100
+  Val Dice:   0.0063
+  Epoch Time: 10.7s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 4
+----------------------------------------
+  Train Loss: 0.7819
+  Val Loss:   0.8172
+  Learning Rate: 0.000100
+  Val Dice:   0.0054
+  Epoch Time: 11.1s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 5
+----------------------------------------
+  Train Loss: 0.7718
+  Val Loss:   0.8007
+  Learning Rate: 0.000100
+  Val Dice:   0.0045
+  Epoch Time: 10.7s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 6
+----------------------------------------
+  Train Loss: 0.7625
+  Val Loss:   0.7837
+  Learning Rate: 0.000100
+  Val Dice:   0.0046
+  Epoch Time: 10.1s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 7
+----------------------------------------
+  Train Loss: 0.7540
+  Val Loss:   0.7663
+  Learning Rate: 0.000100
+  Val Dice:   0.0020
+  Epoch Time: 10.5s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 8
+----------------------------------------
+  Train Loss: 0.7473
+  Val Loss:   0.7652
+  Learning Rate: 0.000100
+  Val Dice:   0.0022
+  Epoch Time: 10.4s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 9
+----------------------------------------
+  Train Loss: 0.7431
+  Val Loss:   0.7481
+  Learning Rate: 0.000100
+  Val Dice:   0.0025
+  Epoch Time: 10.9s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+Epoch 10
+----------------------------------------
+  Train Loss: 0.7375
+  Val Loss:   0.7460
+  Learning Rate: 0.000100
+  Val Dice:   0.0010
+  Epoch Time: 10.7s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+
+============================================================
+RESOURCE MONITORING SUMMARY
+============================================================
+
+Device: cpu
+
+Training Statistics:
+  Total epochs: 10
+  Total samples: 410
+  Avg epoch time: 10.69s
+  Total time: 106.93s
+  Throughput: 3.8 samples/sec
+
+CPU Memory:
+  Peak: 1.51 GB
+History saved to /workspace/projects/multitask-dr-segmentation/experiments/segmentation_uncertainty_history.json
+
+[4/5] Training multi-task model (Our Method)...
+
+======================================================================
+TRAINING: MULTITASK MODEL
+Task Weighting Strategy: uncertainty
+======================================================================
+Device: cpu
+Debug Mode: False
+Epochs: 10
+Batch Size: 4
+Trainable Parameters: 20,268,683
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 1
+----------------------------------------
+  Train Loss: 1.7920
+  Val Loss:   1.8247
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Val Dice:   0.0209
+  Task Weights: Seg=0.9990, Cls=0.9990
+  Epoch Time: 10.3s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 2
+----------------------------------------
+  Train Loss: 1.7571
+  Val Loss:   1.8656
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.0769
+  Val Dice:   0.0209
+  Task Weights: Seg=0.9980, Cls=0.9980
+  Epoch Time: 10.2s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 3
+----------------------------------------
+  Train Loss: 1.6497
+  Val Loss:   1.8126
+  Learning Rate: 0.000100
+  Val Kappa:  -0.2491
+  Val Acc:    0.0769
+  Val Dice:   0.0026
+  Task Weights: Seg=0.9970, Cls=0.9971
+  Epoch Time: 10.4s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 4
+----------------------------------------
+  Train Loss: 1.5947
+  Val Loss:   1.7841
+  Learning Rate: 0.000100
+  Val Kappa:  -0.1260
+  Val Acc:    0.0769
+  Val Dice:   0.0036
+  Task Weights: Seg=0.9961, Cls=0.9963
+  Epoch Time: 10.7s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 5
+----------------------------------------
+  Train Loss: 1.6034
+  Val Loss:   1.7420
+  Learning Rate: 0.000100
+  Val Kappa:  -0.1390
+  Val Acc:    0.1538
+  Val Dice:   0.0036
+  Task Weights: Seg=0.9951, Cls=0.9955
+  Epoch Time: 10.9s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 6
+----------------------------------------
+  Train Loss: 1.5082
+  Val Loss:   2.0873
+  Learning Rate: 0.000100
+  Val Kappa:  0.0307
+  Val Acc:    0.2308
+  Val Dice:   0.0031
+  Task Weights: Seg=0.9942, Cls=0.9947
+  Epoch Time: 10.7s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 7
+----------------------------------------
+  Train Loss: 1.4676
+  Val Loss:   1.8553
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Val Dice:   0.0037
+  Task Weights: Seg=0.9933, Cls=0.9941
+  Epoch Time: 10.4s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 8
+----------------------------------------
+  Train Loss: 1.4891
+  Val Loss:   2.0015
+  Learning Rate: 0.000100
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Val Dice:   0.0031
+  Task Weights: Seg=0.9924, Cls=0.9935
+  Epoch Time: 11.5s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 9
+----------------------------------------
+  Train Loss: 1.3823
+  Val Loss:   1.8029
+  Learning Rate: 0.000050
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Val Dice:   0.0034
+  Task Weights: Seg=0.9915, Cls=0.9930
+  Epoch Time: 10.6s
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/home/ubuntu/.local/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:469: UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case.
+  warnings.warn(
+
+Epoch 10
+----------------------------------------
+  Train Loss: 1.3822
+  Val Loss:   1.6342
+  Learning Rate: 0.000050
+  Val Kappa:  0.0000
+  Val Acc:    0.2308
+  Val Dice:   0.0031
+  Task Weights: Seg=0.9910, Cls=0.9927
+  Epoch Time: 10.8s
+  Saved best model to /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+
+============================================================
+RESOURCE MONITORING SUMMARY
+============================================================
+
+Device: cpu
+
+Training Statistics:
+  Total epochs: 10
+  Total samples: 410
+  Avg epoch time: 10.66s
+  Total time: 106.57s
+  Throughput: 3.8 samples/sec
+
+CPU Memory:
+  Peak: 1.67 GB
+History saved to /workspace/projects/multitask-dr-segmentation/experiments/multitask_uncertainty_history.json
+
+[5/5] Generating visualizations...
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/training_curves.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/confusion_matrix.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/literature_comparison.png
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_0.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_1.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_2.png
+
+================================================================================
+FINAL RESULTS COMPARISON
+================================================================================
+
+Classification Metrics:
+--------------------------------------------------------------------------------
+Model                              Accuracy        Kappa   F1 (macro)
+--------------------------------------------------------------------------------
+Classification-only                  0.2308       0.0000       0.1250
+Multi-task (Ours)                    0.2308       0.0000       0.1250
+
+Segmentation Metrics:
+--------------------------------------------------------------------------------
+Model                           Dice (mean)   IoU (mean)
+--------------------------------------------------------------------------------
+Segmentation-only (U-Net)            0.0010       0.0005
+Multi-task (Ours)                    0.0031       0.0016
+--------------------------------------------------------------------------------
+
+Results saved to /workspace/projects/multitask-dr-segmentation/experiments/final_results.json
+
+================================================================================
+STARTING EVALUATION PHASE
+================================================================================
+
+======================================================================
+COMPREHENSIVE MODEL EVALUATION
+======================================================================
+Device: cpu
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+
+[1/4] Model Parameter Analysis
+
+======================================================================
+MODEL ARCHITECTURE COMPARISON
+======================================================================
+
+Model                                  Total Params    Size (MB)
+----------------------------------------------------------------------
+Classification-only                      16,062,021        61.27
+Segmentation-only (U-Net)                20,103,812        76.69
+Multi-task (Ours)                        20,268,683        77.32
+
+  Component Breakdown:
+    encoder                          15,897,152 (60.64 MB)
+    seg_decoder                       4,206,660 (16.05 MB)
+    classifier                          164,869 (0.63 MB)
+----------------------------------------------------------------------
+
+  Multi-task Efficiency:
+    Combined baseline parameters:   36,165,833
+    Multi-task parameters:          20,268,683
+    Parameter reduction:            44.0%
+
+[2/4] Model Evaluation on Test Set
+----------------------------------------------------------------------
+
+Evaluating Classification-only...
+Traceback (most recent call last):
+  File "/workspace/projects/multitask-dr-segmentation/main.py", line 123, in <module>
+    main()
+  File "/workspace/projects/multitask-dr-segmentation/main.py", line 108, in main
+    eval_results = run_full_evaluation()
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/projects/multitask-dr-segmentation/evaluate.py", line 177, in run_full_evaluation
+    model = load_model(model_type, checkpoint_path, device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/projects/multitask-dr-segmentation/evaluate.py", line 40, in load_model
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/torch/serialization.py", line 1614, in load
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL numpy._core.multiarray.scalar was not an allowed global by default. Please use `torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])` or the `torch.serialization.safe_globals([numpy._core.multiarray.scalar])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
