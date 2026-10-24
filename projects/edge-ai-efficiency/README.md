@@ -111,6 +111,40 @@ Edit `config.py` to modify:
 - NAS search space
 - Quantization settings
 
+## Datasets
+
+The system uses real CIFAR-10 data from torchvision/HuggingFace by default.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **CIFAR-10** | torchvision / HuggingFace | [uoft-cs/cifar10](https://huggingface.co/datasets/uoft-cs/cifar10) | MIT | 163MB | 50K train, 10K test (10 classes, 32x32) |
+| **ImageNette** | fast.ai | [github.com/fastai/imagenette](https://github.com/fastai/imagenette) | Apache 2.0 | 97MB | 9,469 train, 3,925 val (10 classes) |
+
+**Official Sources:**
+- CIFAR-10: [cs.toronto.edu/~kriz/cifar.html](https://www.cs.toronto.edu/~kriz/cifar.html)
+- ImageNette: [github.com/fastai/imagenette](https://github.com/fastai/imagenette)
+
+### Download Instructions
+
+**Automatic (Recommended):** Datasets download automatically on first run:
+```bash
+pip install torch torchvision
+python main.py --debug
+```
+
+**HuggingFace Alternative:**
+```bash
+pip install datasets
+# Code will automatically fall back to HuggingFace if torchvision download fails
+```
+
+**Synthetic Data (for testing only):**
+```bash
+python main.py --debug --use-synthetic
+```
+
+Note: Synthetic data is available as an explicit opt-in flag for pipeline testing, but real CIFAR-10 should be used for meaningful experiments.
+
 ## Benchmarks
 
 The project measures:

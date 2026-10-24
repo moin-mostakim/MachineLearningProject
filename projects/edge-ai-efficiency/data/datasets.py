@@ -1,6 +1,24 @@
 """
 Dataset loading utilities for edge AI efficiency experiments.
-Supports CIFAR-10 and ImageNette (ImageNet subset).
+
+Datasets:
+---------
+CIFAR-10 (Primary):
+- Source: torchvision / HuggingFace Hub (uoft-cs/cifar10)
+- URL: https://huggingface.co/datasets/uoft-cs/cifar10
+- Official: https://www.cs.toronto.edu/~kriz/cifar.html
+- License: MIT
+- Size: 163MB (50K train + 10K test, 10 classes, 32x32 RGB)
+
+ImageNette (ImageNet Subset):
+- Source: fast.ai
+- URL: https://github.com/fastai/imagenette
+- License: Apache 2.0
+- Size: 97MB (9,469 train + 3,925 val, 10 classes, 160x160)
+
+References:
+- Krizhevsky (2009): "Learning Multiple Layers of Features from Tiny Images"
+- Sandler et al. (2018): "MobileNetV2: Inverted Residuals and Linear Bottlenecks"
 """
 
 import torch
@@ -10,6 +28,38 @@ import torchvision.transforms as transforms
 from typing import Tuple, Optional
 import os
 import random
+
+try:
+    from datasets import load_dataset
+    HAS_DATASETS = True
+except ImportError:
+    HAS_DATASETS = False
+
+# Dataset configuration
+DATASET_CONFIG = {
+    "cifar10": {
+        "name": "CIFAR-10",
+        "huggingface": "uoft-cs/cifar10",
+        "url": "https://huggingface.co/datasets/uoft-cs/cifar10",
+        "official": "https://www.cs.toronto.edu/~kriz/cifar.html",
+        "license": "MIT",
+        "size": "163MB",
+        "train_samples": 50000,
+        "test_samples": 10000,
+        "num_classes": 10,
+        "image_size": "32x32",
+    },
+    "imagenette": {
+        "name": "ImageNette",
+        "url": "https://github.com/fastai/imagenette",
+        "license": "Apache 2.0",
+        "size": "97MB",
+        "train_samples": 9469,
+        "val_samples": 3925,
+        "num_classes": 10,
+        "image_size": "160x160",
+    }
+}
 
 
 def get_cifar10_transforms(
@@ -84,12 +134,49 @@ def get_imagenette_transforms(
 
 
 def create_synthetic_cifar10(num_samples: int = 1000, num_classes: int = 10):
-    """Create synthetic CIFAR-10-like data for fast testing."""
+    """Create synthetic CIFAR-10-like data for fast testing (opt-in only)."""
     from torch.utils.data import TensorDataset
     
     images = torch.randn(num_samples, 3, 32, 32)
     labels = torch.randint(0, num_classes, (num_samples,))
     return TensorDataset(images, labels)
+
+
+class HuggingFaceCIFAR10(torch.utils.data.Dataset):
+    """CIFAR-10 loaded from HuggingFace Hub."""
+    
+    def __init__(self, split: str = "train", transform=None, max_samples: Optional[int] = None):
+        if not HAS_DATASETS:
+            raise ImportError("datasets library required. Install with: pip install datasets")
+        
+        self.transform = transform
+        print(f"Loading CIFAR-10 from HuggingFace Hub (split={split})...")
+        
+        dataset = load_dataset("uoft-cs/cifar10", split=split)
+        
+        if max_samples and max_samples < len(dataset):
+            dataset = dataset.select(range(max_samples))
+        
+        self.data = []
+        self.targets = []
+        
+        for item in dataset:
+            self.data.append(item['img'])
+            self.targets.append(item['label'])
+        
+        print(f"Loaded {len(self.data)} CIFAR-10 samples from HuggingFace")
+    
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        img = self.data[idx]
+        target = self.targets[idx]
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, target
 
 
 def get_cifar10_loaders(
