@@ -13,6 +13,44 @@ Design molecules with desired properties by learning a latent representation and
 - **Optimization**: Multi-objective Pareto optimization (NSGA-II style)
 - **Properties**: HOMO, LUMO, Gap (electronic properties)
 
+## Datasets
+
+The system supports real molecular datasets from PyTorch Geometric and HuggingFace.
+
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **QM9** | PyTorch Geometric | [pytorch-geometric.readthedocs.io](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.QM9.html) | CC0 | ~1GB | 134,000 molecules |
+| **ZINC250K** | Irwin et al. | [zinc.docking.org](https://zinc.docking.org/) | Academic | ~100MB | 250,000 molecules |
+| **MOSES** | Polykovskiy et al. | [github.com/molecularsets/moses](https://github.com/molecularsets/moses) | MIT | ~50MB | 1.9M molecules |
+
+**Reference**: Ramakrishnan et al. (2014) "Quantum chemistry structures and properties of 134 kilo molecules"
+
+### Download Instructions
+
+**QM9 via PyTorch Geometric (Recommended):**
+```bash
+pip install torch-geometric
+python -c "from torch_geometric.datasets import QM9; QM9('./data')"  # Downloads automatically
+```
+
+**QM9 via HuggingFace:**
+```bash
+pip install datasets
+python -c "from datasets import load_dataset; load_dataset('graphs-datasets/QM9')"
+```
+
+**ZINC250K:**
+```bash
+wget https://raw.githubusercontent.com/aspuru-guzik-group/chemical_vae/master/models/zinc/250k_rndm_zinc_drugs_clean.smi
+```
+
+**Synthetic Data (pipeline testing):**
+```bash
+python main.py --debug  # Uses synthetic molecular graphs if PyG unavailable
+```
+
+Note: QM9 downloads automatically via PyTorch Geometric. Synthetic data is for testing only.
+
 ## Project Structure
 
 ```
