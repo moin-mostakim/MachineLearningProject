@@ -1,0 +1,8 @@
+{
+  "SimpleCNN": {
+    "model_name": "SimpleCNN",
+    "total_params": 90506,
+    "trainable_params": 90506,
+    "size_mb": 0.34525299072265625
+  }
+}
