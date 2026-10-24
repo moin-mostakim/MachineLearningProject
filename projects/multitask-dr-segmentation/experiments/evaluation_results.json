@@ -1,0 +1,226 @@
+{
+  "model_results": {
+    "Classification-only": {
+      "accuracy": 0.1111111111111111,
+      "kappa": 0.015001704739174948,
+      "f1_macro": 0.046153846153846156,
+      "precision_No_DR": 0.0,
+      "recall_No_DR": 0.0,
+      "f1_No_DR": 0.0,
+      "precision_Mild": 0.0,
+      "recall_Mild": 0.0,
+      "f1_Mild": 0.0,
+      "precision_Moderate": 0.0,
+      "recall_Moderate": 0.0,
+      "f1_Moderate": 0.0,
+      "precision_Severe": 0.0,
+      "recall_Severe": 0.0,
+      "f1_Severe": 0.0,
+      "precision_Proliferative": 0.13043478260869565,
+      "recall_Proliferative": 1.0,
+      "f1_Proliferative": 0.23076923076923078,
+      "auc": 0.5680880230880231,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          2,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    "Segmentation-only (U-Net)": {
+      "dice_Microaneurysms": 0.0001852057030191645,
+      "iou_Microaneurysms": 9.273135947296396e-05,
+      "precision_Microaneurysms": 9.401756688021123e-05,
+      "recall_Microaneurysms": 0.007116920780390501,
+      "dice_Hemorrhages": 0.002944795647636056,
+      "iou_Hemorrhages": 0.0014815558679401875,
+      "precision_Hemorrhages": 0.008030178025364876,
+      "recall_Hemorrhages": 0.00787016935646534,
+      "dice_Soft_Exudates": 0.0005507366149686277,
+      "iou_Soft_Exudates": 0.00027743098326027393,
+      "precision_Soft_Exudates": 0.0004489337734412402,
+      "recall_Soft_Exudates": 0.4821937322202656,
+      "dice_Hard_Exudates": 0.010347400791943073,
+      "iou_Hard_Exudates": 0.005921530537307262,
+      "precision_Hard_Exudates": 0.015096536186454748,
+      "recall_Hard_Exudates": 0.00892484001815319,
+      "dice_mean": 0.003507034620270133,
+      "iou_mean": 0.001943312119692564,
+      "precision_mean": 0.005917416388035269,
+      "recall_mean": 0.12652641559381866
+    },
+    "Multi-task (Ours)": {
+      "cls_accuracy": 0.1111111111111111,
+      "cls_kappa": 0.0,
+      "cls_f1_macro": 0.04,
+      "cls_precision_No_DR": 0.0,
+      "cls_recall_No_DR": 0.0,
+      "cls_f1_No_DR": 0.0,
+      "cls_precision_Mild": 0.0,
+      "cls_recall_Mild": 0.0,
+      "cls_f1_Mild": 0.0,
+      "cls_precision_Moderate": 0.0,
+      "cls_recall_Moderate": 0.0,
+      "cls_f1_Moderate": 0.0,
+      "cls_precision_Severe": 0.0,
+      "cls_recall_Severe": 0.0,
+      "cls_f1_Severe": 0.0,
+      "cls_precision_Proliferative": 0.1111111111111111,
+      "cls_recall_Proliferative": 1.0,
+      "cls_f1_Proliferative": 0.2,
+      "cls_auc": 0.5675324675324676,
+      "seg_dice_Microaneurysms": 0.00039458260289393365,
+      "seg_iou_Microaneurysms": 0.00019784452160820365,
+      "seg_precision_Microaneurysms": 0.0002966212050523609,
+      "seg_recall_Microaneurysms": 0.007530548609793186,
+      "seg_dice_Hemorrhages": 0.015708407387137413,
+      "seg_iou_Hemorrhages": 0.007991430349647999,
+      "seg_precision_Hemorrhages": 0.012797973118722439,
+      "seg_recall_Hemorrhages": 0.06055748462677002,
+      "seg_dice_Soft_Exudates": 0.00229144305922091,
+      "seg_iou_Soft_Exudates": 0.0011502588167786598,
+      "seg_precision_Soft_Exudates": 0.0012226764811202884,
+      "seg_recall_Soft_Exudates": 0.5134334849814574,
+      "seg_dice_Hard_Exudates": 0.012103985995054245,
+      "seg_iou_Hard_Exudates": 0.007234067190438509,
+      "seg_precision_Hard_Exudates": 0.016880367641095764,
+      "seg_recall_Hard_Exudates": 0.00943445973098278,
+      "seg_dice_mean": 0.007624604739248753,
+      "seg_iou_mean": 0.004143400117754936,
+      "seg_precision_mean": 0.007799409611497713,
+      "seg_recall_mean": 0.14773899448725084,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          11
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    }
+  },
+  "parameter_data": {
+    "classification": {
+      "params": 16062021,
+      "size_mb": 61.27174758911133
+    },
+    "segmentation": {
+      "params": 20103812,
+      "size_mb": 76.68995666503906
+    },
+    "multitask": {
+      "params": 20268683,
+      "size_mb": 77.31888961791992
+    }
+  },
+  "quantization_results": [
+    {
+      "model_type": "classification",
+      "fp32": {
+        "size_mb": 61.316349029541016,
+        "inference_ms": 12.57129192352295,
+        "params": 16062021
+      },
+      "int8": {
+        "size_mb": 60.68742370605469,
+        "inference_ms": 12.628164291381836
+      },
+      "improvement": {
+        "size_reduction_percent": 1.0257057594595609,
+        "speed_improvement_percent": -0.4523987526888083
+      }
+    },
+    {
+      "model_type": "segmentation",
+      "fp32": {
+        "size_mb": 76.74219512939453,
+        "inference_ms": 23.482017517089844,
+        "params": 20103812
+      },
+      "int8": {
+        "size_mb": 76.74219512939453,
+        "inference_ms": 23.37533473968506
+      },
+      "improvement": {
+        "size_reduction_percent": 0.0,
+        "speed_improvement_percent": 0.45431691432451704
+      }
+    },
+    {
+      "model_type": "multitask",
+      "fp32": {
+        "size_mb": 77.37112808227539,
+        "inference_ms": 23.615365028381348,
+        "params": 20268683
+      },
+      "int8": {
+        "size_mb": 76.74220275878906,
+        "inference_ms": 23.74424934387207
+      },
+      "improvement": {
+        "size_reduction_percent": 0.8128682353158112,
+        "speed_improvement_percent": -0.5457646550702362
+      }
+    }
+  ]
+}

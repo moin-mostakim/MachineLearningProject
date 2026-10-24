@@ -1,0 +1,145 @@
+
+================================================================================
+MULTI-TASK LEARNING FRAMEWORK
+Joint Lesion Segmentation and Diabetic Retinopathy Grading
+================================================================================
+
+Configuration:
+  Debug Mode: False
+  Image Size: 256x256
+  Batch Size: 4
+  Epochs: 10
+  Task Weighting: uncertainty
+  Seed: 42
+
+Running evaluation only...
+
+======================================================================
+COMPREHENSIVE MODEL EVALUATION
+======================================================================
+Device: cpu
+
+=== Using Real IDRiD Dataset from HuggingFace ===
+Source: MahsaTorki/IDRiD_Dataset
+License: CC BY 4.0
+HuggingFace IDRiD: Loaded 41 train samples
+HuggingFace IDRiD: Loaded 13 val samples
+HuggingFace IDRiD: Loaded 27 test samples
+
+[1/4] Model Parameter Analysis
+
+======================================================================
+MODEL ARCHITECTURE COMPARISON
+======================================================================
+
+Model                                  Total Params    Size (MB)
+----------------------------------------------------------------------
+Classification-only                      16,062,021        61.27
+Segmentation-only (U-Net)                20,103,812        76.69
+Multi-task (Ours)                        20,268,683        77.32
+
+  Component Breakdown:
+    encoder                          15,897,152 (60.64 MB)
+    seg_decoder                       4,206,660 (16.05 MB)
+    classifier                          164,869 (0.63 MB)
+----------------------------------------------------------------------
+
+  Multi-task Efficiency:
+    Combined baseline parameters:   36,165,833
+    Multi-task parameters:          20,268,683
+    Parameter reduction:            44.0%
+
+[2/4] Model Evaluation on Test Set
+----------------------------------------------------------------------
+
+Evaluating Classification-only...
+Loaded model from /workspace/projects/multitask-dr-segmentation/checkpoints/classification_best.pth
+  Epoch: 7
+  Val Loss: 0.5948
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+
+Classification-only METRICS SUMMARY
+============================================================
+
+Evaluating Segmentation-only (U-Net)...
+Loaded model from /workspace/projects/multitask-dr-segmentation/checkpoints/segmentation_best.pth
+  Epoch: 9
+  Val Loss: 0.7460
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+
+Segmentation-only (U-Net) METRICS SUMMARY
+============================================================
+
+Evaluating Multi-task (Ours)...
+Loaded model from /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+  Epoch: 9
+  Val Loss: 1.6342
+
+Multi-task (Ours) METRICS SUMMARY
+============================================================
+
+Classification Metrics:
+----------------------------------------
+  Accuracy:     0.1111
+  Kappa:        0.0000
+  F1 (macro):   0.0400
+  AUC:          0.5675
+
+Segmentation Metrics:
+----------------------------------------
+  Dice (mean):  0.0076
+  IoU (mean):   0.0041
+
+  Per-lesion Dice:
+    Microaneurysms       0.0004
+    Hemorrhages          0.0157
+    Soft_Exudates        0.0023
+    Hard_Exudates        0.0121
+
+[3/4] INT8 Quantization Analysis
+Analyzing classification model...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+Analyzing segmentation model...
+Analyzing multitask model...
+
+================================================================================
+INT8 QUANTIZATION COMPARISON
+================================================================================
+Model                        FP32 Size    INT8 Size  Size Reduction
+--------------------------------------------------------------------------------
+classification                 61.32MB      60.69MB           1.0%
+segmentation                   76.74MB      76.74MB           0.0%
+multitask                      77.37MB      76.74MB           0.8%
+--------------------------------------------------------------------------------
+
+Model                     FP32 Latency INT8 Latency Speed Improvement
+--------------------------------------------------------------------------------
+classification                 12.75ms      12.31ms             3.5%
+segmentation                   22.90ms      23.27ms            -1.6%
+multitask                      22.97ms      23.20ms            -1.0%
+--------------------------------------------------------------------------------
+
+[4/4] Generating Evaluation Figures
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/test_confusion_matrix.png
+Loaded model from /workspace/projects/multitask-dr-segmentation/checkpoints/multitask_best.pth
+  Epoch: 9
+  Val Loss: 1.6342
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_0.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_1.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_2.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/segmentation_example_3.png
+  Saved: /workspace/projects/multitask-dr-segmentation/figures/literature_comparison.png
+Traceback (most recent call last):
+  File "/workspace/projects/multitask-dr-segmentation/main.py", line 123, in <module>
+    main()
+  File "/workspace/projects/multitask-dr-segmentation/main.py", line 93, in main
+    results = run_full_evaluation()
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/projects/multitask-dr-segmentation/evaluate.py", line 224, in run_full_evaluation
+    plot_model_comparison(
+TypeError: plot_model_comparison() got multiple values for argument 'save_path'

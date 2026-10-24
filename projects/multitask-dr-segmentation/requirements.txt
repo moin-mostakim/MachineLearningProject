@@ -1,0 +1,23 @@
+# Multi-Task Learning Framework for DR Grading and Lesion Segmentation
+# Requirements
+
+# Core ML
+torch>=1.9.0
+numpy>=1.21.0
+
+# Image processing
+Pillow>=8.0.0
+
+# Scientific computing
+scikit-learn>=0.24.0
+
+# Visualization
+matplotlib>=3.4.0
+
+# Utilities
+psutil>=5.8.0
+
+# Optional: For advanced features
+# torchvision>=0.10.0  # For pretrained models
+# albumentations>=1.0.0  # For advanced augmentation
+# tensorboard>=2.5.0  # For logging
