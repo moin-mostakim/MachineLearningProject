@@ -9,13 +9,43 @@ Federated learning enables training on distributed data without centralizing it.
 2. **Privacy**: Gradient updates can leak information
 3. **Heterogeneity**: Different clients have different computational capabilities
 
-## Dataset
+## Datasets
 
-**Synthetic CIFAR-10-style Data** with non-IID partitioning using Dirichlet distribution (α=0.5).
+The system supports real datasets from torchvision/HuggingFace with non-IID partitioning.
 
-For real experiments, use:
-- CIFAR-10 via torchvision
-- FEMNIST from LEAF benchmark
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **CIFAR-10** | torchvision / HuggingFace | [uoft-cs/cifar10](https://huggingface.co/datasets/uoft-cs/cifar10) | MIT | 163MB | 50K train, 10K test (10 classes, 32x32) |
+| **FEMNIST** | LEAF Benchmark | [github.com/TalwalkarLab/leaf](https://github.com/TalwalkarLab/leaf) | BSD-2 | ~700MB | 805,263 samples (62 classes, 28x28) |
+
+**Official Sources:**
+- CIFAR-10: [cs.toronto.edu/~kriz/cifar.html](https://www.cs.toronto.edu/~kriz/cifar.html)
+- FEMNIST (LEAF): [github.com/TalwalkarLab/leaf](https://github.com/TalwalkarLab/leaf)
+- Reference: Caldas et al. (2018) "LEAF: A Benchmark for Federated Settings"
+
+### Download Instructions
+
+**Automatic (Recommended):** CIFAR-10 downloads automatically on first run:
+```bash
+pip install torch torchvision
+python main.py --debug
+```
+
+**HuggingFace Alternative:**
+```bash
+pip install datasets
+# Falls back to HuggingFace if torchvision download fails
+```
+
+**LEAF Benchmark (FEMNIST):**
+```bash
+git clone https://github.com/TalwalkarLab/leaf.git
+cd leaf/data/femnist
+./preprocess.sh -s niid --sf 0.1 -t sample
+```
+
+**Non-IID Partitioning:**
+Data is partitioned across clients using Dirichlet distribution (α=0.5) for heterogeneous/non-IID splits.
 
 ## Methods
 
