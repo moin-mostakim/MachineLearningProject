@@ -1,0 +1,177 @@
+======================================================================
+EDGE AI EFFICIENCY: NAS + QAT FOR REAL-TIME INFERENCE
+======================================================================
+
+Started at: 2026-10-24 10:04:07
+[DEBUG MODE] Reduced training epochs, NAS iterations, and batch size
+Device: cpu
+Random seed: 42
+
+--- Loading Data (cifar10) ---
+Using synthetic CIFAR-10-like data for fast testing
+Train batches: 31, Val batches: 7
+
+--- Phase 1: Baseline Models ---
+
+============================================================
+PHASE 1: Baseline Models
+============================================================
+
+--- Model Architecture Summary ---
+
+MobileNetV2:
+  Parameters: 2,236,682 (2.24M)
+  Size: 8.66 MB
+  FLOPs: 179.23 MFLOPs
+
+MobileNetV2-Small:
+  Parameters: 70,474 (0.07M)
+  Size: 0.28 MB
+  FLOPs: 17.52 MFLOPs
+
+EfficientNet-Lite0:
+  Parameters: 7,155,658 (7.16M)
+  Size: 27.46 MB
+  FLOPs: 241.93 MFLOPs
+
+EfficientNet-Lite-Small:
+  Parameters: 574,282 (0.57M)
+  Size: 2.24 MB
+  FLOPs: 42.19 MFLOPs
+
+--- Training MobileNetV2-Small (Baseline) ---
+Epoch 1/3 (3.3s): Train Loss=2.3513, Train Acc=9.68%, Val Acc=9.75%
+Epoch 2/3 (2.8s): Train Loss=2.3383, Train Acc=9.88%, Val Acc=10.00%
+Epoch 3/3 (3.0s): Train Loss=2.2964, Train Acc=12.65%, Val Acc=10.00%
+
+Training completed in 9.0s
+Best validation accuracy: 10.00%
+
+Benchmarking MobileNetV2-Small...
+  Measuring accuracy...
+  Measuring CPU latency...
+  Results for MobileNetV2-Small:
+    Accuracy: 10.00%
+    Parameters: 0.07M
+    Size: 0.28 MB
+    FLOPs: 17.52 MFLOPs
+    CPU Latency: 1.53±0.20 ms
+Phase 1 complete.
+
+[DEBUG MODE] Skipping NAS (slow on CPU) - using baseline as NAS result
+
+--- Phase 3: Quantization ---
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/quantization/observer.py:534: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
+  super().__init__(
+
+============================================================
+PHASE 3: Quantization
+============================================================
+
+--- Post-Training Quantization Comparison ---
+Evaluating Float32 baseline...
+Applying INT8 dynamic quantization...
+Simulating INT4 quantization...
+
+Quantization Comparison Results:
+--------------------------------------------------
+float32: Accuracy=10.00%, Bits=32
+int8_dynamic: Accuracy=10.25%, Bits=8
+int4_simulated: Accuracy=10.25%, Bits=4
+
+Model Size Reduction:
+  Float32: 0.28 MB
+  INT8: 0.07 MB (75.0% reduction)
+  INT4: 0.04 MB (87.5% reduction)
+
+--- Quantization-Aware Training ---
+Preparing model for QAT...
+Model prepared for QAT
+Pre-QAT accuracy: 10.00%
+QAT Epoch 1/2: Train Acc=18.95%, Val Acc=10.75%
+QAT Epoch 2/2: Train Acc=19.76%, Val Acc=12.50%
+
+QAT Accuracy Comparison:
+  float_accuracy: 10.00%
+  qat_accuracy: 9.75%
+Phase 3 complete.
+
+[DEBUG MODE] Skipping Combined NAS+QAT
+
+======================================================================
+EDGE AI EFFICIENCY: EXPERIMENT SUMMARY
+======================================================================
+
+Dataset: cifar10
+Debug Mode: True
+Training Epochs: 3
+
+--- Baseline Results ---
+MobileNetV2-Small:
+  Accuracy: 10.00%
+  Latency: 1.53 ms
+  Parameters: 0.07M
+
+--- NAS Results ---
+
+--- Quantization Results ---
+PTQ Comparison:
+  float32: 10.00% (32-bit)
+  int8_dynamic: 10.25% (8-bit)
+  int4_simulated: 10.25% (4-bit)
+QAT Results:
+  float_accuracy: 10.00%
+  qat_accuracy: 9.75%
+
+--- Literature Comparison ---
+Reference results from papers (ImageNet):
+  MobileNetV2 (1.0): 72.0% Top-1, 3.4M params
+  MobileNetV2 (0.5): 65.4% Top-1, 1.95M params
+  EfficientNet-B0: 77.1% Top-1, 5.3M params
+  Once-for-All (OFA): Up to 80.0% Top-1 with 595M FLOPs
+  Note: Our results are on CIFAR-10, not directly comparable
+
+======================================================================
+
+Results saved to /workspace/projects/edge-ai-efficiency/results/
+
+
+Key References:
+===============
+
+1. MobileNetV2 (Sandler et al., 2018)
+   - Inverted residuals with linear bottlenecks
+   - Width multiplier α ∈ {0.25, 0.5, 0.75, 1.0}
+   - Expansion ratio t = 6
+   - Input resolution: 224×224
+   - Training: SGD, momentum=0.9, weight_decay=4e-5
+
+2. EfficientNet (Tan & Le, 2019)
+   - Compound scaling: depth α^φ, width β^φ, resolution γ^φ
+   - α=1.2, β=1.1, γ=1.15 with α·β²·γ² ≈ 2
+   - Squeeze-and-Excitation with ratio 0.25
+   - Swish activation, dropout 0.2-0.4
+
+3. Once-for-All NAS (Cai et al., 2020)
+   - Progressive shrinking training
+   - Elastic kernel: {3, 5, 7}
+   - Elastic depth: {2, 3, 4} blocks per stage
+   - Elastic width: {0.5, 0.75, 1.0} expansion
+   - Accuracy predictors for efficient search
+
+4. Quantization (Jacob et al., 2018)
+   - INT8 inference with minimal accuracy loss
+   - Per-channel quantization for weights
+   - Fake quantization during training (QAT)
+   - Batch normalization folding
+
+5. Additional References:
+   - ProxylessNAS (Cai et al., 2019): Hardware-aware search
+   - FBNet (Wu et al., 2019): Differentiable NAS with latency
+   - HAQ (Wang et al., 2019): Hardware-aware mixed precision
+
+
+Completed at: 2026-10-24 10:04:33
+Status: SUCCESS
