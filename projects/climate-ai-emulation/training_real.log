@@ -1,0 +1,369 @@
+
+======================================================================
+  AI-Driven Climate Emulation and Uncertainty Quantification
+  for High-Resolution Earth System Modeling
+======================================================================
+  Start time: 2026-10-24 19:50:06
+======================================================================
+
+Using CPU
+
+============================================================
+  DATA LOADING
+============================================================
+
+Data source: synthetic
+Spatial resolution: 32x64
+Input time steps: 2
+Forecast lead time: 72h
+
+=== Using Real WeatherBench2 ERA5 Data ===
+Source: gs://weatherbench2/datasets/era5/1959-2022-6h-64x32_equiangular_conservative.zarr
+License: Copernicus Climate Data Store License
+  Downloading ERA5 data from WeatherBench2 (2015-2018)...
+  Caching to /workspace/projects/climate-ai-emulation/data/cache/era5_2015_2018_train.npz
+  Loaded 214 timesteps, 5 channels
+WeatherBench2 ERA5 (train): 200 samples from 2015-2018
+  Downloading ERA5 data from WeatherBench2 (2019-2019)...
+  Caching to /workspace/projects/climate-ai-emulation/data/cache/era5_2019_2019_val.npz
+  Loaded 54 timesteps, 5 channels
+WeatherBench2 ERA5 (val): 40 samples from 2019-2019
+  Downloading ERA5 data from WeatherBench2 (2020-2020)...
+  Caching to /workspace/projects/climate-ai-emulation/data/cache/era5_2020_2020_test.npz
+  Loaded 54 timesteps, 5 channels
+WeatherBench2 ERA5 (test): 40 samples from 2020-2020
+Train batches: 50
+Val batches: 10
+Test batches: 10
+
+============================================================
+  BASELINE EVALUATION
+============================================================
+
+Evaluating persistence...
+  RMSE: 0.6504
+  ACC:  0.7873
+Evaluating climatology...
+  RMSE: 0.9588
+  ACC:  0.0000
+Evaluating linear...
+  Fitting linear regression on training data...
+  RMSE: 0.5552
+  ACC:  0.7973
+
+============================================================
+  NEURAL NETWORK TRAINING
+============================================================
+
+Created U-Net with 1,569,926 parameters
+
+--------------------------------------------------------------------------------
+Layer                                    Shape                     Parameters
+--------------------------------------------------------------------------------
+input_conv.weight                        [16, 10, 1, 1]                   160
+input_conv.bias                          [16]                              16
+encoders.0.conv_block.conv1.weight       [32, 16, 3, 3]                 4,608
+encoders.0.conv_block.norm1.weight       [32]                              32
+encoders.0.conv_block.norm1.bias         [32]                              32
+encoders.0.conv_block.conv2.weight       [32, 32, 3, 3]                 9,216
+encoders.0.conv_block.norm2.weight       [32]                              32
+encoders.0.conv_block.norm2.bias         [32]                              32
+encoders.1.conv_block.conv1.weight       [64, 32, 3, 3]                18,432
+encoders.1.conv_block.norm1.weight       [64]                              64
+encoders.1.conv_block.norm1.bias         [64]                              64
+encoders.1.conv_block.conv2.weight       [64, 64, 3, 3]                36,864
+encoders.1.conv_block.norm2.weight       [64]                              64
+encoders.1.conv_block.norm2.bias         [64]                              64
+encoders.2.conv_block.conv1.weight       [128, 64, 3, 3]               73,728
+encoders.2.conv_block.norm1.weight       [128]                            128
+encoders.2.conv_block.norm1.bias         [128]                            128
+encoders.2.conv_block.conv2.weight       [128, 128, 3, 3]             147,456
+encoders.2.conv_block.norm2.weight       [128]                            128
+encoders.2.conv_block.norm2.bias         [128]                            128
+bottleneck.conv1.weight                  [256, 128, 3, 3]             294,912
+bottleneck.norm1.weight                  [256]                            256
+bottleneck.norm1.bias                    [256]                            256
+bottleneck.conv2.weight                  [256, 256, 3, 3]             589,824
+bottleneck.norm2.weight                  [256]                            256
+bottleneck.norm2.bias                    [256]                            256
+decoders.0.up.weight                     [256, 128, 2, 2]             131,072
+decoders.0.up.bias                       [128]                            128
+decoders.0.attention.W_g.weight          [64, 128, 1, 1]                8,192
+decoders.0.attention.W_x.weight          [64, 128, 1, 1]                8,192
+decoders.0.attention.psi.weight          [1, 64, 1, 1]                     64
+decoders.0.attention.psi.bias            [1]                                1
+decoders.0.conv_block.conv1.weight       [64, 256, 3, 3]              147,456
+decoders.0.conv_block.norm1.weight       [64]                              64
+decoders.0.conv_block.norm1.bias         [64]                              64
+decoders.0.conv_block.conv2.weight       [64, 64, 3, 3]                36,864
+decoders.0.conv_block.norm2.weight       [64]                              64
+decoders.0.conv_block.norm2.bias         [64]                              64
+decoders.1.up.weight                     [64, 32, 2, 2]                 8,192
+decoders.1.up.bias                       [32]                              32
+decoders.1.attention.W_g.weight          [32, 32, 1, 1]                 1,024
+decoders.1.attention.W_x.weight          [32, 64, 1, 1]                 2,048
+decoders.1.attention.psi.weight          [1, 32, 1, 1]                     32
+decoders.1.attention.psi.bias            [1]                                1
+decoders.1.conv_block.conv1.weight       [32, 96, 3, 3]                27,648
+decoders.1.conv_block.norm1.weight       [32]                              32
+decoders.1.conv_block.norm1.bias         [32]                              32
+decoders.1.conv_block.conv2.weight       [32, 32, 3, 3]                 9,216
+decoders.1.conv_block.norm2.weight       [32]                              32
+decoders.1.conv_block.norm2.bias         [32]                              32
+decoders.2.up.weight                     [32, 16, 2, 2]                 2,048
+decoders.2.up.bias                       [16]                              16
+decoders.2.attention.W_g.weight          [16, 16, 1, 1]                   256
+decoders.2.attention.W_x.weight          [16, 32, 1, 1]                   512
+decoders.2.attention.psi.weight          [1, 16, 1, 1]                     16
+decoders.2.attention.psi.bias            [1]                                1
+decoders.2.conv_block.conv1.weight       [16, 48, 3, 3]                 6,912
+decoders.2.conv_block.norm1.weight       [16]                              16
+decoders.2.conv_block.norm1.bias         [16]                              16
+decoders.2.conv_block.conv2.weight       [16, 16, 3, 3]                 2,304
+decoders.2.conv_block.norm2.weight       [16]                              16
+decoders.2.conv_block.norm2.bias         [16]                              16
+output_conv.weight                       [5, 16, 1, 1]                     80
+output_conv.bias                         [5]                                5
+residual_proj.weight                     [5, 5, 1, 1]                      25
+residual_proj.bias                       [5]                                5
+--------------------------------------------------------------------------------
+Total                                                               1,569,926
+--------------------------------------------------------------------------------
+
+============================================================
+Starting Training
+============================================================
+Device: cpu
+Epochs: 5
+Batch size: 4
+Learning rate: 0.0001
+Mixed precision: False
+============================================================
+
+Epoch   1/5 | Train Loss: 3.1567 | Val Loss: 2.1556 | Val RMSE: 1.4682 | Val ACC: 0.2669 | LR: 1.00e-04 | Time: 1.2s
+Epoch   2/5 | Train Loss: 2.0507 | Val Loss: 1.4697 | Val RMSE: 1.2123 | Val ACC: 0.4153 | LR: 9.05e-05 | Time: 1.2s
+Epoch   3/5 | Train Loss: 1.5820 | Val Loss: 1.2118 | Val RMSE: 1.1008 | Val ACC: 0.4917 | LR: 6.58e-05 | Time: 1.2s
+Epoch   4/5 | Train Loss: 1.3879 | Val Loss: 1.1149 | Val RMSE: 1.0559 | Val ACC: 0.5163 | LR: 3.52e-05 | Time: 1.2s
+Epoch   5/5 | Train Loss: 1.3239 | Val Loss: 1.0923 | Val RMSE: 1.0451 | Val ACC: 0.5241 | LR: 1.05e-05 | Time: 1.2s
+
+============================================================
+Training Complete
+============================================================
+Best validation loss: 1.0923
+Total epochs: 5
+
+Resource Usage:
+  peak_cpu_percent: 100.00
+  peak_memory_gb: 2.15
+  peak_gpu_memory_gb: 0.00
+  avg_gpu_memory_gb: 0.00
+
+Timing:
+  train: 5.6s total, 1.11s avg
+  validate: 0.4s total, 0.08s avg
+
+============================================================
+  NEURAL NETWORK EVALUATION
+============================================================
+
+Neural Network Results:
+  RMSE: 1.0659
+  MAE:  0.8132
+  ACC:  0.4932
+  SSIM: 0.1086
+
+============================================================
+  DEEP ENSEMBLE TRAINING
+============================================================
+
+Created ensemble with 2 members
+Parameters per member: 393,238
+Total parameters: 786,476
+
+============================================================
+Training Deep Ensemble (2 members)
+============================================================
+
+
+--- Training Member 1/2 ---
+
+============================================================
+Starting Training
+============================================================
+Device: cpu
+Epochs: 5
+Batch size: 4
+Learning rate: 0.0001
+Mixed precision: False
+============================================================
+
+Epoch   1/5 | Train Loss: 2.9975 | Val Loss: 2.5318 | Val RMSE: 1.5912 | Val ACC: -0.0616 | LR: 1.00e-04 | Time: 0.9s
+Epoch   2/5 | Train Loss: 2.4654 | Val Loss: 2.0150 | Val RMSE: 1.4195 | Val ACC: 0.0329 | LR: 9.05e-05 | Time: 0.8s
+Epoch   3/5 | Train Loss: 2.0976 | Val Loss: 1.7714 | Val RMSE: 1.3309 | Val ACC: 0.0895 | LR: 6.58e-05 | Time: 0.8s
+Epoch   4/5 | Train Loss: 1.9437 | Val Loss: 1.6728 | Val RMSE: 1.2934 | Val ACC: 0.1159 | LR: 3.52e-05 | Time: 0.8s
+Epoch   5/5 | Train Loss: 1.8642 | Val Loss: 1.6462 | Val RMSE: 1.2831 | Val ACC: 0.1237 | LR: 1.05e-05 | Time: 0.9s
+
+============================================================
+Training Complete
+============================================================
+Best validation loss: 1.6462
+Total epochs: 5
+
+Resource Usage:
+  peak_cpu_percent: 99.30
+  peak_memory_gb: 2.18
+  peak_gpu_memory_gb: 0.00
+  avg_gpu_memory_gb: 0.00
+
+Timing:
+  train: 3.9s total, 0.78s avg
+  validate: 0.3s total, 0.07s avg
+
+--- Training Member 2/2 ---
+
+============================================================
+Starting Training
+============================================================
+Device: cpu
+Epochs: 5
+Batch size: 4
+Learning rate: 0.0001
+Mixed precision: False
+============================================================
+
+Epoch   1/5 | Train Loss: 2.6961 | Val Loss: 2.1773 | Val RMSE: 1.4756 | Val ACC: 0.4384 | LR: 1.00e-04 | Time: 0.8s
+Epoch   2/5 | Train Loss: 2.1391 | Val Loss: 1.7997 | Val RMSE: 1.3415 | Val ACC: 0.4985 | LR: 9.05e-05 | Time: 0.8s
+Epoch   3/5 | Train Loss: 1.8339 | Val Loss: 1.5592 | Val RMSE: 1.2487 | Val ACC: 0.5151 | LR: 6.58e-05 | Time: 0.8s
+Epoch   4/5 | Train Loss: 1.6766 | Val Loss: 1.4487 | Val RMSE: 1.2036 | Val ACC: 0.5234 | LR: 3.52e-05 | Time: 0.8s
+Epoch   5/5 | Train Loss: 1.5904 | Val Loss: 1.4181 | Val RMSE: 1.1909 | Val ACC: 0.5256 | LR: 1.05e-05 | Time: 0.8s
+
+============================================================
+Training Complete
+============================================================
+Best validation loss: 1.4181
+Total epochs: 5
+
+Resource Usage:
+  peak_cpu_percent: 99.50
+  peak_memory_gb: 2.11
+  peak_gpu_memory_gb: 0.00
+  avg_gpu_memory_gb: 0.00
+
+Timing:
+  train: 3.7s total, 0.75s avg
+  validate: 0.3s total, 0.06s avg
+
+============================================================
+  ENSEMBLE EVALUATION
+============================================================
+
+Ensemble Results:
+  RMSE: 0.9355
+  ACC:  0.4292
+  CRPS: 0.5657
+  Calibration Error: 0.0981
+
+============================================================
+  INT8 QUANTIZATION COMPARISON
+============================================================
+
+
+============================================================
+QUANTIZATION REPORT: Climate Emulator
+============================================================
+Error during comparison: Given groups=1, weight of size [16, 10, 1, 1], expected input[1, 14, 32, 64] to have 10 channels, but got 14 channels instead
+
+======================================================================
+MODEL PARAMETER COUNT TABLE
+======================================================================
+Model                               Parameters    Size (MB)    Size INT8
+----------------------------------------------------------------------
+Persistence                                  0         0.00         0.00
+Climatology                                  0         0.00         0.00
+UNET                                 1,569,926         6.28         1.57
+----------------------------------------------------------------------
+======================================================================
+
+============================================================
+  LITERATURE COMPARISON
+============================================================
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         LITERATURE COMPARISON TABLE                          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ Model              │ Z500 RMSE (m) │ T850 RMSE (K) │ Resolution │ Lead Time  ║
+║                    │    72h/120h   │    72h/120h   │            │            ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ BASELINES (WeatherBench, Rasp et al. 2020)                                   ║
+╠──────────────────────────────────────────────────────────────────────────────╣
+║ Persistence        │   936 / 1033  │  4.23 / 4.56  │   5.625°   │ 72h/120h   ║
+║ Climatology        │   1075 / 1075 │  3.50 / 3.50  │   5.625°   │ 72h/120h   ║
+║ Weekly Climatology │   816 / 816   │  2.45 / 2.45  │   5.625°   │ 72h/120h   ║
+║ Linear Regression  │   268 / 499   │  1.85 / 2.52  │   5.625°   │ 72h/120h   ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ ML BASELINES (WeatherBench, Rasp et al. 2020)                                ║
+╠──────────────────────────────────────────────────────────────────────────────╣
+║ CNN (ResNet)       │   268 / 373   │  1.65 / 2.02  │   5.625°   │ 72h/120h   ║
+║ U-Net              │   254 / 345   │  1.58 / 1.95  │   5.625°   │ 72h/120h   ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ STATE-OF-THE-ART                                                             ║
+╠──────────────────────────────────────────────────────────────────────────────╣
+║ IFS-HRES (ECMWF)   │   154 / 334   │  1.36 / 1.96  │   0.1°     │ 72h/120h   ║
+║ Pangu-Weather [1]  │   135 / 263   │  1.21 / 1.64  │   0.25°    │ 72h/120h   ║
+║ GraphCast [2]      │   123 / 244   │  1.14 / 1.57  │   0.25°    │ 72h/120h   ║
+║ FourCastNet [3]    │   145 / 282   │  1.30 / 1.73  │   0.25°    │ 72h/120h   ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ THIS WORK (Synthetic Data - for methodology validation)                      ║
+╠──────────────────────────────────────────────────────────────────────────────╣
+║ Our U-Net          │   varies*     │   varies*     │   5.625°   │ 72h        ║
+║ Our ConvLSTM       │   varies*     │   varies*     │   5.625°   │ 72h        ║
+║ Our Ensemble       │   varies*     │   varies*     │   5.625°   │ 72h        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+* Results on synthetic data are not directly comparable to real weather benchmarks.
+  This implementation validates the methodology and can be applied to real data.
+
+REFERENCES:
+[1] Bi, K., et al. (2023). Pangu-Weather: A 3D High-Resolution Model for Fast 
+    and Accurate Global Weather Forecast. Nature, 619, 533-538.
+    
+[2] Lam, R., et al. (2023). GraphCast: Learning skillful medium-range global 
+    weather forecasting. Science, 382(6677), 1416-1421.
+    
+[3] Pathak, J., et al. (2022). FourCastNet: A Global Data-driven High-resolution 
+    Weather Model using Adaptive Fourier Neural Operators. arXiv:2202.11214.
+
+[4] Rasp, S., et al. (2020). WeatherBench: A benchmark dataset for data-driven 
+    weather forecasting. JAMES, 12(11), e2020MS002203.
+
+KEY FINDINGS FROM LITERATURE:
+- ML models can match or exceed operational NWP skill at medium-range (3-7 days)
+- Ensemble methods improve calibration of uncertainty estimates
+- Higher resolution improves skill but increases compute requirements
+- Residual learning critical for capturing weather anomalies
+- Data-driven approaches orders of magnitude faster than physics-based NWP
+
+
+Results saved to outputs/experiment_results.json
+
+============================================================
+  EXPERIMENT SUMMARY
+============================================================
+
+Timing:
+  baselines: 0.1s
+  nn_training: 7.9s
+  ensemble_training: 10.1s
+  quantization: 0.0s
+
+Resource Usage:
+  peak_cpu_percent: 100.00
+  peak_memory_gb: 2.17
+  peak_gpu_memory_gb: 0.00
+  avg_gpu_memory_gb: 0.00
+
+======================================================================
+  Experiment Complete!
+======================================================================
+
