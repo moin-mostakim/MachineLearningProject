@@ -6,14 +6,40 @@ This project implements causal representation learning for autonomous driving un
 
 Autonomous driving systems must operate reliably across different conditions (weather, lighting). Standard training (ERM) often learns spurious correlations that fail under distribution shift. Causal/invariant learning aims to learn features that generalize across environments.
 
-## Dataset
+## Datasets
 
-**Synthetic Multi-Environment Driving Data**
-- Environment 0: Clear weather (high contrast)
-- Environment 1: Rain (low contrast, blur)
-- Environment 2: Night (dark, headlight effects)
+The system supports real autonomous driving datasets with multi-environment conditions.
 
-Each environment has steering action labels (4 classes) based on road curvature.
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **nuScenes Mini** | nuScenes | [nuscenes.org](https://www.nuscenes.org/nuscenes) | CC BY-NC-SA 4.0 | ~4GB | 404 scenes (mini) |
+| **KITTI** | KITTI Vision | [cvlibs.net/datasets/kitti](http://www.cvlibs.net/datasets/kitti/) | CC BY-NC-SA 3.0 | ~22GB | 22 stereo sequences |
+| **BDD100K** | Berkeley | [bdd-data.berkeley.edu](https://bdd-data.berkeley.edu/) | BSD-3 | ~6.5GB | 100K videos |
+| **GTA5→Cityscapes** | Domain Adaptation | [github.com/DomainBed](https://github.com/facebookresearch/DomainBed) | Research | ~20GB | Synthetic→Real |
+
+**Reference**: Caesar et al. (2020) "nuScenes: A multimodal dataset for autonomous driving"
+
+### Download Instructions
+
+**nuScenes Mini (Recommended for testing):**
+```bash
+# Register at nuscenes.org, then download
+wget https://www.nuscenes.org/data/v1.0-mini.tgz
+tar -xzf v1.0-mini.tgz -C data/nuscenes/
+```
+
+**KITTI:**
+```bash
+# Download from cvlibs.net/datasets/kitti
+wget https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_color.zip
+```
+
+**Synthetic Data (pipeline testing):**
+```bash
+python main.py --debug  # Generates multi-environment synthetic driving data
+```
+
+The synthetic data generates Clear/Rain/Night environments with steering labels. Real nuScenes or KITTI data is recommended for domain generalization research.
 
 ## Methods
 
