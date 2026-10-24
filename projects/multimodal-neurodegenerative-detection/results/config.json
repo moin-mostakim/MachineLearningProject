@@ -21,8 +21,8 @@
     "dropout": 0.2
   },
   "training": {
-    "num_epochs": 3,
-    "batch_size": 8,
+    "num_epochs": 20,
+    "batch_size": 16,
     "num_workers": 0,
     "early_stopping_patience": 5,
     "seed": 42,
@@ -36,11 +36,11 @@
   },
   "data": {
     "dataset_name": "alzheimers_synthetic",
-    "image_size": 32,
+    "image_size": 64,
     "train_split": 0.7,
     "val_split": 0.15,
     "test_split": 0.15,
-    "max_samples": 100
+    "max_samples": 500
   },
-  "num_classes": 3
+  "num_classes": 4
 }

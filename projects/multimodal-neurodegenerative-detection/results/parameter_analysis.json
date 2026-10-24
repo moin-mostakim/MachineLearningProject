@@ -1,9 +1,9 @@
 {
   "Image Only": {
     "model_name": "Image Only",
-    "total_params": 233283,
-    "trainable_params": 233283,
-    "total_size_mb": 0.8899040222167969,
+    "total_params": 233348,
+    "trainable_params": 233348,
+    "total_size_mb": 0.8901519775390625,
     "components": [
       {
         "name": "Image Encoder",
@@ -13,17 +13,17 @@
       },
       {
         "name": "Classifier",
-        "total_params": 8451,
-        "trainable_params": 8451,
-        "size_mb": 0.032238006591796875
+        "total_params": 8516,
+        "trainable_params": 8516,
+        "size_mb": 0.0324859619140625
       }
     ]
   },
   "Clinical Only": {
     "model_name": "Clinical Only",
-    "total_params": 6339,
-    "trainable_params": 6339,
-    "total_size_mb": 0.024181365966796875,
+    "total_params": 6404,
+    "trainable_params": 6404,
+    "total_size_mb": 0.0244293212890625,
     "components": [
       {
         "name": "Clinical Encoder",
@@ -33,17 +33,17 @@
       },
       {
         "name": "Classifier",
-        "total_params": 2307,
-        "trainable_params": 2307,
-        "size_mb": 0.008800506591796875
+        "total_params": 2372,
+        "trainable_params": 2372,
+        "size_mb": 0.0090484619140625
       }
     ]
   },
   "Concat Fusion": {
     "model_name": "Concat Fusion",
-    "total_params": 239363,
-    "trainable_params": 239363,
-    "total_size_mb": 0.9130973815917969,
+    "total_params": 239428,
+    "trainable_params": 239428,
+    "total_size_mb": 0.9133453369140625,
     "components": [
       {
         "name": "Image Encoder",
@@ -59,17 +59,17 @@
       },
       {
         "name": "Classifier",
-        "total_params": 10499,
-        "trainable_params": 10499,
-        "size_mb": 0.040050506591796875
+        "total_params": 10564,
+        "trainable_params": 10564,
+        "size_mb": 0.0402984619140625
       }
     ]
   },
   "Attention Fusion (Ours)": {
     "model_name": "Attention Fusion (Ours)",
-    "total_params": 373509,
-    "trainable_params": 373509,
-    "total_size_mb": 1.4248237609863281,
+    "total_params": 373574,
+    "trainable_params": 373574,
+    "total_size_mb": 1.4250717163085938,
     "components": [
       {
         "name": "Image Encoder",
@@ -91,9 +91,9 @@
       },
       {
         "name": "Classifier",
-        "total_params": 8451,
-        "trainable_params": 8451,
-        "size_mb": 0.032238006591796875
+        "total_params": 8516,
+        "trainable_params": 8516,
+        "size_mb": 0.0324859619140625
       }
     ]
   }

@@ -114,7 +114,7 @@ class ExperimentConfig:
     fusion: FusionConfig = field(default_factory=FusionConfig)
     training: TrainingConfig = field(default_factory=TrainingConfig)
     data: DataConfig = field(default_factory=DataConfig)
-    num_classes: int = 3  # Normal, MCI, AD
+    num_classes: int = 4  # Non/Very Mild/Mild/Moderate Demented (Falah/Alzheimer_MRI)
     
     @classmethod
     def default(cls) -> "ExperimentConfig":
