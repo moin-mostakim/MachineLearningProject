@@ -10,16 +10,43 @@ Early detection of Alzheimer's disease and other neurodegenerative conditions is
 
 Using attention-based fusion to learn optimal modality weighting for 3-class classification: Normal, Mild Cognitive Impairment (MCI), and Alzheimer's Disease (AD).
 
-## Dataset
+## Datasets
 
-**Synthetic Alzheimer's-style Dataset** (generated to mimic ADNI structure)
-- Real ADNI data requires a Data Use Agreement from USC LONI
-- Our synthetic data generates:
-  - Brain images with class-specific atrophy patterns
-  - Clinical features correlated with disease stage (age, MMSE, CDR, APOE4)
-- 3 classes: Normal (NC), MCI, AD
+The system supports multiple brain imaging datasets. ADNI requires a Data Use Agreement; OASIS is openly available.
 
-**Note:** For real research, obtain access to [ADNI](http://adni.loni.usc.edu/) or [OASIS](https://www.oasis-brains.org/).
+| Dataset | Source | URL | License | Size | Access |
+|---------|--------|-----|---------|------|--------|
+| **OASIS-3** | Open Access | [oasis-brains.org](https://www.oasis-brains.org/) | Open Access | ~50GB | Free registration |
+| **OASIS-1** | Open Access | [oasis-brains.org](https://www.oasis-brains.org/) | Open Access | ~5GB | Free registration |
+| **ADNI** | USC LONI | [adni.loni.usc.edu](http://adni.loni.usc.edu/) | DUA Required | ~100GB+ | Research agreement |
+
+**Reference**: Marcus et al. (2007) "Open Access Series of Imaging Studies (OASIS)"
+
+### Download Instructions
+
+**OASIS-3 (Recommended - Open Access):**
+```bash
+# Register at oasis-brains.org, then download via XNAT
+# OASIS-3 includes 1,098 subjects with longitudinal MRI and clinical data
+```
+
+**OASIS-1 (Smaller, Quick Start):**
+```bash
+# 416 subjects aged 18-96, cross-sectional MRI
+# Register at oasis-brains.org and download
+```
+
+**ADNI (Requires Agreement):**
+1. Apply for access at [adni.loni.usc.edu](http://adni.loni.usc.edu/)
+2. Complete Data Use Agreement
+3. Download via LONI IDA
+
+**Synthetic Data (pipeline testing):**
+```bash
+python main.py --debug  # Generates synthetic data mimicking OASIS structure
+```
+
+Note: Synthetic data generates brain images with class-specific atrophy patterns. Real OASIS/ADNI data is required for valid neurodegenerative disease research.
 
 ## Method
 
