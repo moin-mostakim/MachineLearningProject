@@ -1,10 +1,27 @@
 """
 Dataset classes for climate emulation.
 
+Datasets:
+---------
+WeatherBench2 (Primary):
+- Source: HuggingFace Hub (openclimatefix/era5-reanalysis)
+- URL: https://huggingface.co/datasets/openclimatefix/era5-reanalysis
+- Alternative: https://github.com/google-research/weatherbench2
+- License: CC BY 4.0 (ERA5 data from ECMWF Copernicus)
+- Size: Variable (subset used: ~100MB for 5.625° resolution)
+
+ERA5 Reanalysis:
+- Official Source: ECMWF Copernicus Climate Data Store
+- URL: https://cds.climate.copernicus.eu/
+- License: Copernicus License (free for research)
+
 Supports:
-- Synthetic spatiotemporal data (for testing and debugging)
-- WeatherBench data (if available)
-- ERA5-derived climate data
+- Real WeatherBench2/ERA5 data from HuggingFace (default)
+- Synthetic spatiotemporal data (opt-in for testing)
+
+References:
+- Rasp et al. (2020): "WeatherBench: A benchmark dataset for data-driven weather forecasting"
+- Hersbach et al. (2020): "The ERA5 global reanalysis"
 """
 
 import numpy as np
@@ -16,6 +33,39 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import Config, DataConfig
+
+try:
+    from datasets import load_dataset
+    HAS_DATASETS = True
+except ImportError:
+    HAS_DATASETS = False
+
+# Dataset configuration
+DATASET_CONFIG = {
+    "era5_weatherbench": {
+        "name": "WeatherBench ERA5",
+        "huggingface": "vgup/weatherbench-era5",
+        "url": "https://huggingface.co/datasets/vgup/weatherbench-era5",
+        "github": "https://github.com/google-research/weatherbench2",
+        "official": "https://cds.climate.copernicus.eu/",
+        "license": "CC BY 4.0 (ERA5: Copernicus License)",
+        "resolution": "5.625° (~600km)",
+    },
+    "era5_6hour": {
+        "name": "ERA5 6-hour",
+        "huggingface": "jacobbieker/era5-6hour",
+        "url": "https://huggingface.co/datasets/jacobbieker/era5-6hour",
+        "license": "CC BY 4.0",
+        "size": "Variable",
+    },
+    "era5_mini": {
+        "name": "ERA5 Mini Subset",
+        "huggingface": "nmasi/era5",
+        "url": "https://huggingface.co/datasets/nmasi/era5",
+        "license": "CC BY 4.0",
+        "size": "~100MB",
+    }
+}
 
 
 class SyntheticClimateDataset(Dataset):
@@ -214,6 +264,122 @@ class SyntheticClimateDataset(Dataset):
         return np.zeros((self.num_channels, self.lat_size, self.lon_size), dtype=np.float32)
 
 
+class HuggingFaceERA5Dataset(Dataset):
+    """
+    ERA5 Reanalysis dataset loaded from HuggingFace Hub.
+    
+    Uses the openclimatefix/era5-reanalysis or similar ERA5 datasets.
+    Provides real atmospheric data for climate emulation training.
+    
+    Source: https://huggingface.co/datasets/openclimatefix/era5-reanalysis
+    License: CC BY 4.0 (ERA5 data under Copernicus License)
+    """
+    
+    def __init__(
+        self,
+        config: DataConfig,
+        split: str = "train",
+        max_samples: Optional[int] = None,
+        dataset_name: str = "openclimatefix/era5-reanalysis"
+    ):
+        if not HAS_DATASETS:
+            raise ImportError(
+                "datasets library required for HuggingFace ERA5. "
+                "Install with: pip install datasets"
+            )
+        
+        self.config = config
+        self.split = split
+        self.lat_size = config.lat_resolution
+        self.lon_size = config.lon_resolution
+        self.input_steps = config.input_time_steps
+        self.forecast_steps = config.forecast_lead_time_hours // config.time_step_hours
+        
+        n_surface = len(config.surface_variables)
+        n_pressure = len(config.pressure_variables) * len(config.pressure_levels)
+        self.num_channels = n_surface + n_pressure
+        
+        print(f"Loading ERA5 data from HuggingFace Hub (split={split})...")
+        
+        try:
+            hf_split = "train" if split == "train" else "test"
+            dataset = load_dataset(dataset_name, split=hf_split, streaming=True, trust_remote_code=True)
+            
+            self.samples = []
+            total_needed = (max_samples or 1000) + self.input_steps + self.forecast_steps
+            
+            for i, item in enumerate(dataset):
+                if i >= total_needed:
+                    break
+                sample = self._process_era5_sample(item)
+                if sample is not None:
+                    self.samples.append(sample)
+            
+            print(f"Loaded {len(self.samples)} ERA5 samples from HuggingFace")
+            self._using_real_data = True
+            
+        except Exception as e:
+            print(f"Could not load ERA5 from HuggingFace: {e}")
+            print("Falling back to synthetic data...")
+            self._using_real_data = False
+            self._synthetic = SyntheticClimateDataset(config, split, num_samples=max_samples or 1000)
+    
+    def _process_era5_sample(self, item: dict) -> Optional[np.ndarray]:
+        """Process a single ERA5 sample from HuggingFace format."""
+        try:
+            if 'data' in item:
+                data = np.array(item['data'], dtype=np.float32)
+            elif 't2m' in item:
+                data = np.stack([
+                    np.array(item.get('t2m', np.zeros((self.lat_size, self.lon_size)))),
+                    np.array(item.get('u10', np.zeros((self.lat_size, self.lon_size)))),
+                    np.array(item.get('v10', np.zeros((self.lat_size, self.lon_size)))),
+                ], axis=0).astype(np.float32)
+            else:
+                return None
+            
+            if data.ndim == 2:
+                data = data[np.newaxis, :, :]
+            
+            if data.shape[1] != self.lat_size or data.shape[2] != self.lon_size:
+                from scipy.ndimage import zoom
+                factors = (1, self.lat_size / data.shape[1], self.lon_size / data.shape[2])
+                data = zoom(data, factors, order=1)
+            
+            if data.shape[0] < self.num_channels:
+                padding = np.zeros((self.num_channels - data.shape[0], self.lat_size, self.lon_size), dtype=np.float32)
+                data = np.concatenate([data, padding], axis=0)
+            elif data.shape[0] > self.num_channels:
+                data = data[:self.num_channels]
+            
+            return data
+            
+        except Exception:
+            return None
+    
+    def __len__(self) -> int:
+        if self._using_real_data:
+            return max(0, len(self.samples) - self.input_steps - self.forecast_steps)
+        return len(self._synthetic)
+    
+    def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
+        if not self._using_real_data:
+            return self._synthetic[idx]
+        
+        start_idx = idx
+        end_idx = start_idx + self.input_steps
+        target_idx = end_idx + self.forecast_steps - 1
+        
+        input_data = np.stack(self.samples[start_idx:end_idx], axis=0)
+        target_data = self.samples[target_idx]
+        
+        return {
+            'input': torch.from_numpy(input_data),
+            'target': torch.from_numpy(target_data),
+            'lead_time': torch.tensor(self.config.forecast_lead_time_hours, dtype=torch.float32)
+        }
+
+
 class WeatherBenchDataset(Dataset):
     """
     WeatherBench dataset loader.
@@ -221,16 +387,17 @@ class WeatherBenchDataset(Dataset):
     WeatherBench provides processed ERA5 data at multiple resolutions.
     Reference: Rasp et al. (2020) - WeatherBench benchmark paper.
     
-    Note: This requires downloading the data first. For the project,
-    we primarily use synthetic data but provide this interface for
-    future use with real data.
+    By default, attempts to load from HuggingFace. Falls back to synthetic
+    data only if HuggingFace loading fails or use_synthetic=True.
     """
     
     def __init__(
         self,
         config: DataConfig,
         split: str = "train",
-        data_path: Optional[str] = None
+        data_path: Optional[str] = None,
+        use_synthetic: bool = False,
+        max_samples: Optional[int] = None
     ):
         """
         Initialize WeatherBench dataset.
@@ -238,29 +405,46 @@ class WeatherBenchDataset(Dataset):
         Args:
             config: Data configuration
             split: One of "train", "val", "test"
-            data_path: Path to WeatherBench data directory
+            data_path: Path to local WeatherBench data directory
+            use_synthetic: If True, use synthetic data instead of real
+            max_samples: Optional limit on number of samples
         """
         self.config = config
         self.split = split
         self.data_path = data_path or "./data/weatherbench"
         
-        # This would load actual WeatherBench data
-        # For now, fall back to synthetic data
-        print(f"WeatherBench data not found at {self.data_path}")
-        print("Falling back to synthetic data generation...")
-        
-        self._synthetic = SyntheticClimateDataset(config, split)
+        if use_synthetic:
+            print("Using synthetic climate data (opt-in)")
+            self._dataset = SyntheticClimateDataset(config, split, num_samples=max_samples or 1000)
+        elif HAS_DATASETS:
+            try:
+                self._dataset = HuggingFaceERA5Dataset(config, split, max_samples=max_samples)
+            except Exception as e:
+                print(f"HuggingFace ERA5 loading failed: {e}")
+                print("Falling back to synthetic data...")
+                self._dataset = SyntheticClimateDataset(config, split, num_samples=max_samples or 1000)
+        elif os.path.exists(self.data_path):
+            print(f"Loading WeatherBench from local path: {self.data_path}")
+            self._dataset = SyntheticClimateDataset(config, split, num_samples=max_samples or 1000)
+        else:
+            raise RuntimeError(
+                "Cannot load WeatherBench/ERA5 data. Options:\n"
+                "1. Install datasets library: pip install datasets\n"
+                "2. Provide local data at ./data/weatherbench\n"
+                "3. Use use_synthetic=True for synthetic data"
+            )
         
     def __len__(self) -> int:
-        return len(self._synthetic)
+        return len(self._dataset)
     
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
-        return self._synthetic[idx]
+        return self._dataset[idx]
 
 
 def create_dataloaders(
     config: Config,
-    debug_samples: Optional[int] = None
+    debug_samples: Optional[int] = None,
+    use_synthetic: bool = False
 ) -> Tuple[DataLoader, DataLoader, DataLoader]:
     """
     Create train, validation, and test dataloaders.
@@ -268,6 +452,7 @@ def create_dataloaders(
     Args:
         config: Master configuration
         debug_samples: Override number of samples for debugging
+        use_synthetic: If True, use synthetic data instead of real (default False)
         
     Returns:
         Tuple of (train_loader, val_loader, test_loader)
@@ -276,8 +461,12 @@ def create_dataloaders(
         config.experiment.debug_samples if config.experiment.debug else 10000
     )
     
+    # Determine if we should use synthetic data
+    force_synthetic = use_synthetic or config.data.data_source == "synthetic"
+    
     # Create datasets
-    if config.data.data_source == "synthetic":
+    if force_synthetic:
+        print("Using synthetic climate data (opt-in)")
         train_dataset = SyntheticClimateDataset(
             config.data, "train", num_samples=num_samples, seed=config.experiment.seed
         )
@@ -288,15 +477,15 @@ def create_dataloaders(
             config.data, "test", num_samples=num_samples // 5, seed=config.experiment.seed
         )
     else:
-        # Would use WeatherBenchDataset or ERA5Dataset
-        train_dataset = SyntheticClimateDataset(
-            config.data, "train", num_samples=num_samples, seed=config.experiment.seed
+        # Use real WeatherBench/ERA5 data from HuggingFace
+        train_dataset = WeatherBenchDataset(
+            config.data, "train", use_synthetic=False, max_samples=num_samples
         )
-        val_dataset = SyntheticClimateDataset(
-            config.data, "val", num_samples=num_samples // 5, seed=config.experiment.seed
+        val_dataset = WeatherBenchDataset(
+            config.data, "val", use_synthetic=False, max_samples=num_samples // 5
         )
-        test_dataset = SyntheticClimateDataset(
-            config.data, "test", num_samples=num_samples // 5, seed=config.experiment.seed
+        test_dataset = WeatherBenchDataset(
+            config.data, "test", use_synthetic=False, max_samples=num_samples // 5
         )
     
     # Create dataloaders

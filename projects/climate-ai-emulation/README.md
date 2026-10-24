@@ -129,21 +129,74 @@ from utils.quantization import quantize_for_deployment
 quantized_model, metrics = quantize_for_deployment(model, method="dynamic")
 ```
 
-## Data
+## Datasets
 
-### Synthetic Data
-For testing and debugging, the project generates synthetic spatiotemporal data with:
-- Spatial correlations (Gaussian random fields)
-- Temporal autocorrelation (AR process)
-- Multi-channel atmospheric variables
+The system supports multiple climate/weather datasets. Due to the large size of ERA5 data, this project provides synthetic data for quick testing while documenting how to use real data.
 
-### Real Data (WeatherBench)
-The code supports WeatherBench data at multiple resolutions:
-- 5.625° (~600km)
-- 2.8125° (~300km)
-- 1.40625° (~150km)
+| Dataset | Source | URL | License | Resolution | Size |
+|---------|--------|-----|---------|------------|------|
+| **WeatherBench2** | Google Research | [github.com/google-research/weatherbench2](https://github.com/google-research/weatherbench2) | Apache 2.0 | 5.625°, 2.8125°, 1.40625° | ~100GB+ |
+| **ERA5** | ECMWF Copernicus | [cds.climate.copernicus.eu](https://cds.climate.copernicus.eu/) | Copernicus License | 0.25° native | ~500TB total |
+| **WeatherBench (original)** | Pangeo | [pangeo-data/WeatherBench](https://github.com/pangeo-data/WeatherBench) | CC BY 4.0 | Multiple | ~10GB |
 
-Download from: https://github.com/pangeo-data/WeatherBench
+### Download Instructions
+
+**WeatherBench2 (Recommended for full experiments):**
+```bash
+# Install Google Cloud SDK for data access
+pip install google-cloud-storage xarray zarr
+
+# Download specific variables at 5.625° resolution
+# See: https://weatherbench2.readthedocs.io/en/latest/data-guide.html
+python -c "
+import xarray as xr
+ds = xr.open_zarr('gs://weatherbench2/datasets/era5/1959-2023_01_10-6h-240x121_equiangular_with_poles_conservative.zarr')
+ds_subset = ds[['2m_temperature', '10m_u_component_of_wind', '10m_v_component_of_wind']].sel(time=slice('2020', '2021'))
+ds_subset.to_netcdf('data/weatherbench/era5_subset.nc')
+"
+```
+
+**Original WeatherBench (smaller, easier):**
+```bash
+# Download from Pangeo data catalog
+pip install intake intake-xarray zarr
+python -c "
+import intake
+cat = intake.open_catalog('https://raw.githubusercontent.com/pangeo-data/WeatherBench/master/catalog.yaml')
+ds = cat.era5_5_625deg.to_dask()
+ds.sel(time=slice('2017', '2018')).to_netcdf('data/weatherbench/era5_5.625.nc')
+"
+```
+
+**ECMWF Climate Data Store (requires free registration):**
+1. Register at [cds.climate.copernicus.eu](https://cds.climate.copernicus.eu/)
+2. Install CDS API: `pip install cdsapi`
+3. Download ERA5 data using their API
+
+**Synthetic Data (for pipeline testing):**
+```bash
+python main.py --debug  # Uses synthetic by default in debug mode
+```
+
+Note: Synthetic data generates realistic spatiotemporal patterns (Gaussian random fields with AR(1) temporal correlation) suitable for testing the full pipeline, but real ERA5/WeatherBench data is required for meaningful scientific experiments.
+
+### Data Variables
+
+| Variable | Description | Units | Pressure Levels |
+|----------|-------------|-------|-----------------|
+| t2m | 2m Temperature | K | Surface |
+| u10 | 10m U-wind | m/s | Surface |
+| v10 | 10m V-wind | m/s | Surface |
+| z | Geopotential | m²/s² | 500, 850 hPa |
+| t | Temperature | K | 500, 850 hPa |
+
+### Data Format
+
+The dataloader expects data in NetCDF or Zarr format with dimensions:
+- `time`: Timestamps
+- `lat`: Latitude coordinates
+- `lon`: Longitude coordinates
+- Variables as data arrays
 
 ## License
 
