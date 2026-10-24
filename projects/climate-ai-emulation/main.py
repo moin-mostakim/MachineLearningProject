@@ -160,7 +160,12 @@ def evaluate_model(
             targets = batch['target'].to(device)
             
             if with_uncertainty and hasattr(model, 'predict_with_uncertainty'):
-                mean, var = model.predict_with_uncertainty(inputs, n_samples=5)
+                import inspect
+                sig = inspect.signature(model.predict_with_uncertainty)
+                if 'n_samples' in sig.parameters:
+                    mean, var = model.predict_with_uncertainty(inputs, n_samples=5)
+                else:
+                    mean, var = model.predict_with_uncertainty(inputs)
                 std = torch.sqrt(var + 1e-8)
                 all_stds.append(std.cpu())
                 outputs = mean
