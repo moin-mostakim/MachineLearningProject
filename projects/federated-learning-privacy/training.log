@@ -1,0 +1,58 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Privacy-Preserving Federated Learning
+INFO:__main__:============================================================
+INFO:__main__:Creating client dataloaders...
+INFO:src.data_loader:Created synthetic dataset with 4000 samples
+INFO:src.data_loader:Created synthetic dataset with 1000 samples
+INFO:__main__:Created 10 clients
+INFO:__main__:Model: 90,506 params, 0.35 MB
+INFO:__main__:
+--- Training FedAvg ---
+INFO:src.trainer:Training with FedAvg...
+FedAvg:   0%|          | 0/20 [00:00<?, ?it/s]FedAvg:   5%|▌         | 1/20 [00:04<01:22,  4.33s/it]FedAvg:  10%|█         | 2/20 [00:05<00:45,  2.50s/it]FedAvg:  15%|█▌        | 3/20 [00:06<00:30,  1.80s/it]FedAvg:  20%|██        | 4/20 [00:10<00:41,  2.62s/it]INFO:src.trainer:FedAvg Round 5: Accuracy = 0.0980
+FedAvg:  25%|██▌       | 5/20 [00:57<04:41, 18.78s/it]FedAvg:  30%|███       | 6/20 [02:27<09:59, 42.83s/it]FedAvg:  35%|███▌      | 7/20 [05:13<17:59, 83.03s/it]FedAvg:  40%|████      | 8/20 [07:39<20:38, 103.22s/it]FedAvg:  45%|████▌     | 9/20 [09:54<20:43, 113.02s/it]INFO:src.trainer:FedAvg Round 10: Accuracy = 0.0840
+FedAvg:  50%|█████     | 10/20 [12:23<20:40, 124.10s/it]FedAvg:  55%|█████▌    | 11/20 [14:20<18:18, 122.09s/it]FedAvg:  60%|██████    | 12/20 [16:14<15:56, 119.57s/it]FedAvg:  65%|██████▌   | 13/20 [16:42<10:43, 91.87s/it] FedAvg:  70%|███████   | 14/20 [17:14<07:22, 73.82s/it]INFO:src.trainer:FedAvg Round 15: Accuracy = 0.0920
+FedAvg:  75%|███████▌  | 15/20 [17:53<05:15, 63.17s/it]FedAvg:  80%|████████  | 16/20 [18:27<03:38, 54.59s/it]FedAvg:  85%|████████▌ | 17/20 [20:01<03:19, 66.35s/it]FedAvg:  90%|█████████ | 18/20 [21:32<02:27, 73.86s/it]FedAvg:  95%|█████████▌| 19/20 [23:07<01:19, 79.96s/it]INFO:src.trainer:FedAvg Round 20: Accuracy = 0.0840
+FedAvg: 100%|██████████| 20/20 [24:56<00:00, 88.86s/it]FedAvg: 100%|██████████| 20/20 [24:56<00:00, 74.83s/it]
+INFO:__main__:
+--- Training FedProx ---
+INFO:src.trainer:Training with FedProx (μ=0.01)...
+FedProx:   0%|          | 0/20 [00:00<?, ?it/s]FedProx:   5%|▌         | 1/20 [01:58<37:22, 118.05s/it]FedProx:  10%|█         | 2/20 [03:47<33:52, 112.90s/it]FedProx:  15%|█▌        | 3/20 [05:40<31:58, 112.88s/it]FedProx:  20%|██        | 4/20 [06:59<26:35, 99.71s/it] INFO:src.trainer:FedProx Round 5: Accuracy = 0.1200
+FedProx:  25%|██▌       | 5/20 [08:25<23:41, 94.77s/it]FedProx:  30%|███       | 6/20 [09:50<21:20, 91.49s/it]FedProx:  35%|███▌      | 7/20 [11:45<21:29, 99.16s/it]FedProx:  40%|████      | 8/20 [13:22<19:41, 98.47s/it]FedProx:  45%|████▌     | 9/20 [15:41<20:20, 110.93s/it]INFO:src.trainer:FedProx Round 10: Accuracy = 0.1200
+FedProx:  50%|█████     | 10/20 [17:31<18:27, 110.80s/it]FedProx:  55%|█████▌    | 11/20 [19:55<18:09, 121.05s/it]FedProx:  60%|██████    | 12/20 [21:42<15:32, 116.58s/it]FedProx:  65%|██████▌   | 13/20 [22:43<11:38, 99.79s/it] FedProx:  70%|███████   | 14/20 [23:35<08:32, 85.43s/it]INFO:src.trainer:FedProx Round 15: Accuracy = 0.1200
+FedProx:  75%|███████▌  | 15/20 [24:08<05:47, 69.52s/it]FedProx:  80%|████████  | 16/20 [24:51<04:06, 61.57s/it]FedProx:  85%|████████▌ | 17/20 [25:28<02:42, 54.12s/it]FedProx:  90%|█████████ | 18/20 [26:03<01:37, 48.51s/it]FedProx:  95%|█████████▌| 19/20 [26:28<00:41, 41.41s/it]INFO:src.trainer:FedProx Round 20: Accuracy = 0.0930
+FedProx: 100%|██████████| 20/20 [27:09<00:00, 41.30s/it]FedProx: 100%|██████████| 20/20 [27:09<00:00, 81.48s/it]
+INFO:__main__:
+--- Training PersonalizedFL+DP ---
+INFO:src.trainer:Training with Personalized FL + DP (ε=8.0)...
+PersonalizedFL+DP:   0%|          | 0/20 [00:00<?, ?it/s]PersonalizedFL+DP:   5%|▌         | 1/20 [00:27<08:43, 27.56s/it]PersonalizedFL+DP:  10%|█         | 2/20 [01:03<09:44, 32.48s/it]PersonalizedFL+DP:  15%|█▌        | 3/20 [01:38<09:32, 33.69s/it]PersonalizedFL+DP:  20%|██        | 4/20 [02:07<08:29, 31.86s/it]INFO:src.trainer:PersonalizedFL+DP Round 5: Accuracy = 0.0840
+PersonalizedFL+DP:  25%|██▌       | 5/20 [02:55<09:24, 37.64s/it]PersonalizedFL+DP:  30%|███       | 6/20 [03:37<09:06, 39.05s/it]PersonalizedFL+DP:  35%|███▌      | 7/20 [04:17<08:33, 39.53s/it]PersonalizedFL+DP:  40%|████      | 8/20 [05:08<08:37, 43.16s/it]PersonalizedFL+DP:  45%|████▌     | 9/20 [05:44<07:29, 40.82s/it]INFO:src.trainer:PersonalizedFL+DP Round 10: Accuracy = 0.0930
+PersonalizedFL+DP:  50%|█████     | 10/20 [06:25<06:50, 41.02s/it]PersonalizedFL+DP:  55%|█████▌    | 11/20 [07:14<06:28, 43.22s/it]PersonalizedFL+DP:  60%|██████    | 12/20 [08:06<06:08, 46.09s/it]PersonalizedFL+DP:  65%|██████▌   | 13/20 [08:57<05:32, 47.45s/it]PersonalizedFL+DP:  70%|███████   | 14/20 [09:46<04:47, 47.88s/it]INFO:src.trainer:PersonalizedFL+DP Round 15: Accuracy = 0.0930
+PersonalizedFL+DP:  75%|███████▌  | 15/20 [10:42<04:11, 50.33s/it]PersonalizedFL+DP:  80%|████████  | 16/20 [11:26<03:14, 48.56s/it]PersonalizedFL+DP:  85%|████████▌ | 17/20 [11:59<02:11, 43.88s/it]PersonalizedFL+DP:  90%|█████████ | 18/20 [12:56<01:35, 47.90s/it]PersonalizedFL+DP:  95%|█████████▌| 19/20 [13:31<00:43, 43.85s/it]INFO:src.trainer:PersonalizedFL+DP Round 20: Accuracy = 0.0930
+PersonalizedFL+DP: 100%|██████████| 20/20 [14:21<00:00, 45.81s/it]PersonalizedFL+DP: 100%|██████████| 20/20 [14:21<00:00, 43.09s/it]
+Traceback (most recent call last):
+  File "/workspace/projects/federated-learning-privacy/main.py", line 140, in <module>
+  File "/workspace/projects/federated-learning-privacy/main.py", line 94, in main
+  File "/workspace/projects/federated-learning-privacy/src/visualization.py", line 28, in plot_convergence
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/pyplot.py", line 1346, in savefig
+    res = fig.savefig(fname, **kwargs)  # type: ignore[func-returns-value]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/figure.py", line 3515, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2289, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2146, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/backends/backend_agg.py", line 537, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/backends/backend_agg.py", line 486, in _print_pil
+    mpl.image.imsave(
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/matplotlib/image.py", line 1729, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/PIL/Image.py", line 2707, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'results/figures/convergence.png'
