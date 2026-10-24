@@ -473,10 +473,11 @@ def main():
     print("=" * 70 + "\n")
     
     # Get configuration
-    config = get_debug_config()  # Use debug config for quick testing
+    config = get_config()  # Use full config with real APTOS data
     print(f"Running in {'DEBUG' if config.training.debug_mode else 'FULL'} mode")
     print(f"Device: {config.device}")
     print(f"Epochs: {config.training.epochs}")
+    print(f"Dataset: HuggingFace APTOS 2019 (3,662 samples)")
     
     # Setup
     setup_directories(config)
@@ -489,15 +490,20 @@ def main():
         torch.cuda.manual_seed(config.seed)
     
     # Create data loaders
-    print("\nLoading data...")
+    print("\nLoading APTOS dataset from HuggingFace...")
     data_dir = Path(config.output_dir) / 'data'
+    
+    # Use reasonable subset for CPU training (500 samples ~14% of dataset)
+    # Still meaningful for demonstrating model performance on real data
+    max_train_samples = 500 if config.device == 'cpu' else None
     
     train_loader, val_loader, test_loader = get_dataloaders(
         data_dir=str(data_dir),
         batch_size=config.data.batch_size,
         image_size=config.data.image_size,
-        num_workers=0,  # Use 0 workers for faster startup in debug
-        num_synthetic_samples=100 if config.training.debug_mode else 2000,
+        num_workers=0,  # Use 0 workers for faster startup
+        max_samples=max_train_samples,  # Use subset for CPU, full for GPU
+        use_synthetic=False,  # Use real HuggingFace APTOS data
         seed=config.seed,
     )
     

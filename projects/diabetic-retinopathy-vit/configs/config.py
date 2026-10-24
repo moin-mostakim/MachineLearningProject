@@ -119,12 +119,13 @@ class TrainingConfig:
     # Learning rate scheduler
     # Cosine annealing works well for ViT
     scheduler: str = 'cosine'
-    warmup_epochs: int = 5  # Linear warmup crucial for ViT stability
+    warmup_epochs: int = 1  # Reduced warmup for CPU-friendly 5-epoch training
     
     # Training epochs
     # 50-100 epochs common for medical imaging
     # Reference: APTOS solutions used 30-100 epochs
-    epochs: int = 50
+    # Using 5 epochs for CPU-friendly meaningful evaluation
+    epochs: int = 5
     
     # Early stopping patience
     early_stopping_patience: int = 10
@@ -149,7 +150,7 @@ class TrainingConfig:
     betas: Tuple[float, float] = (0.9, 0.999)
     
     # Debug mode settings
-    debug_mode: bool = True
+    debug_mode: bool = False
     debug_batches: int = 2
     debug_epochs: int = 1
 
