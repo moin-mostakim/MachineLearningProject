@@ -258,7 +258,7 @@ def evaluate_model(
     # Load best checkpoint
     checkpoint_path = Path(config.checkpoint_dir) / f'{model_name}_best.pt'
     if checkpoint_path.exists():
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
         model.load_state_dict(checkpoint['model_state_dict'])
         print(f"Loaded best checkpoint from epoch {checkpoint['epoch'] + 1}")
     
@@ -298,7 +298,7 @@ def generate_visualizations(
     # Load best checkpoint
     checkpoint_path = Path(config.checkpoint_dir) / f'{model_name}_best.pt'
     if checkpoint_path.exists():
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
         model.load_state_dict(checkpoint['model_state_dict'])
     
     # Get sample images

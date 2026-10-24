@@ -511,7 +511,7 @@ def load_checkpoint(
     Returns:
         Checkpoint dictionary with epoch and metrics
     """
-    checkpoint = torch.load(path, map_location='cpu')
+    checkpoint = torch.load(path, map_location='cpu', weights_only=False)
     
     model.load_state_dict(checkpoint['model_state_dict'])
     
