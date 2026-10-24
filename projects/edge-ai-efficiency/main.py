@@ -567,47 +567,62 @@ def main():
     os.makedirs(results_dir, exist_ok=True)
     
     # Load data
-    print(f"\n--- Loading Data ({config.data.dataset}) ---")
+    print(f"\n--- Loading Data ({config.data.dataset}) ---", flush=True)
     subset_size = 2000 if config.experiment.debug_mode else None
     # Use synthetic data in debug mode for fast iteration
     use_synthetic = config.experiment.debug_mode
+    # Reduce workers for faster startup in debug mode
+    num_workers = 0 if use_synthetic else config.training.num_workers
     train_loader, val_loader = get_dataloaders(
         dataset=config.data.dataset,
         batch_size=config.training.batch_size,
-        num_workers=config.training.num_workers,
-        pin_memory=config.training.pin_memory,
+        num_workers=num_workers,
+        pin_memory=False if device == 'cpu' else config.training.pin_memory,
         subset_size=subset_size,
         use_synthetic=use_synthetic
     )
-    print(f"Train batches: {len(train_loader)}, Val batches: {len(val_loader)}")
+    print(f"Train batches: {len(train_loader)}, Val batches: {len(val_loader)}", flush=True)
     
     # All results
     all_results = {}
     
     try:
         # Phase 1: Baseline
+        print("\n--- Phase 1: Baseline Models ---", flush=True)
         baseline_results, baseline_model = run_baseline_experiment(
             config, train_loader, val_loader, device, results_dir
         )
         all_results['baseline'] = baseline_results
+        print("Phase 1 complete.", flush=True)
         
-        # Phase 2: NAS
-        nas_results, nas_model = run_nas_experiment(
-            config, train_loader, val_loader, device, results_dir
-        )
-        all_results['nas'] = nas_results
+        # Phase 2: NAS (skip in debug mode - too slow on CPU)
+        if not config.experiment.debug_mode:
+            nas_results, nas_model = run_nas_experiment(
+                config, train_loader, val_loader, device, results_dir
+            )
+            all_results['nas'] = nas_results
+        else:
+            print("\n[DEBUG MODE] Skipping NAS (slow on CPU) - using baseline as NAS result", flush=True)
+            nas_model = baseline_model
+            all_results['nas'] = {'skipped_in_debug': True}
         
         # Phase 3: Quantization
+        print("\n--- Phase 3: Quantization ---", flush=True)
         quant_results = run_quantization_experiment(
             config, baseline_model, train_loader, val_loader, device, results_dir
         )
         all_results['quantization'] = quant_results
+        print("Phase 3 complete.", flush=True)
         
-        # Phase 4: Combined NAS + QAT
-        combined_results = run_combined_experiment(
-            config, nas_model, train_loader, val_loader, device, results_dir
-        )
-        all_results['combined'] = combined_results
+        # Phase 4: Combined NAS + QAT (skip in debug mode if NAS was skipped)
+        if not config.experiment.debug_mode:
+            combined_results = run_combined_experiment(
+                config, nas_model, train_loader, val_loader, device, results_dir
+            )
+            all_results['combined'] = combined_results
+        else:
+            print("\n[DEBUG MODE] Skipping Combined NAS+QAT", flush=True)
+            all_results['combined'] = {'skipped_in_debug': True}
         
         # Generate summary
         summary = create_results_summary(all_results, config)

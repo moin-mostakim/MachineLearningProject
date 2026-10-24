@@ -1,0 +1,116 @@
+{
+  "baseline": {
+    "MobileNetV2": {
+      "model_info": {
+        "params": 2236682,
+        "size_mb": 8.662788391113281,
+        "flops": 179232778
+      }
+    },
+    "MobileNetV2-Small": {
+      "model_info": {
+        "params": 70474,
+        "size_mb": 0.28357696533203125,
+        "flops": 17515530
+      },
+      "training_history": [
+        {
+          "epoch": 1,
+          "train_loss": 2.3512598929866666,
+          "train_acc": 9.67741935483871,
+          "val_loss": 2.3288865430014476,
+          "val_acc": 9.75,
+          "lr": 0.07500000000000001
+        },
+        {
+          "epoch": 2,
+          "train_loss": 2.3382851769847255,
+          "train_acc": 9.879032258064516,
+          "val_loss": 2.3820187704903737,
+          "val_acc": 10.0,
+          "lr": 0.025000000000000015
+        },
+        {
+          "epoch": 3,
+          "train_loss": 2.2964028696860037,
+          "train_acc": 12.651209677419354,
+          "val_loss": 2.308199644088745,
+          "val_acc": 10.0,
+          "lr": 0.0
+        }
+      ],
+      "benchmark": {
+        "accuracy": 10.0,
+        "latency_ms": 1.5318995698362414,
+        "params": 70474,
+        "flops": 17515530
+      }
+    },
+    "EfficientNet-Lite0": {
+      "model_info": {
+        "params": 7155658,
+        "size_mb": 27.457321166992188,
+        "flops": 241931210
+      }
+    },
+    "EfficientNet-Lite-Small": {
+      "model_info": {
+        "params": 574282,
+        "size_mb": 2.240142822265625,
+        "flops": 42193418
+      }
+    }
+  },
+  "nas": {
+    "skipped_in_debug": true
+  },
+  "quantization": {
+    "ptq_comparison": {
+      "float32": {
+        "loss": 2.306951250348772,
+        "accuracy": 10.0,
+        "bits": 32
+      },
+      "int8_dynamic": {
+        "loss": 2.3066886152539934,
+        "accuracy": 10.25,
+        "bits": 8
+      },
+      "int4_simulated": {
+        "loss": 2.408876691545759,
+        "accuracy": 10.25,
+        "bits": 4
+      }
+    },
+    "size_reduction": {
+      "float32_size_mb": 0.28357696533203125,
+      "int8_size_mb": 0.07089424133300781,
+      "int4_size_mb": 0.035447120666503906,
+      "int8_reduction": 0.75,
+      "int4_reduction": 0.875
+    },
+    "qat_history": [
+      {
+        "epoch": 1,
+        "train_loss": 2.2379777431488037,
+        "train_acc": 18.951612903225808,
+        "val_loss": 2.3028506551470076,
+        "val_acc": 10.75
+      },
+      {
+        "epoch": 2,
+        "train_loss": 2.230531500231835,
+        "train_acc": 19.758064516129032,
+        "val_loss": 2.303617034639631,
+        "val_acc": 12.5
+      }
+    ],
+    "qat_accuracy": {
+      "float_accuracy": 10.0,
+      "qat_accuracy": 9.75
+    }
+  },
+  "combined": {
+    "skipped_in_debug": true
+  }
+}
