@@ -84,7 +84,7 @@ class TrainingConfig:
 class DataConfig:
     """Dataset configuration."""
     
-    dataset_name: str = "sciq"  # Options: sciq, arc_easy, arc_challenge, synthetic
+    dataset_name: str = "sciq"  # Options: sciq, arc_easy, arc_challenge
     data_dir: str = "data"
     train_file: str = "train.json"
     val_file: str = "val.json"
@@ -94,10 +94,25 @@ class DataConfig:
     max_samples: Optional[int] = None  # Limit samples for debugging
     num_workers: int = 4  # DataLoader workers
     shuffle_train: bool = True
+    use_synthetic: bool = False  # Use synthetic data instead of real (opt-in only)
     
     # Knowledge graph
     kg_file: str = "knowledge_graph.json"
     build_kg_from_data: bool = True  # Build KG from training data
+    
+    # Dataset URLs (for documentation and manual download)
+    dataset_urls: dict = field(default_factory=lambda: {
+        "sciq": {
+            "huggingface": "https://huggingface.co/datasets/allenai/sciq",
+            "official": "https://allenai.org/data/sciq",
+            "license": "CC BY-NC 3.0",
+        },
+        "arc": {
+            "huggingface": "https://huggingface.co/datasets/allenai/ai2_arc",
+            "official": "https://allenai.org/data/arc",
+            "license": "CC BY-SA 4.0",
+        }
+    })
 
 
 @dataclass

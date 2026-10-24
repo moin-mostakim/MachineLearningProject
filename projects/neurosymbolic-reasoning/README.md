@@ -60,15 +60,42 @@ python train.py --epochs 20 --dataset sciq
 python train.py --debug --quantize int8
 ```
 
-## Dataset
+## Datasets
 
-The system supports multiple scientific reasoning datasets:
+The system uses real scientific reasoning datasets from HuggingFace Hub by default.
 
-1. **SciQ** (default): Science question answering with support text
-2. **ARC-Easy**: AI2 Reasoning Challenge (easy split)
-3. **ARC-Challenge**: AI2 Reasoning Challenge (challenge split)
+| Dataset | Source | URL | License | Size | Samples |
+|---------|--------|-----|---------|------|---------|
+| **SciQ** | HuggingFace Hub | [allenai/sciq](https://huggingface.co/datasets/allenai/sciq) | CC BY-NC 3.0 | ~13MB | 13,679 (11,679 train, 1,000 val, 1,000 test) |
+| **ARC-Easy** | HuggingFace Hub | [allenai/ai2_arc](https://huggingface.co/datasets/allenai/ai2_arc) | CC BY-SA 4.0 | ~1.1MB | 5,197 |
+| **ARC-Challenge** | HuggingFace Hub | [allenai/ai2_arc](https://huggingface.co/datasets/allenai/ai2_arc) | CC BY-SA 4.0 | ~1.1MB | 2,590 |
 
-For debug mode, synthetic scientific reasoning data is generated.
+**Official Sources:**
+- SciQ: [AllenAI SciQ](https://allenai.org/data/sciq) - Crowdsourced science questions
+- ARC: [AllenAI ARC](https://allenai.org/data/arc) - AI2 Reasoning Challenge
+
+### Download Instructions
+
+**Automatic (Recommended):** Datasets are automatically downloaded from HuggingFace Hub on first run:
+```bash
+pip install datasets
+python train.py --dataset sciq
+```
+
+**Manual Download:**
+```bash
+# Using HuggingFace CLI
+pip install huggingface_hub
+huggingface-cli download allenai/sciq --repo-type dataset
+huggingface-cli download allenai/ai2_arc --repo-type dataset
+```
+
+**Synthetic Data (for testing only):**
+```bash
+python train.py --debug --use-synthetic
+```
+
+Note: Synthetic data is available as an explicit opt-in flag for quick testing, but real datasets should be used for meaningful experiments.
 
 ## Model Comparison
 
