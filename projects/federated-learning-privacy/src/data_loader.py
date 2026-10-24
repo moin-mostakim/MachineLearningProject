@@ -1,43 +1,106 @@
-"""Data loading with non-IID partitioning for federated learning."""
+"""
+Data loading with non-IID partitioning for federated learning.
+
+Dataset: CIFAR-10
+- Source: torchvision (official) or HuggingFace Hub (uoft-cs/cifar10)
+- URL: https://huggingface.co/datasets/uoft-cs/cifar10
+- Official: https://www.cs.toronto.edu/~kriz/cifar.html
+- License: MIT
+- Size: 163MB (50K train + 10K test, 10 classes, 32x32 RGB)
+- Reference: Krizhevsky (2009): "Learning Multiple Layers of Features from Tiny Images"
+"""
 
 import torch
 from torch.utils.data import Dataset, DataLoader, Subset
+import torchvision
+import torchvision.transforms as transforms
 import numpy as np
 from typing import Dict, List, Tuple
 import logging
+import os
+
+try:
+    from datasets import load_dataset
+    HAS_DATASETS = True
+except ImportError:
+    HAS_DATASETS = False
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class SyntheticCIFAR10(Dataset):
-    """Synthetic CIFAR-10-like dataset for FL experiments."""
-    
-    def __init__(self, num_samples: int = 5000, seed: int = 42):
-        np.random.seed(seed)
-        self.num_samples = num_samples
-        self.num_classes = 10
-        
-        # Generate synthetic 32x32x3 images
-        self.data = np.random.randn(num_samples, 3, 32, 32).astype(np.float32) * 0.2 + 0.5
-        self.targets = np.random.randint(0, 10, num_samples)
-        
-        # Add class-specific patterns
-        for i in range(num_samples):
-            label = self.targets[i]
-            # Add class-specific bias to make it learnable
-            self.data[i, label % 3, :, :] += 0.1 * (label / 10)
-        
-        self.data = np.clip(self.data, 0, 1)
-        logger.info(f"Created synthetic dataset with {num_samples} samples")
-    
-    def __len__(self) -> int:
-        return self.num_samples
-    
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
-        return torch.from_numpy(self.data[idx]), int(self.targets[idx])
+# CIFAR-10 statistics for normalization
+CIFAR10_MEAN = (0.4914, 0.4822, 0.4465)
+CIFAR10_STD = (0.2470, 0.2435, 0.2616)
 
 
+class HuggingFaceCIFAR10(Dataset):
+    """CIFAR-10 from HuggingFace Hub as fallback."""
+    
+    def __init__(self, split: str = "train", transform=None, max_samples=None):
+        self.transform = transform
+        logger.info(f"Loading CIFAR-10 from HuggingFace Hub ({split})...")
+        ds = load_dataset("uoft-cs/cifar10", split=split)
+        
+        if max_samples and max_samples < len(ds):
+            ds = ds.select(range(max_samples))
+        
+        self.data = []
+        self.targets = []
+        for sample in ds:
+            self.data.append(np.array(sample["img"]))
+            self.targets.append(sample["label"])
+        
+        self.data = np.stack(self.data)
+        self.targets = np.array(self.targets)
+        logger.info(f"Loaded {len(self.data)} CIFAR-10 samples from HuggingFace")
+    
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        img = self.data[idx]
+        if self.transform:
+            from PIL import Image
+            img = Image.fromarray(img)
+            img = self.transform(img)
+        else:
+            img = torch.from_numpy(img).permute(2, 0, 1).float() / 255.0
+        return img, int(self.targets[idx])
+
+
+def get_cifar10_dataset(train: bool = True, data_dir: str = "./data", max_samples=None):
+    """
+    Load CIFAR-10 from torchvision with HuggingFace fallback.
+    
+    ALWAYS uses real CIFAR-10 data (no synthetic data).
+    """
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(CIFAR10_MEAN, CIFAR10_STD)
+    ])
+    
+    try:
+        dataset = torchvision.datasets.CIFAR10(
+            root=data_dir, train=train, download=True, transform=transform
+        )
+        logger.info(f"Loaded CIFAR-10 {'train' if train else 'test'} ({len(dataset)} samples) from torchvision")
+        
+        if max_samples and max_samples < len(dataset):
+            indices = list(range(max_samples))
+            dataset = Subset(dataset, indices)
+        
+        return dataset
+        
+    except Exception as e:
+        logger.warning(f"torchvision CIFAR-10 failed: {e}")
+        if HAS_DATASETS:
+            split = "train" if train else "test"
+            return HuggingFaceCIFAR10(split=split, transform=transform, max_samples=max_samples)
+        raise RuntimeError(
+            "Cannot load CIFAR-10. Install datasets library: pip install datasets"
+        )
+    
 def create_non_iid_partitions(
     dataset: Dataset,
     num_clients: int,
@@ -91,11 +154,14 @@ def create_client_dataloaders(
     config,
     seed: int = 42
 ) -> Tuple[Dict[int, DataLoader], DataLoader]:
-    """Create dataloaders for each client and a test loader."""
+    """
+    Create dataloaders for each client and a test loader.
     
-    total_samples = config.federated.num_clients * config.data.samples_per_client
-    train_dataset = SyntheticCIFAR10(int(total_samples * 0.8), seed)
-    test_dataset = SyntheticCIFAR10(int(total_samples * 0.2), seed + 1000)
+    Uses REAL CIFAR-10 data from torchvision or HuggingFace.
+    """
+    # Load real CIFAR-10 data
+    train_dataset = get_cifar10_dataset(train=True, data_dir="./data")
+    test_dataset = get_cifar10_dataset(train=False, data_dir="./data")
     
     if config.data.iid:
         # IID: random split

@@ -10,7 +10,7 @@ from pathlib import Path
 class ModelConfig:
     backbone: str = "resnet18"
     feature_dim: int = 512
-    num_classes: int = 4  # steering actions
+    num_classes: int = 10  # CIFAR-10/SVHN classes (using real data)
     dropout: float = 0.3
     
     _justifications: Dict[str, str] = field(default_factory=lambda: {

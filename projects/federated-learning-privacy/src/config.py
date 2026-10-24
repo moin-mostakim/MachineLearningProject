@@ -97,7 +97,7 @@ class ExperimentConfig:
         config.federated.clients_per_round = 3
         config.federated.num_rounds = 3
         config.federated.local_epochs = 1
-        config.data.samples_per_client = 100
+        config.data.samples_per_client = 50
         return config
     
     def to_dict(self) -> Dict[str, Any]:

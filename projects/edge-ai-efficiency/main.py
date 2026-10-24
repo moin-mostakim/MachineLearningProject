@@ -311,12 +311,12 @@ def run_quantization_experiment(
     results = {}
     input_size = (1, 3, config.get_image_size(), config.get_image_size())
     
-    # Get calibration data
+    # Get calibration data - always use real data
     cal_loader = get_calibration_loader(
         dataset=config.data.dataset,
         batch_size=32,
         num_samples=config.quantization.observer_batches * 32,
-        use_synthetic=config.experiment.debug_mode
+        use_synthetic=False
     )
     
     # Post-Training Quantization comparison
@@ -568,11 +568,11 @@ def main():
     
     # Load data
     print(f"\n--- Loading Data ({config.data.dataset}) ---", flush=True)
-    subset_size = 2000 if config.experiment.debug_mode else None
-    # Use synthetic data in debug mode for fast iteration
-    use_synthetic = config.experiment.debug_mode
+    subset_size = 5000 if config.experiment.debug_mode else None
+    # ALWAYS use real data - no synthetic data per user requirements
+    use_synthetic = False
     # Reduce workers for faster startup in debug mode
-    num_workers = 0 if use_synthetic else config.training.num_workers
+    num_workers = 2 if config.experiment.debug_mode else config.training.num_workers
     train_loader, val_loader = get_dataloaders(
         dataset=config.data.dataset,
         batch_size=config.training.batch_size,

@@ -28,7 +28,7 @@
     "dataset": "cifar10",
     "iid": false,
     "alpha": 0.5,
-    "samples_per_client": 100
+    "samples_per_client": 50
   },
   "seed": 42
 }

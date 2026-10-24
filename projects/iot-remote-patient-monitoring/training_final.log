@@ -1,0 +1,124 @@
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║     SMART REMOTE PATIENT MONITORING SYSTEM                                   ║
+║     Using Simulated IoT Sensors with Real-Time Health Analytics              ║
+║     and Emergency Alert Mechanism                                            ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║     Methods: Threshold | Isolation Forest | LSTM | Transformer               ║
+║     Dataset: Simulated from MIMIC-III/PhysioNet distributions                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+    
+============================================================
+SMART REMOTE PATIENT MONITORING SYSTEM - CONFIGURATION
+============================================================
+
+### Vital Signs Thresholds ###
+Heart Rate: 75.0±12.0 bpm (Critical: <40.0 or >150.0)
+SpO2: 97.0±1.5% (Critical: <85.0%)
+SBP: 120.0±15.0 mmHg (Critical: <70.0 or >200.0)
+Temperature: 36.8±0.4°C (Critical: <34.0 or >41.0°C)
+
+### Simulation Parameters ###
+Patients: 100
+Sampling interval: 5s
+Duration: 24 hours
+Anomaly rate: 5.0%
+
+### Model Configurations ###
+LSTM: 2 layers × 64 units
+Transformer: 2 layers × 32d × 4 heads
+============================================================
+
+============================================================
+STEP 1: GENERATING SIMULATED IOT SENSOR DATA
+============================================================
+Simulated patient 0/10
+
+Dataset Statistics:
+  Total samples: 28,800
+  Patients: 10
+  Anomaly rate: 20.22%
+
+Resource Usage for 'data_generation':
+==================================================
+RESOURCE USAGE SUMMARY
+==================================================
+Duration: 2.0 seconds
+
+CPU:
+  Mean: 66.7%
+  Max: 100.0%
+
+Memory:
+  Mean: 7.65 GB (48.9%)
+  Max: 7.66 GB
+==================================================
+
+Dataset saved to: /workspace/projects/iot-remote-patient-monitoring/data/patient_vitals.csv
+
+Data splits:
+  Train: 17,280 samples
+  Validation: 5,760 samples
+  Test: 5,760 samples
+
+============================================================
+STEP 2: THRESHOLD-BASED BASELINE DETECTION
+============================================================
+
+Threshold Detection Results:
+  Precision: 1.0000
+  Recall: 0.2268
+  F1 Score: 0.3697
+
+Resource Usage for 'threshold_baseline':
+==================================================
+RESOURCE USAGE SUMMARY
+==================================================
+Duration: 2.0 seconds
+
+CPU:
+  Mean: 100.0%
+  Max: 100.0%
+
+Memory:
+  Mean: 7.21 GB (46.2%)
+  Max: 7.32 GB
+==================================================
+
+============================================================
+STEP 3: ISOLATION FOREST ANOMALY DETECTION
+============================================================
+Isolation Forest trained with 17280 samples
+  n_estimators: 100
+  max_samples: 256
+  contamination: 0.05
+
+Isolation Forest Results:
+  Precision: 0.2521
+  Recall: 0.4828
+  F1 Score: 0.3313
+
+Resource Usage for 'isolation_forest':
+==================================================
+RESOURCE USAGE SUMMARY
+==================================================
+Duration: 0.0 seconds
+
+CPU:
+  Mean: 100.0%
+  Max: 100.0%
+
+Memory:
+  Mean: 7.01 GB (44.9%)
+  Max: 7.01 GB
+==================================================
+Model saved to: /workspace/projects/iot-remote-patient-monitoring/models/isolation_forest.joblib
+
+============================================================
+STEP 4: LSTM AUTOENCODER ANOMALY DETECTION
+============================================================
+Preparing training data...
+Training LSTM on cpu...
+  Sequences: 17221
+  Sequence length: 60
+  Hidden size: 64
