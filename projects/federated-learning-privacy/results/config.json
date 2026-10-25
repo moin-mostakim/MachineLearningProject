@@ -8,10 +8,10 @@
     "dropout": 0.2
   },
   "federated": {
-    "num_clients": 5,
-    "clients_per_round": 3,
-    "num_rounds": 3,
-    "local_epochs": 1
+    "num_clients": 10,
+    "clients_per_round": 5,
+    "num_rounds": 20,
+    "local_epochs": 2
   },
   "dp": {
     "epsilon": 8.0,
@@ -28,7 +28,7 @@
     "dataset": "cifar10",
     "iid": false,
     "alpha": 0.5,
-    "samples_per_client": 100
+    "samples_per_client": 500
   },
   "seed": 42
 }

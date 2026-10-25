@@ -15,10 +15,10 @@
       "dropout": 0.2
     },
     "federated": {
-      "num_clients": 5,
-      "clients_per_round": 3,
-      "num_rounds": 3,
-      "local_epochs": 1
+      "num_clients": 10,
+      "clients_per_round": 5,
+      "num_rounds": 20,
+      "local_epochs": 2
     },
     "dp": {
       "epsilon": 8.0,
@@ -35,7 +35,7 @@
       "dataset": "cifar10",
       "iid": false,
       "alpha": 0.5,
-      "samples_per_client": 100
+      "samples_per_client": 500
     },
     "seed": 42
   },
@@ -46,28 +46,79 @@
     "size_mb": 0.34525299072265625
   },
   "resources": {
-    "wall_time_seconds": 4.57083738899928,
-    "cpu_percent_mean": 152.325,
-    "memory_peak_mb": 68.37797927856445
+    "wall_time_seconds": 60.96049361900077,
+    "cpu_percent_mean": 383.8171953255426,
+    "memory_peak_mb": 68.27428340911865
   },
   "FedAvg_accuracies": [
-    0.1,
-    0.1,
-    0.1
+    0.092,
+    0.092,
+    0.084,
+    0.084,
+    0.104,
+    0.098,
+    0.098,
+    0.098,
+    0.084,
+    0.084,
+    0.098,
+    0.092,
+    0.111,
+    0.105,
+    0.092,
+    0.11,
+    0.11,
+    0.092,
+    0.092,
+    0.084
   ],
-  "FedAvg_final": 0.1,
+  "FedAvg_final": 0.084,
   "FedProx_accuracies": [
-    0.15,
-    0.15,
-    0.15
+    0.084,
+    0.111,
+    0.095,
+    0.111,
+    0.111,
+    0.114,
+    0.11,
+    0.11,
+    0.086,
+    0.111,
+    0.093,
+    0.098,
+    0.092,
+    0.086,
+    0.12,
+    0.12,
+    0.092,
+    0.084,
+    0.105,
+    0.086
   ],
-  "FedProx_final": 0.15,
+  "FedProx_final": 0.086,
   "PersonalizedFL+DP_accuracies": [
-    0.04,
-    0.04,
-    0.04
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.098,
+    0.098,
+    0.098,
+    0.098,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093
   ],
-  "PersonalizedFL+DP_final": 0.04,
+  "PersonalizedFL+DP_final": 0.093,
   "quantization": {
     "size": {
       "fp32_size_mb": 0.34955310821533203,
@@ -76,18 +127,18 @@
     },
     "latency": {
       "fp32": {
-        "mean_ms": 0.2352344398968853,
-        "p95_ms": 0.2542767502745846
+        "mean_ms": 0.23032225944916718,
+        "p95_ms": 0.25025170361914206
       },
       "int8": {
-        "mean_ms": 0.2688355198915815,
-        "p95_ms": 0.31848464977883845
+        "mean_ms": 0.2700897598697338,
+        "p95_ms": 0.30089915380813176
       },
-      "speedup": 0.8750124983177552
+      "speedup": 0.8527619098193623
     },
     "accuracy": {
-      "fp32_metric": 0.1,
-      "int8_metric": 0.1
+      "fp32_metric": 0.084,
+      "int8_metric": 0.084
     }
   }
 }

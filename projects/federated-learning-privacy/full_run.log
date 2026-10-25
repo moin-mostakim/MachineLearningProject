@@ -1,0 +1,49 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Privacy-Preserving Federated Learning
+INFO:__main__:============================================================
+INFO:__main__:Creating client dataloaders...
+INFO:src.data_loader:Created synthetic dataset with 4000 samples
+INFO:src.data_loader:Created synthetic dataset with 1000 samples
+INFO:__main__:Created 10 clients
+INFO:__main__:Model: 90,506 params, 0.35 MB
+INFO:__main__:
+--- Training FedAvg ---
+INFO:src.trainer:Training with FedAvg...
+FedAvg:   0%|          | 0/20 [00:00<?, ?it/s]FedAvg:   5%|▌         | 1/20 [00:04<01:23,  4.39s/it]FedAvg:  10%|█         | 2/20 [00:05<00:43,  2.42s/it]FedAvg:  15%|█▌        | 3/20 [00:06<00:29,  1.74s/it]FedAvg:  20%|██        | 4/20 [00:07<00:23,  1.46s/it]INFO:src.trainer:FedAvg Round 5: Accuracy = 0.1040
+FedAvg:  25%|██▌       | 5/20 [00:08<00:18,  1.23s/it]FedAvg:  30%|███       | 6/20 [00:09<00:15,  1.09s/it]FedAvg:  35%|███▌      | 7/20 [00:10<00:14,  1.08s/it]FedAvg:  40%|████      | 8/20 [00:11<00:12,  1.04s/it]FedAvg:  45%|████▌     | 9/20 [00:11<00:10,  1.01it/s]INFO:src.trainer:FedAvg Round 10: Accuracy = 0.0840
+FedAvg:  50%|█████     | 10/20 [00:12<00:09,  1.01it/s]FedAvg:  55%|█████▌    | 11/20 [00:13<00:08,  1.07it/s]FedAvg:  60%|██████    | 12/20 [00:14<00:07,  1.04it/s]FedAvg:  65%|██████▌   | 13/20 [00:15<00:06,  1.14it/s]FedAvg:  70%|███████   | 14/20 [00:16<00:05,  1.15it/s]INFO:src.trainer:FedAvg Round 15: Accuracy = 0.0920
+FedAvg:  75%|███████▌  | 15/20 [00:16<00:04,  1.22it/s]FedAvg:  80%|████████  | 16/20 [00:17<00:03,  1.17it/s]FedAvg:  85%|████████▌ | 17/20 [00:18<00:02,  1.12it/s]FedAvg:  90%|█████████ | 18/20 [00:19<00:01,  1.14it/s]FedAvg:  95%|█████████▌| 19/20 [00:20<00:00,  1.14it/s]INFO:src.trainer:FedAvg Round 20: Accuracy = 0.0840
+FedAvg: 100%|██████████| 20/20 [00:21<00:00,  1.10it/s]FedAvg: 100%|██████████| 20/20 [00:21<00:00,  1.08s/it]
+INFO:__main__:
+--- Training FedProx ---
+INFO:src.trainer:Training with FedProx (μ=0.01)...
+FedProx:   0%|          | 0/20 [00:00<?, ?it/s]FedProx:   5%|▌         | 1/20 [00:01<00:20,  1.05s/it]FedProx:  10%|█         | 2/20 [00:02<00:19,  1.06s/it]FedProx:  15%|█▌        | 3/20 [00:03<00:17,  1.04s/it]FedProx:  20%|██        | 4/20 [00:03<00:14,  1.10it/s]INFO:src.trainer:FedProx Round 5: Accuracy = 0.1110
+FedProx:  25%|██▌       | 5/20 [00:04<00:13,  1.14it/s]FedProx:  30%|███       | 6/20 [00:05<00:11,  1.19it/s]FedProx:  35%|███▌      | 7/20 [00:06<00:11,  1.10it/s]FedProx:  40%|████      | 8/20 [00:07<00:10,  1.11it/s]FedProx:  45%|████▌     | 9/20 [00:08<00:11,  1.00s/it]INFO:src.trainer:FedProx Round 10: Accuracy = 0.1110
+FedProx:  50%|█████     | 10/20 [00:09<00:09,  1.01it/s]FedProx:  55%|█████▌    | 11/20 [00:10<00:09,  1.07s/it]FedProx:  60%|██████    | 12/20 [00:11<00:08,  1.03s/it]FedProx:  65%|██████▌   | 13/20 [00:12<00:07,  1.06s/it]FedProx:  70%|███████   | 14/20 [00:14<00:06,  1.12s/it]INFO:src.trainer:FedProx Round 15: Accuracy = 0.1200
+FedProx:  75%|███████▌  | 15/20 [00:14<00:05,  1.04s/it]FedProx:  80%|████████  | 16/20 [00:16<00:04,  1.04s/it]FedProx:  85%|████████▌ | 17/20 [00:16<00:02,  1.02it/s]FedProx:  90%|█████████ | 18/20 [00:17<00:01,  1.02it/s]FedProx:  95%|█████████▌| 19/20 [00:18<00:00,  1.04it/s]INFO:src.trainer:FedProx Round 20: Accuracy = 0.0860
+FedProx: 100%|██████████| 20/20 [00:19<00:00,  1.02s/it]FedProx: 100%|██████████| 20/20 [00:19<00:00,  1.00it/s]
+INFO:__main__:
+--- Training PersonalizedFL+DP ---
+INFO:src.trainer:Training with Personalized FL + DP (ε=8.0)...
+PersonalizedFL+DP:   0%|          | 0/20 [00:00<?, ?it/s]PersonalizedFL+DP:   5%|▌         | 1/20 [00:00<00:17,  1.11it/s]PersonalizedFL+DP:  10%|█         | 2/20 [00:01<00:15,  1.14it/s]PersonalizedFL+DP:  15%|█▌        | 3/20 [00:02<00:15,  1.10it/s]PersonalizedFL+DP:  20%|██        | 4/20 [00:03<00:13,  1.16it/s]INFO:src.trainer:PersonalizedFL+DP Round 5: Accuracy = 0.0980
+PersonalizedFL+DP:  25%|██▌       | 5/20 [00:04<00:13,  1.11it/s]PersonalizedFL+DP:  30%|███       | 6/20 [00:05<00:11,  1.18it/s]PersonalizedFL+DP:  35%|███▌      | 7/20 [00:06<00:11,  1.13it/s]PersonalizedFL+DP:  40%|████      | 8/20 [00:07<00:10,  1.13it/s]PersonalizedFL+DP:  45%|████▌     | 9/20 [00:08<00:10,  1.00it/s]INFO:src.trainer:PersonalizedFL+DP Round 10: Accuracy = 0.0930
+PersonalizedFL+DP:  50%|█████     | 10/20 [00:09<00:09,  1.02it/s]PersonalizedFL+DP:  55%|█████▌    | 11/20 [00:10<00:09,  1.01s/it]PersonalizedFL+DP:  60%|██████    | 12/20 [00:11<00:07,  1.01it/s]PersonalizedFL+DP:  65%|██████▌   | 13/20 [00:12<00:06,  1.02it/s]PersonalizedFL+DP:  70%|███████   | 14/20 [00:13<00:05,  1.01it/s]INFO:src.trainer:PersonalizedFL+DP Round 15: Accuracy = 0.0930
+PersonalizedFL+DP:  75%|███████▌  | 15/20 [00:14<00:05,  1.03s/it]PersonalizedFL+DP:  80%|████████  | 16/20 [00:15<00:04,  1.03s/it]PersonalizedFL+DP:  85%|████████▌ | 17/20 [00:16<00:03,  1.05s/it]PersonalizedFL+DP:  90%|█████████ | 18/20 [00:17<00:02,  1.04s/it]PersonalizedFL+DP:  95%|█████████▌| 19/20 [00:18<00:01,  1.02s/it]INFO:src.trainer:PersonalizedFL+DP Round 20: Accuracy = 0.0930
+PersonalizedFL+DP: 100%|██████████| 20/20 [00:19<00:00,  1.02it/s]PersonalizedFL+DP: 100%|██████████| 20/20 [00:19<00:00,  1.03it/s]
+INFO:__main__:
+Running quantization comparison...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+INFO:__main__:============================================================
+INFO:__main__:Experiment Complete!
+INFO:__main__:============================================================
+
+SUMMARY
+========================================
+FedAvg: 0.0840
+FedProx: 0.0860
+PersonalizedFL+DP: 0.0930
+
+DP Privacy Budget: ε=8.0
+Training time: 61.0s
