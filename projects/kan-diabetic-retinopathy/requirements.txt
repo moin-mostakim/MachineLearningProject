@@ -1,0 +1,18 @@
+# Requirements for KAN Diabetic Retinopathy Detection
+
+# Core ML
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.21.0
+
+# Metrics and evaluation
+scikit-learn>=1.0.0
+
+# Visualization
+matplotlib>=3.5.0
+
+# System monitoring
+psutil>=5.9.0
+
+# Image processing
+Pillow>=9.0.0

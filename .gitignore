@@ -14,3 +14,4 @@ data/*.zip
 # Duplicate/backup dataset files
 data/CCPP/*.ods
 data/CCPP/Readme.txt~
+*.pt
