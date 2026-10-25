@@ -1,0 +1,74 @@
+
+============================================================
+ Adversarial Robustness of Vision-Language Models
+============================================================
+Dataset: cifar10
+Debug mode: False
+Device: cpu
+Epochs: 100
+Epsilon: 0.0314 (8.0/255)
+Methods: ['standard', 'adversarial', 'certified', 'dro']
+
+==================================================
+ System Information
+==================================================
+  cpu_count: 4
+  cpu_count_physical: 4
+  total_memory_gb: 16.78
+  available_memory_gb: 11.14
+  torch_version: 2.14.1+cu130
+  cuda_available: False
+==================================================
+
+
+==================================================
+Model Parameter Count
+==================================================
+Component                      Parameters
+--------------------------------------------------
+total                          11,828,034
+trainable                      11,828,034
+vision_encoder                 11,825,472
+text_encoder                        2,560
+--------------------------------------------------
+Memory (float32)                 47.31 MB
+Memory (float16)                 23.66 MB
+==================================================
+
+Loading CIFAR-10 dataset...
+Loading real CIFAR-10 from HuggingFace Hub...
+  HuggingFace URL: https://huggingface.co/datasets/cifar10
+Loading CIFAR-10 from HuggingFace Hub (split=train)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'uoft-cs/cifar10' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  Loaded 50000 samples from HuggingFace
+Loading CIFAR-10 from HuggingFace Hub (split=test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'uoft-cs/cifar10' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+  Loaded 10000 samples from HuggingFace
+Train batches: 391, Test batches: 79
+
+============================================================
+ Training: Standard Baseline
+============================================================
+/workspace/projects/adversarial-vlm-robustness/trainers/base.py:43: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler() if config.training.use_amp else None
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/cuda/amp/grad_scaler.py:31: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  super().__init__(
+Resource monitoring started
+
+Epoch 1/100
+----------------------------------------
+/workspace/projects/adversarial-vlm-robustness/trainers/standard.py:22: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/cuda/amp/autocast_mode.py:54: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  super().__init__(
+  Batch 0/391: Loss=9.1900
+  Batch 50/391: Loss=2.3026
+  Batch 100/391: Loss=2.3026
+  Batch 150/391: Loss=2.3026
+  Batch 200/391: Loss=2.3026
+  Batch 250/391: Loss=2.3026

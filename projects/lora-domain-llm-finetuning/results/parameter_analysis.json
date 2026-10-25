@@ -1,0 +1,140 @@
+{
+  "Frozen Baseline": {
+    "model_name": "Frozen Baseline",
+    "total_params": 81912576,
+    "trainable_params": 0,
+    "frozen_params": 81912576,
+    "total_size_mb": 312.4716796875,
+    "components": [
+      {
+        "name": "Embeddings",
+        "total_params": 39383808,
+        "trainable_params": 0,
+        "frozen_params": 39383808,
+        "size_mb": 150.2373046875
+      },
+      {
+        "name": "Attention",
+        "total_params": 14174208,
+        "trainable_params": 0,
+        "frozen_params": 14174208,
+        "size_mb": 54.0703125
+      },
+      {
+        "name": "MLP/FFN",
+        "total_params": 28334592,
+        "trainable_params": 0,
+        "frozen_params": 28334592,
+        "size_mb": 108.087890625
+      },
+      {
+        "name": "LayerNorm",
+        "total_params": 19968,
+        "trainable_params": 0,
+        "frozen_params": 19968,
+        "size_mb": 0.076171875
+      },
+      {
+        "name": "LM Head",
+        "total_params": 38597376,
+        "trainable_params": 0,
+        "frozen_params": 38597376,
+        "size_mb": 147.2373046875
+      }
+    ],
+    "flops_estimate": 20969619456
+  },
+  "Full Fine-tuning": {
+    "model_name": "Full Fine-tuning",
+    "total_params": 81912576,
+    "trainable_params": 81912576,
+    "frozen_params": 0,
+    "total_size_mb": 312.4716796875,
+    "components": [
+      {
+        "name": "Embeddings",
+        "total_params": 39383808,
+        "trainable_params": 39383808,
+        "frozen_params": 0,
+        "size_mb": 150.2373046875
+      },
+      {
+        "name": "Attention",
+        "total_params": 14174208,
+        "trainable_params": 14174208,
+        "frozen_params": 0,
+        "size_mb": 54.0703125
+      },
+      {
+        "name": "MLP/FFN",
+        "total_params": 28334592,
+        "trainable_params": 28334592,
+        "frozen_params": 0,
+        "size_mb": 108.087890625
+      },
+      {
+        "name": "LayerNorm",
+        "total_params": 19968,
+        "trainable_params": 19968,
+        "frozen_params": 0,
+        "size_mb": 0.076171875
+      },
+      {
+        "name": "LM Head",
+        "total_params": 38597376,
+        "trainable_params": 38597376,
+        "frozen_params": 0,
+        "size_mb": 147.2373046875
+      }
+    ],
+    "flops_estimate": 20969619456
+  },
+  "Vanilla LoRA (r=8)": {
+    "model_name": "Vanilla LoRA (r=8)",
+    "total_params": 82060032,
+    "trainable_params": 147456,
+    "frozen_params": 81912576,
+    "total_size_mb": 313.0341796875,
+    "components": [
+      {
+        "name": "Base Model (Frozen)",
+        "total_params": 81912576,
+        "trainable_params": 0,
+        "frozen_params": 81912576,
+        "size_mb": 312.4716796875
+      },
+      {
+        "name": "LoRA Adapters",
+        "total_params": 147456,
+        "trainable_params": 147456,
+        "frozen_params": 0,
+        "size_mb": 0.5625
+      }
+    ],
+    "flops_estimate": 21007368192
+  },
+  "Adaptive LoRA (Ours)": {
+    "model_name": "Adaptive LoRA (Ours)",
+    "total_params": 82318080,
+    "trainable_params": 405504,
+    "frozen_params": 81912576,
+    "total_size_mb": 314.0185546875,
+    "components": [
+      {
+        "name": "Base Model (Frozen)",
+        "total_params": 81912576,
+        "trainable_params": 0,
+        "frozen_params": 81912576,
+        "size_mb": 312.4716796875
+      },
+      {
+        "name": "LoRA Adapters",
+        "total_params": 405504,
+        "trainable_params": 405504,
+        "frozen_params": 0,
+        "size_mb": 1.546875
+      }
+    ],
+    "flops_estimate": 21073428480
+  }
+}

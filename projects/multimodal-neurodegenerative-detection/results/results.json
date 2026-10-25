@@ -1,0 +1,499 @@
+{
+  "hardware": {
+    "cpu_model": "x86_64",
+    "cpu_cores_physical": 4,
+    "cpu_cores_logical": 4,
+    "ram_total_gb": 15.628128051757812,
+    "python_version": "3.12.3",
+    "torch_version": "2.14.1+cu130"
+  },
+  "config": {
+    "image_encoder": {
+      "model_name": "microsoft/resnet-18",
+      "hidden_dim": 512,
+      "pretrained": true,
+      "freeze_backbone": true
+    },
+    "clinical_encoder": {
+      "input_dim": 10,
+      "hidden_dims": [
+        64,
+        32
+      ],
+      "output_dim": 32,
+      "dropout": 0.3
+    },
+    "fusion": {
+      "fusion_type": "attention",
+      "hidden_dim": 128,
+      "num_heads": 4,
+      "dropout": 0.2
+    },
+    "training": {
+      "num_epochs": 20,
+      "batch_size": 16,
+      "num_workers": 0,
+      "early_stopping_patience": 5,
+      "seed": 42,
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.01,
+        "beta1": 0.9,
+        "beta2": 0.999
+      }
+    },
+    "data": {
+      "dataset_name": "alzheimers_synthetic",
+      "image_size": 64,
+      "train_split": 0.7,
+      "val_split": 0.15,
+      "test_split": 0.15,
+      "max_samples": 500
+    },
+    "num_classes": 4
+  },
+  "parameter_analysis": {
+    "Image Only": {
+      "model_name": "Image Only",
+      "total_params": 233348,
+      "trainable_params": 233348,
+      "total_size_mb": 0.8901519775390625,
+      "components": [
+        {
+          "name": "Image Encoder",
+          "total_params": 224832,
+          "trainable_params": 224832,
+          "size_mb": 0.857666015625
+        },
+        {
+          "name": "Classifier",
+          "total_params": 8516,
+          "trainable_params": 8516,
+          "size_mb": 0.0324859619140625
+        }
+      ]
+    },
+    "Clinical Only": {
+      "model_name": "Clinical Only",
+      "total_params": 6404,
+      "trainable_params": 6404,
+      "total_size_mb": 0.0244293212890625,
+      "components": [
+        {
+          "name": "Clinical Encoder",
+          "total_params": 4032,
+          "trainable_params": 4032,
+          "size_mb": 0.015380859375
+        },
+        {
+          "name": "Classifier",
+          "total_params": 2372,
+          "trainable_params": 2372,
+          "size_mb": 0.0090484619140625
+        }
+      ]
+    },
+    "Concat Fusion": {
+      "model_name": "Concat Fusion",
+      "total_params": 239428,
+      "trainable_params": 239428,
+      "total_size_mb": 0.9133453369140625,
+      "components": [
+        {
+          "name": "Image Encoder",
+          "total_params": 224832,
+          "trainable_params": 224832,
+          "size_mb": 0.857666015625
+        },
+        {
+          "name": "Clinical Encoder",
+          "total_params": 4032,
+          "trainable_params": 4032,
+          "size_mb": 0.015380859375
+        },
+        {
+          "name": "Classifier",
+          "total_params": 10564,
+          "trainable_params": 10564,
+          "size_mb": 0.0402984619140625
+        }
+      ]
+    },
+    "Attention Fusion (Ours)": {
+      "model_name": "Attention Fusion (Ours)",
+      "total_params": 373574,
+      "trainable_params": 373574,
+      "total_size_mb": 1.4250717163085938,
+      "components": [
+        {
+          "name": "Image Encoder",
+          "total_params": 224832,
+          "trainable_params": 224832,
+          "size_mb": 0.857666015625
+        },
+        {
+          "name": "Clinical Encoder",
+          "total_params": 4032,
+          "trainable_params": 4032,
+          "size_mb": 0.015380859375
+        },
+        {
+          "name": "Fusion Module",
+          "total_params": 136194,
+          "trainable_params": 136194,
+          "size_mb": 0.5195388793945312
+        },
+        {
+          "name": "Classifier",
+          "total_params": 8516,
+          "trainable_params": 8516,
+          "size_mb": 0.0324859619140625
+        }
+      ]
+    }
+  },
+  "model_results": {
+    "Image Only": {
+      "training": {
+        "train_losses": [
+          1.3124829083681107,
+          1.1688544172793627,
+          1.0853683035820723,
+          1.060437036678195,
+          1.0287013072520494,
+          1.003905050456524,
+          0.9859434552490711,
+          0.9436673168092966,
+          0.9463987722992897
+        ],
+        "val_losses": [
+          1.2830009971346175,
+          1.0878102609089442,
+          1.0511797411101205,
+          1.0313168849263872,
+          1.0116558926446098,
+          1.0064191733087813,
+          1.0265762039593287,
+          0.9674188154084342,
+          0.9793757285390582
+        ],
+        "val_accuracies": [
+          0.54,
+          0.54,
+          0.54,
+          0.55,
+          0.53,
+          0.51,
+          0.47,
+          0.54,
+          0.51
+        ],
+        "best_val_accuracy": 0.55
+      },
+      "test_metrics": {
+        "accuracy": 0.48,
+        "precision_macro": 0.225,
+        "recall_macro": 0.2640480087288598,
+        "f1_macro": 0.22527692513012143,
+        "precision_weighted": 0.391,
+        "recall_weighted": 0.48,
+        "f1_weighted": 0.4018257039903911,
+        "confusion_matrix": [
+          [
+            40,
+            7,
+            0,
+            0
+          ],
+          [
+            31,
+            8,
+            0,
+            0
+          ],
+          [
+            8,
+            5,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "resources": {
+        "wall_time_seconds": 892.1520525909946,
+        "cpu_percent_mean": 62.664280829724184,
+        "memory_peak_mb": 66.02556800842285
+      }
+    },
+    "Clinical Only": {
+      "training": {
+        "train_losses": [
+          1.408896554261446,
+          1.3858224414288998,
+          1.3486421704292297,
+          1.3267395794391632,
+          1.2941719219088554,
+          1.2656382881104946,
+          1.2476679906249046,
+          1.2288754507899284,
+          1.1854251734912395,
+          1.1684872768819332
+        ],
+        "val_losses": [
+          1.3801402023860387,
+          1.370568871498108,
+          1.3402109486716134,
+          1.3107541118349348,
+          1.2896326780319214,
+          1.2591169221060616,
+          1.2247659478868758,
+          1.2023030008588518,
+          1.1919335637773787,
+          1.1612448522022791
+        ],
+        "val_accuracies": [
+          0.35,
+          0.45,
+          0.5,
+          0.54,
+          0.57,
+          0.56,
+          0.56,
+          0.54,
+          0.54,
+          0.54
+        ],
+        "best_val_accuracy": 0.57
+      },
+      "test_metrics": {
+        "accuracy": 0.47,
+        "precision_macro": 0.1175,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1598639455782313,
+        "precision_weighted": 0.22089999999999999,
+        "recall_weighted": 0.47,
+        "f1_weighted": 0.30054421768707484,
+        "confusion_matrix": [
+          [
+            47,
+            0,
+            0,
+            0
+          ],
+          [
+            39,
+            0,
+            0,
+            0
+          ],
+          [
+            13,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "resources": {
+        "wall_time_seconds": 316.00395414800005,
+        "cpu_percent_mean": 50.82341792483135,
+        "memory_peak_mb": 0.21128463745117188
+      }
+    },
+    "Concat Fusion": {
+      "training": {
+        "train_losses": [
+          1.3251903913915157,
+          1.1403480153530836,
+          1.0585742127150297,
+          1.0498430114239454,
+          0.996999628841877,
+          0.9479811061173677,
+          0.9315630551427603,
+          0.9093303550034761,
+          0.9304812327027321,
+          0.8748129513114691,
+          0.8571149501949549
+        ],
+        "val_losses": [
+          1.2461498124258858,
+          1.0140905039651054,
+          0.9894868390900748,
+          0.9799317717552185,
+          0.986338768686567,
+          0.9478924700192043,
+          0.9342682787350246,
+          0.9346368823732648,
+          0.9380163209778922,
+          0.9226702536855426,
+          0.9190793548311506
+        ],
+        "val_accuracies": [
+          0.54,
+          0.54,
+          0.54,
+          0.54,
+          0.54,
+          0.55,
+          0.53,
+          0.53,
+          0.5,
+          0.5,
+          0.52
+        ],
+        "best_val_accuracy": 0.55
+      },
+      "test_metrics": {
+        "accuracy": 0.48,
+        "precision_macro": 0.21832632071061242,
+        "recall_macro": 0.2662302236770322,
+        "f1_macro": 0.23522167487684728,
+        "precision_weighted": 0.3846470313230481,
+        "recall_weighted": 0.48,
+        "f1_weighted": 0.41935960591133004,
+        "confusion_matrix": [
+          [
+            38,
+            9,
+            0,
+            0
+          ],
+          [
+            29,
+            10,
+            0,
+            0
+          ],
+          [
+            2,
+            11,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ]
+        ]
+      },
+      "resources": {
+        "wall_time_seconds": 1702.854990103995,
+        "cpu_percent_mean": 50.89194442788145,
+        "memory_peak_mb": 0.6276636123657227
+      }
+    },
+    "Attention Fusion (Ours)": {
+      "training": {
+        "train_losses": [
+          1.3636589460074902,
+          1.3018481619656086,
+          1.1147290151566267,
+          1.0537081081420183,
+          1.0616461914032698,
+          1.0158594958484173
+        ],
+        "val_losses": [
+          1.345797061920166,
+          1.090918779373169,
+          1.0128160119056702,
+          0.9924946512494769,
+          1.0082085132598877,
+          0.9835352982793536
+        ],
+        "val_accuracies": [
+          0.54,
+          0.54,
+          0.54,
+          0.54,
+          0.54,
+          0.54
+        ],
+        "best_val_accuracy": 0.54
+      },
+      "test_metrics": {
+        "accuracy": 0.47,
+        "precision_macro": 0.1175,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1598639455782313,
+        "precision_weighted": 0.22089999999999999,
+        "recall_weighted": 0.47,
+        "f1_weighted": 0.30054421768707484,
+        "confusion_matrix": [
+          [
+            47,
+            0,
+            0,
+            0
+          ],
+          [
+            39,
+            0,
+            0,
+            0
+          ],
+          [
+            13,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "resources": {
+        "wall_time_seconds": 1201.8446493299998,
+        "cpu_percent_mean": 50.977290398918186,
+        "memory_peak_mb": 0.47594451904296875
+      }
+    }
+  },
+  "quantization": {
+    "size": {
+      "fp32_size_mb": 1.4468889236450195,
+      "int8_size_mb": 0.8455915451049805,
+      "compression_ratio": 1.7110967251516072,
+      "size_reduction_pct": 41.55795021398351
+    },
+    "latency": {
+      "fp32": {
+        "mean_ms": 698.3190371002516,
+        "std_ms": 46.1958480619343,
+        "p50_ms": 685.7334900014393,
+        "p95_ms": 806.6438425506931,
+        "throughput_per_sec": 1.4320102229383138
+      },
+      "int8": {
+        "mean_ms": 935.4603745329465,
+        "std_ms": 52.29754952868044,
+        "p50_ms": 927.3291734971281,
+        "p95_ms": 1031.8729098984475,
+        "throughput_per_sec": 1.068992366992858
+      },
+      "speedup": 0.7464977203859715
+    },
+    "accuracy": {
+      "fp32_metric": 0.47,
+      "int8_metric": 0.47
+    }
+  }
+}

@@ -1,0 +1,13 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Privacy-Preserving Federated Learning
+INFO:__main__:============================================================
+INFO:__main__:Creating client dataloaders...
+INFO:src.data_loader:Loaded CIFAR-10 train (50000 samples) from torchvision
+INFO:src.data_loader:Loaded CIFAR-10 test (10000 samples) from torchvision
+INFO:__main__:Created 5 clients
+INFO:__main__:Model: 90,506 params, 0.35 MB
+INFO:__main__:
+--- Training FedAvg ---
+INFO:src.trainer:Training with FedAvg...
+FedAvg:   0%|          | 0/3 [00:00<?, ?it/s]

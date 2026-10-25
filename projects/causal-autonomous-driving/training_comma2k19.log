@@ -1,0 +1,128 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Causal Representation Learning for Autonomous Driving
+INFO:__main__:============================================================
+INFO:__main__:Creating multi-environment dataloaders...
+INFO:src.data_loader:Loading driving dataset from https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/datasets/commaai/comma2k19/revision/4bff77c7254c654c28d4c2726186b4e825adccee "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/datasets/commaai/comma2k19/tree/4bff77c7254c654c28d4c2726186b4e825adccee/data?recursive=false&expand=false "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/datasets/commaai/comma2k19/tree/4bff77c7254c654c28d4c2726186b4e825adccee?recursive=false&expand=false "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/data/demo-00000-of-00003.parquet "HTTP/1.1 302 Found"
+INFO:httpx2:HTTP Request: GET https://huggingface.co/api/datasets/commaai/comma2k19/xet-read-token/4bff77c7254c654c28d4c2726186b4e825adccee "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/data/demo-00001-of-00003.parquet "HTTP/1.1 302 Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/data/demo-00002-of-00003.parquet "HTTP/1.1 302 Found"
+Generating demo split:   0%|          | 0/64 [00:00<?, ? examples/s]Generating demo split:  17%|█▋        | 11/64 [00:02<00:14,  3.70 examples/s]Generating demo split:  34%|███▍      | 22/64 [00:03<00:06,  6.93 examples/s]Generating demo split:  52%|█████▏    | 33/64 [00:06<00:06,  5.13 examples/s]Generating demo split:  67%|██████▋   | 43/64 [00:06<00:02,  7.30 examples/s]Generating demo split:  84%|████████▍ | 54/64 [00:09<00:01,  5.70 examples/s]Generating demo split: 100%|██████████| 64/64 [00:09<00:00,  7.62 examples/s]Generating demo split: 100%|██████████| 64/64 [00:09<00:00,  6.50 examples/s]
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 0 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 0 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 0 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 1 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 1 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 1 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 2 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 2 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:src.data_loader:Loading comma2k19 from HuggingFace...
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/commaai/comma2k19/4bff77c7254c654c28d4c2726186b4e825adccee/README.md?%2Fdatasets%2Fcommaai%2Fcomma2k19%2Fresolve%2Fmain%2FREADME.md=&etag=%2237ecbc78e2b87b270c07da8b95583288abc1f495%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/commaai/comma2k19/commaai/comma2k19.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/.huggingface.yaml "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=commaai/comma2k19 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/commaai/comma2k19/resolve/4bff77c7254c654c28d4c2726186b4e825adccee/dataset_infos.json "HTTP/1.1 404 Not Found"
+INFO:src.data_loader:Loaded 64 driving samples with steering angles
+INFO:src.data_loader:Created env 2 dataset: 64 samples from comma2k19
+INFO:src.data_loader:Dataset URL: https://huggingface.co/datasets/commaai/comma2k19
+INFO:__main__:Analyzing parameters...
+INFO:__main__:
+## Model Parameter Comparison
+| Model | Total Params | Trainable | Size (MB) |
+|-------|-------------|-----------|-----------|
+| ERM | 226,053 | 226,053 | 0.86 |
+| IRM | 226,054 | 226,054 | 0.86 |
+| Augmentation | 226,053 | 226,053 | 0.86 |
+INFO:__main__:
+Training ERM...
+INFO:src.trainer:Epoch 1/20 - Loss: 1.0551, Val Acc: 0.9531
+INFO:src.trainer:Epoch 2/20 - Loss: 0.2655, Val Acc: 0.9531
+INFO:src.trainer:Epoch 3/20 - Loss: 0.2080, Val Acc: 0.9531

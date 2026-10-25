@@ -14,3 +14,10 @@ data/*.zip
 # Duplicate/backup dataset files
 data/CCPP/*.ods
 data/CCPP/Readme.txt~
+# Large data files
+*.tar.gz
+*.joblib
+*.zip
+datasets/
+**/cifar-*/
+**/cifar10*/

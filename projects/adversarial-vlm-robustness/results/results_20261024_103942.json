@@ -1,0 +1,43 @@
+{
+  "config": {
+    "dataset": "cifar10",
+    "debug": true,
+    "epochs": 3,
+    "epsilon": 0.03137254901960784,
+    "sigma": 0.25
+  },
+  "evaluation": {
+    "Standard": {
+      "clean_accuracy": 0.075,
+      "adversarial_accuracy": 0.075,
+      "robustness_gap": 0.0,
+      "total_samples": 200
+    },
+    "Adversarial": {
+      "clean_accuracy": 0.095,
+      "adversarial_accuracy": 0.095,
+      "robustness_gap": 0.0,
+      "total_samples": 200
+    },
+    "Certified": {
+      "clean_accuracy": 0.09,
+      "adversarial_accuracy": 0.09,
+      "robustness_gap": 0.0,
+      "total_samples": 200
+    },
+    "DRO": {
+      "clean_accuracy": 0.075,
+      "adversarial_accuracy": 0.075,
+      "robustness_gap": 0.0,
+      "total_samples": 200
+    }
+  },
+  "certified": {
+    "Certified": {
+      "certified_acc_r0.0": 0.11,
+      "certified_acc_r0.25": 0.11,
+      "certified_acc_r0.5": 0.0
+    }
+  },
+  "training_time": 93.40707921981812
+}

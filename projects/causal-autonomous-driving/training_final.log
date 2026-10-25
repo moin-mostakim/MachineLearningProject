@@ -1,0 +1,228 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Causal Representation Learning for Autonomous Driving
+INFO:__main__:============================================================
+INFO:__main__:Creating multi-environment dataloaders...
+INFO:src.data_loader:Loading SVHN dataset from https://huggingface.co/datasets/svhn
+INFO:src.data_loader:Loading SVHN from HuggingFace (train)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 350 samples from CIFAR-10
+INFO:src.data_loader:Created env 0 dataset: 350 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 0 dataset: 75 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 0 dataset: 75 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (train)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 350 samples from CIFAR-10
+INFO:src.data_loader:Created env 1 dataset: 350 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 1 dataset: 75 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 1 dataset: 75 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (train)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 350 samples from CIFAR-10
+INFO:src.data_loader:Created env 2 dataset: 350 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 2 dataset: 75 samples from SVHN
+INFO:src.data_loader:Loading SVHN from HuggingFace (test)...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'svhn' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/ufldl-stanford/svhn/f9e1717d73324ebbc1ece84267ccd80d0aca0690/README.md?%2Fdatasets%2Fufldl-stanford%2Fsvhn%2Fresolve%2Fmain%2FREADME.md=&etag=%2243fa56d8f0fdb1bef89f821531bcdfa220ff8810%22 "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/ufldl-stanford/svhn/resolve/f9e1717d73324ebbc1ece84267ccd80d0aca0690/svhn.py "HTTP/1.1 404 Not Found"
+INFO:httpx2:HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/svhn/svhn.py "HTTP/1.1 404 Not Found"
+WARNING:src.data_loader:HuggingFace SVHN failed: Invalid HF URI 'hf://datasets/svhn@f9e1717d73324ebbc1ece84267ccd80d0aca0690/.huggingface.yaml'. Repository id must be 'namespace/name', got 'svhn'., trying torchvision...
+WARNING:src.data_loader:SVHN failed: HTTP Error 502: Bad Gateway, falling back to CIFAR-10...
+INFO:src.data_loader:Loading CIFAR-10 from torchvision as fallback...
+INFO:src.data_loader:Loaded 75 samples from CIFAR-10
+INFO:src.data_loader:Created env 2 dataset: 75 samples from SVHN
+INFO:__main__:Analyzing parameters...
+INFO:__main__:
+## Model Parameter Comparison
+| Model | Total Params | Trainable | Size (MB) |
+|-------|-------------|-----------|-----------|
+| ERM | 226,698 | 226,698 | 0.86 |
+| IRM | 226,699 | 226,699 | 0.86 |
+| Augmentation | 226,698 | 226,698 | 0.86 |
+INFO:__main__:
+Training ERM...
+INFO:src.trainer:Epoch 1/20 - Loss: 2.0910, Val Acc: 0.0622
+INFO:src.trainer:Epoch 2/20 - Loss: 1.8877, Val Acc: 0.1200
+INFO:src.trainer:Epoch 3/20 - Loss: 1.7371, Val Acc: 0.1911
+INFO:src.trainer:Epoch 4/20 - Loss: 1.6087, Val Acc: 0.1867
+INFO:src.trainer:Epoch 5/20 - Loss: 1.4809, Val Acc: 0.1600
+INFO:src.trainer:Epoch 6/20 - Loss: 1.3503, Val Acc: 0.2267
+INFO:src.trainer:Epoch 7/20 - Loss: 1.2612, Val Acc: 0.1956
+INFO:src.trainer:Epoch 8/20 - Loss: 1.0446, Val Acc: 0.2089
+INFO:src.trainer:Epoch 9/20 - Loss: 0.9753, Val Acc: 0.2000
+INFO:src.trainer:Epoch 10/20 - Loss: 0.7257, Val Acc: 0.2444
+INFO:src.trainer:Epoch 11/20 - Loss: 0.6114, Val Acc: 0.2089
+INFO:src.trainer:Epoch 12/20 - Loss: 0.4537, Val Acc: 0.2000
+INFO:src.trainer:Epoch 13/20 - Loss: 0.4218, Val Acc: 0.2311
+INFO:src.trainer:Epoch 14/20 - Loss: 0.3430, Val Acc: 0.1733
+INFO:src.trainer:Epoch 15/20 - Loss: 0.2603, Val Acc: 0.1600
+INFO:src.trainer:Epoch 16/20 - Loss: 0.2693, Val Acc: 0.1956
+INFO:src.trainer:Epoch 17/20 - Loss: 0.3167, Val Acc: 0.1689
+INFO:src.trainer:Epoch 18/20 - Loss: 0.3076, Val Acc: 0.1600
+INFO:src.trainer:Epoch 19/20 - Loss: 0.1837, Val Acc: 0.1733
+INFO:src.trainer:Epoch 20/20 - Loss: 0.2168, Val Acc: 0.1911
+INFO:__main__:ERM - Test Acc: 0.2356, Robustness: 0.9400, Time: 2503.0s
+INFO:__main__:
+Training IRM...
+INFO:src.trainer:Epoch 1/20 - Loss: 2.2047, Penalty: 0.006734, Val Acc: 0.0667
+INFO:src.trainer:Epoch 2/20 - Loss: 2.0382, Penalty: 0.010038, Val Acc: 0.1644
+INFO:src.trainer:Epoch 3/20 - Loss: 1.9458, Penalty: 0.021260, Val Acc: 0.2178
+INFO:src.trainer:Epoch 4/20 - Loss: 1.8741, Penalty: 0.014800, Val Acc: 0.2622
+INFO:src.trainer:Epoch 5/20 - Loss: 1.7661, Penalty: 0.019754, Val Acc: 0.2222
+INFO:src.trainer:Epoch 6/20 - Loss: 1.7110, Penalty: 0.026935, Val Acc: 0.2089
+INFO:src.trainer:Epoch 7/20 - Loss: 1.6007, Penalty: 0.030973, Val Acc: 0.2400
+INFO:src.trainer:Epoch 8/20 - Loss: 1.5603, Penalty: 0.027896, Val Acc: 0.2178
+INFO:src.trainer:Epoch 9/20 - Loss: 1.4605, Penalty: 0.039948, Val Acc: 0.2578
+INFO:src.trainer:Epoch 10/20 - Loss: 1.6310, Penalty: 0.056782, Val Acc: 0.1556
+INFO:src.trainer:Epoch 11/20 - Loss: 2.0216, Penalty: 0.034087, Val Acc: 0.1422
+INFO:src.trainer:Epoch 12/20 - Loss: 2.1675, Penalty: 0.009357, Val Acc: 0.1378
+INFO:src.trainer:Epoch 13/20 - Loss: 2.2416, Penalty: 0.003562, Val Acc: 0.1733
+INFO:src.trainer:Epoch 14/20 - Loss: 2.2609, Penalty: 0.002075, Val Acc: 0.1378
+INFO:src.trainer:Epoch 15/20 - Loss: 2.2849, Penalty: 0.000849, Val Acc: 0.1156
+INFO:src.trainer:Epoch 16/20 - Loss: 2.2977, Penalty: 0.000476, Val Acc: 0.0844
+INFO:src.trainer:Epoch 17/20 - Loss: 2.2911, Penalty: 0.000237, Val Acc: 0.1244
+INFO:src.trainer:Epoch 18/20 - Loss: 2.2971, Penalty: 0.000307, Val Acc: 0.1022
+INFO:src.trainer:Epoch 19/20 - Loss: 2.3032, Penalty: 0.000129, Val Acc: 0.0933
+INFO:src.trainer:Epoch 20/20 - Loss: 2.2970, Penalty: 0.000104, Val Acc: 0.1022
+INFO:__main__:IRM - Test Acc: 0.1067, Robustness: 0.9811, Time: 2043.2s
+INFO:__main__:
+Training Augmentation...
+INFO:src.trainer:Epoch 1/20 - Loss: 2.1056, Val Acc: 0.0444
+INFO:src.trainer:Epoch 2/20 - Loss: 1.9183, Val Acc: 0.1956

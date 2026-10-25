@@ -1,0 +1,218 @@
+{
+  "hardware": {
+    "cpu_model": "x86_64",
+    "cpu_cores": 4,
+    "ram_gb": 15.628128051757812,
+    "torch_version": "2.14.1+cu130"
+  },
+  "config": {
+    "model": {
+      "backbone": "resnet18",
+      "feature_dim": 512,
+      "num_classes": 10,
+      "dropout": 0.3
+    },
+    "irm": {
+      "penalty_weight": 10000.0,
+      "penalty_anneal_iters": 100
+    },
+    "training": {
+      "num_epochs": 2,
+      "batch_size": 8,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "num_environments": 3
+    },
+    "data": {
+      "image_size": 16,
+      "num_samples_per_env": 50,
+      "train_split": 0.7,
+      "val_split": 0.15
+    },
+    "seed": 42
+  },
+  "parameters": {
+    "ERM": {
+      "model_name": "ERM",
+      "total_params": 226698,
+      "trainable_params": 226698,
+      "size_mb": 0.8647842407226562
+    },
+    "IRM": {
+      "model_name": "IRM",
+      "total_params": 226699,
+      "trainable_params": 226699,
+      "size_mb": 0.8647880554199219
+    },
+    "Augmentation": {
+      "model_name": "Augmentation",
+      "total_params": 226698,
+      "trainable_params": 226698,
+      "size_mb": 0.8647842407226562
+    }
+  },
+  "ERM_training": {
+    "train_losses": [
+      1.079512225712339,
+      0.5292699709534645
+    ],
+    "val_accuracies": [
+      0.8571428571428571,
+      0.8571428571428571
+    ]
+  },
+  "ERM_eval": {
+    "overall_accuracy": 0.875,
+    "f1_macro": 0.4666666666666667,
+    "per_environment": [
+      {
+        "environment": 0,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 1,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 2,
+        "accuracy": 0.875
+      }
+    ],
+    "robustness_score": 1.0,
+    "accuracy_std": 0.0,
+    "confusion_matrix": [
+      [
+        21,
+        0
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "ERM_resources": {
+    "wall_time_seconds": 4.742200395994587,
+    "cpu_percent_mean": 107.4725,
+    "memory_peak_mb": 66.06174564361572
+  },
+  "IRM_training": {
+    "train_losses": [
+      1.6415663957595825,
+      0.797835499048233
+    ],
+    "val_accuracies": [
+      0.8571428571428571,
+      0.8571428571428571
+    ],
+    "irm_penalties": [
+      0.29320015701814556,
+      0.4069328710436821
+    ]
+  },
+  "IRM_eval": {
+    "overall_accuracy": 0.875,
+    "f1_macro": 0.4666666666666667,
+    "per_environment": [
+      {
+        "environment": 0,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 1,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 2,
+        "accuracy": 0.875
+      }
+    ],
+    "robustness_score": 1.0,
+    "accuracy_std": 0.0,
+    "confusion_matrix": [
+      [
+        21,
+        0
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "IRM_resources": {
+    "wall_time_seconds": 0.10111675499501871,
+    "cpu_percent_mean": 0.0,
+    "memory_peak_mb": 0.0660543441772461
+  },
+  "Augmentation_training": {
+    "train_losses": [
+      1.2061013827721279,
+      0.639700319369634
+    ],
+    "val_accuracies": [
+      0.8571428571428571,
+      0.8571428571428571
+    ]
+  },
+  "Augmentation_eval": {
+    "overall_accuracy": 0.875,
+    "f1_macro": 0.4666666666666667,
+    "per_environment": [
+      {
+        "environment": 0,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 1,
+        "accuracy": 0.875
+      },
+      {
+        "environment": 2,
+        "accuracy": 0.875
+      }
+    ],
+    "robustness_score": 1.0,
+    "accuracy_std": 0.0,
+    "confusion_matrix": [
+      [
+        21,
+        0
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "Augmentation_resources": {
+    "wall_time_seconds": 0.20594969800004037,
+    "cpu_percent_mean": 195.25,
+    "memory_peak_mb": 0.08375167846679688
+  },
+  "quantization": {
+    "size": {
+      "fp32_size_mb": 0.8758153915405273,
+      "int8_size_mb": 0.4993562698364258,
+      "compression_ratio": 1.7538888453877195,
+      "size_reduction_pct": 42.98384400871554
+    },
+    "latency": {
+      "fp32": {
+        "mean_ms": 0.12425740045728162,
+        "p95_ms": 0.13079730197205208,
+        "throughput_per_sec": 8047.810402598833
+      },
+      "int8": {
+        "mean_ms": 0.17173124055261724,
+        "p95_ms": 0.2007756491366308,
+        "throughput_per_sec": 5823.052327474494
+      },
+      "speedup": 0.7235573449387039
+    },
+    "accuracy": {
+      "fp32_metric": 0.875,
+      "int8_metric": 0.875
+    }
+  }
+}

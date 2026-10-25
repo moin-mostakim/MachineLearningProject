@@ -1,0 +1,100 @@
+{
+  "Image Only": {
+    "model_name": "Image Only",
+    "total_params": 233348,
+    "trainable_params": 233348,
+    "total_size_mb": 0.8901519775390625,
+    "components": [
+      {
+        "name": "Image Encoder",
+        "total_params": 224832,
+        "trainable_params": 224832,
+        "size_mb": 0.857666015625
+      },
+      {
+        "name": "Classifier",
+        "total_params": 8516,
+        "trainable_params": 8516,
+        "size_mb": 0.0324859619140625
+      }
+    ]
+  },
+  "Clinical Only": {
+    "model_name": "Clinical Only",
+    "total_params": 6404,
+    "trainable_params": 6404,
+    "total_size_mb": 0.0244293212890625,
+    "components": [
+      {
+        "name": "Clinical Encoder",
+        "total_params": 4032,
+        "trainable_params": 4032,
+        "size_mb": 0.015380859375
+      },
+      {
+        "name": "Classifier",
+        "total_params": 2372,
+        "trainable_params": 2372,
+        "size_mb": 0.0090484619140625
+      }
+    ]
+  },
+  "Concat Fusion": {
+    "model_name": "Concat Fusion",
+    "total_params": 239428,
+    "trainable_params": 239428,
+    "total_size_mb": 0.9133453369140625,
+    "components": [
+      {
+        "name": "Image Encoder",
+        "total_params": 224832,
+        "trainable_params": 224832,
+        "size_mb": 0.857666015625
+      },
+      {
+        "name": "Clinical Encoder",
+        "total_params": 4032,
+        "trainable_params": 4032,
+        "size_mb": 0.015380859375
+      },
+      {
+        "name": "Classifier",
+        "total_params": 10564,
+        "trainable_params": 10564,
+        "size_mb": 0.0402984619140625
+      }
+    ]
+  },
+  "Attention Fusion (Ours)": {
+    "model_name": "Attention Fusion (Ours)",
+    "total_params": 373574,
+    "trainable_params": 373574,
+    "total_size_mb": 1.4250717163085938,
+    "components": [
+      {
+        "name": "Image Encoder",
+        "total_params": 224832,
+        "trainable_params": 224832,
+        "size_mb": 0.857666015625
+      },
+      {
+        "name": "Clinical Encoder",
+        "total_params": 4032,
+        "trainable_params": 4032,
+        "size_mb": 0.015380859375
+      },
+      {
+        "name": "Fusion Module",
+        "total_params": 136194,
+        "trainable_params": 136194,
+        "size_mb": 0.5195388793945312
+      },
+      {
+        "name": "Classifier",
+        "total_params": 8516,
+        "trainable_params": 8516,
+        "size_mb": 0.0324859619140625
+      }
+    ]
+  }
+}
