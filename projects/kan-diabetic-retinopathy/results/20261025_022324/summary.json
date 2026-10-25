@@ -1,0 +1,188 @@
+{
+  "timestamp": "20261025_022324",
+  "config": {
+    "data": {
+      "dataset": "synthetic",
+      "data_dir": "./data",
+      "image_size": 224,
+      "num_classes": 5,
+      "batch_size": 16,
+      "num_workers": 4,
+      "train_split": 0.8,
+      "val_split": 0.1,
+      "test_split": 0.1,
+      "augmentation": true,
+      "class_weights": true
+    },
+    "kan": {
+      "hidden_dims": [
+        64,
+        32
+      ],
+      "grid_size": 5,
+      "spline_order": 3,
+      "scale_noise": 0.1,
+      "scale_base": 1.0,
+      "scale_spline": 1.0,
+      "base_activation": "silu",
+      "grid_eps": 0.02,
+      "grid_range": [
+        -1.0,
+        1.0
+      ]
+    },
+    "mlp": {
+      "hidden_dims": [
+        512,
+        256,
+        128
+      ],
+      "dropout": 0.3,
+      "activation": "relu",
+      "batch_norm": true
+    },
+    "cnn": {
+      "backbone": "resnet18",
+      "pretrained": true,
+      "feature_dim": 512,
+      "freeze_backbone": false
+    },
+    "hybrid": {
+      "cnn_backbone": "resnet18",
+      "kan_hidden_dims": [
+        128,
+        64
+      ],
+      "freeze_cnn": false,
+      "feature_dim": 512
+    },
+    "training": {
+      "epochs": 5,
+      "learning_rate": 0.0003,
+      "weight_decay": 1e-05,
+      "optimizer": "adamw",
+      "scheduler": "cosine",
+      "warmup_epochs": 1,
+      "label_smoothing": 0.1,
+      "mixup_alpha": 0.2,
+      "early_stopping_patience": 15,
+      "gradient_clip": 1.0,
+      "seed": 42
+    },
+    "quantization": {
+      "enabled": true,
+      "method": "dynamic",
+      "backend": "fbgemm",
+      "calibration_batches": 100
+    },
+    "experiment": {
+      "name": "kan_diabetic_retinopathy",
+      "results_dir": "./results",
+      "checkpoint_dir": "./checkpoints",
+      "log_dir": "./logs",
+      "device": "cpu",
+      "debug_mode": true,
+      "debug_epochs": 5,
+      "debug_batches": 5,
+      "debug_samples": 200,
+      "log_interval": 10,
+      "save_checkpoints": true,
+      "checkpoint_interval": 10,
+      "monitor_resources": true
+    }
+  },
+  "param_comparison": {
+    "MLP Classifier": {
+      "total_params": 429317,
+      "classifier_params": 645
+    },
+    "KAN Classifier": {
+      "total_params": 209253,
+      "classifier_params": 165
+    },
+    "CNN (ResNet-18)": {
+      "total_params": 11179077,
+      "classifier_params": 2565
+    },
+    "Hybrid CNN+KAN": {
+      "total_params": 11619589,
+      "classifier_params": 443077
+    },
+    "Hybrid CNN+MLP": {
+      "total_params": 11342149,
+      "classifier_params": 165637
+    }
+  },
+  "results": {
+    "hybrid_kan": {
+      "model_name": "hybrid_kan",
+      "params": 11619589,
+      "trainable_params": 11619589,
+      "qwk": 0.6706586826347305,
+      "accuracy": 0.775,
+      "auc_macro": 0.7942162095412869,
+      "f1_macro": 0.3067379679144385,
+      "confusion_matrix": [
+        [
+          26,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          2,
+          0,
+          0
+        ]
+      ],
+      "best_epoch": 4,
+      "best_val_qwk": 0.7013934970139349,
+      "resource_stats": {
+        "total_time": 64.49626159667969,
+        "peak_memory_mb": 2277.45703125,
+        "peak_gpu_memory_mb": 0,
+        "avg_cpu_percent": 40.30769230769231,
+        "max_cpu_percent": 60.9,
+        "avg_memory_mb": 2128.1263822115384
+      }
+    },
+    "quantization": {
+      "fp32_size_mb": 44.408453941345215,
+      "int8_size_mb": 44.40840435028076,
+      "size_reduction": 1.0000011167044882,
+      "fp32_latency_ms": 9.179597170004854,
+      "int8_latency_ms": 9.239875269922777,
+      "speedup": 0.9934763080499434,
+      "fp32_accuracy": 0.775,
+      "fp32_qwk": 0.6706586826347305,
+      "int8_accuracy": 0.775,
+      "int8_qwk": 0.6706586826347305,
+      "accuracy_drop": 0.0,
+      "qwk_drop": 0.0
+    }
+  }
+}

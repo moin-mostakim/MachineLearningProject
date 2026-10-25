@@ -35,7 +35,7 @@ class HuggingFaceAPTOSDataset(Dataset):
     APTOS 2019 dataset loaded from HuggingFace Hub.
     
     Uses sngsfydy/aptos dataset which mirrors the Kaggle APTOS 2019 data.
-    No Kaggle account required.
+    No Kaggle account required. Uses lazy loading to reduce memory.
     """
     
     def __init__(
@@ -74,11 +74,8 @@ class HuggingFaceAPTOSDataset(Dataset):
         print(f"Loading APTOS dataset from HuggingFace Hub...")
         dataset = load_dataset("sngsfydy/aptos", split="train")
         
-        all_images = []
         all_labels = []
-        
         for item in dataset:
-            all_images.append(item["image"])
             all_labels.append(item["label"])
         
         random.seed(seed)
@@ -99,10 +96,11 @@ class HuggingFaceAPTOSDataset(Dataset):
         if max_samples:
             selected_indices = selected_indices[:max_samples]
         
-        self.images = [all_images[i] for i in selected_indices]
+        self.dataset = dataset
+        self.indices = selected_indices
         self.labels = torch.tensor([all_labels[i] for i in selected_indices], dtype=torch.long)
         
-        print(f"Loaded {len(self.images)} APTOS images for {split} split")
+        print(f"Loaded {len(self.indices)} APTOS images for {split} split")
         print(f"Class distribution: {self._get_class_dist()}")
     
     def _get_class_dist(self) -> Dict[int, int]:
@@ -114,7 +112,8 @@ class HuggingFaceAPTOSDataset(Dataset):
         return len(self.labels)
     
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
-        image = self.images[idx]
+        real_idx = self.indices[idx]
+        image = self.dataset[real_idx]["image"]
         label = self.labels[idx].item()
         
         if not isinstance(image, Image.Image):
