@@ -2,6 +2,10 @@
 """
 Causal Representation Learning for Robust Decision-Making
 in Autonomous Driving under Distribution Shift
+
+REGRESSION VERSION: Predicts continuous steering angles
+Metrics: MAE (Mean Absolute Error), RMSE (Root Mean Squared Error)
+Dataset: Udacity Self-Driving Car Challenge (glenn2/udacity_dataset)
 """
 
 import argparse
@@ -11,11 +15,12 @@ import sys
 from pathlib import Path
 
 import torch
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 
 from src.config import ExperimentConfig
-from src.data_loader import create_multi_environment_loaders
+from src.data_loader import create_multi_environment_loaders, DATASET_INFO
 from src.model import ERMClassifier, IRMClassifier, DataAugmentationBaseline
 from src.trainer import ERMTrainer, IRMTrainer
 from src.evaluation import evaluate_model, LiteratureComparison
@@ -47,19 +52,29 @@ def main():
     config = ExperimentConfig.small_debug() if args.debug else ExperimentConfig.default()
     config.save(output_dir / "config.json")
     
-    all_results = {"hardware": hardware.__dict__, "config": config.to_dict()}
+    all_results = {
+        "hardware": hardware.__dict__, 
+        "config": config.to_dict(),
+        "dataset": DATASET_INFO,
+        "task": "steering_angle_regression",
+        "metrics": ["MAE", "RMSE"]
+    }
     
     logger.info("=" * 60)
     logger.info("Causal Representation Learning for Autonomous Driving")
+    logger.info("STEERING ANGLE REGRESSION (MAE/RMSE)")
+    logger.info(f"Dataset: {DATASET_INFO['name']}")
+    logger.info(f"URL: {DATASET_INFO['url']}")
     logger.info("=" * 60)
     
     logger.info("Creating multi-environment dataloaders...")
     loaders = create_multi_environment_loaders(config)
     
+    regression = getattr(config.model, 'regression', True)
     models = {
-        "ERM": ERMClassifier(config.model.feature_dim, config.model.num_classes),
-        "IRM": IRMClassifier(config.model.feature_dim, config.model.num_classes),
-        "Augmentation": DataAugmentationBaseline(config.model.feature_dim, config.model.num_classes)
+        "ERM": ERMClassifier(config.model.feature_dim, config.model.num_classes, regression=regression),
+        "IRM": IRMClassifier(config.model.feature_dim, config.model.num_classes, regression=regression),
+        "Augmentation": DataAugmentationBaseline(config.model.feature_dim, config.model.num_classes, regression=regression)
     }
     
     logger.info("Analyzing parameters...")
@@ -85,9 +100,10 @@ def main():
         resources = monitor.stop()
         
         training_results[name] = train_result
-        eval_results[name] = evaluate_model(model, loaders["test"])
+        eval_results[name] = evaluate_model(model, loaders["test"], regression=regression)
         
-        logger.info(f"{name} - Test Acc: {eval_results[name]['overall_accuracy']:.4f}, "
+        logger.info(f"{name} - Test MAE: {eval_results[name]['overall_mae']:.4f}, "
+                   f"RMSE: {eval_results[name]['overall_rmse']:.4f}, "
                    f"Robustness: {eval_results[name]['robustness_score']:.4f}, "
                    f"Time: {resources.wall_time_seconds:.1f}s")
         
@@ -95,12 +111,11 @@ def main():
         all_results[f"{name}_eval"] = eval_results[name]
         all_results[f"{name}_resources"] = resources.to_dict()
     
-    plot_training_curves(training_results, save_path=figures_dir / "training_curves.png")
-    plot_environment_comparison(eval_results, save_path=figures_dir / "environment_comparison.png")
-    
-    our_results = {n: r["overall_accuracy"] for n, r in eval_results.items()}
-    published = {"DANN": 0.72, "IRM (Arjovsky)": 0.75}
-    plot_method_comparison(our_results, published, save_path=figures_dir / "method_comparison.png")
+    try:
+        plot_training_curves(training_results, save_path=figures_dir / "training_curves.png")
+        plot_environment_comparison(eval_results, save_path=figures_dir / "environment_comparison.png")
+    except Exception as e:
+        logger.warning(f"Could not generate some plots: {e}")
     
     logger.info("\nRunning quantization comparison...")
     quantizer = ModelQuantizer(models["IRM"])
@@ -108,20 +123,23 @@ def main():
     def make_input():
         return torch.randn(1, 3, config.data.image_size, config.data.image_size)
     
-    def eval_acc(model):
+    def eval_mae(model):
         model.eval()
-        correct, total = 0, 0
+        all_preds, all_targets = [], []
         with torch.no_grad():
             for loader in loaders["test"]:
                 for batch in loader:
-                    logits = model(batch["image"])
-                    correct += (logits.argmax(1) == batch["label"]).sum().item()
-                    total += batch["label"].size(0)
-        return correct / total if total > 0 else 0
+                    preds = model(batch["image"])
+                    all_preds.extend(preds.cpu().numpy())
+                    all_targets.extend(batch["steering_angle"].numpy())
+        return 1 - np.mean(np.abs(np.array(all_preds) - np.array(all_targets)))
     
-    quant_comparison = quantizer.full_comparison(make_input, eval_acc)
+    quant_comparison = quantizer.full_comparison(make_input, eval_mae)
     all_results["quantization"] = quant_comparison
-    plot_quantization_comparison(quant_comparison, save_path=figures_dir / "quantization_comparison.png")
+    try:
+        plot_quantization_comparison(quant_comparison, save_path=figures_dir / "quantization_comparison.png")
+    except Exception as e:
+        logger.warning(f"Could not plot quantization: {e}")
     
     with open(output_dir / "results.json", 'w') as f:
         json.dump(all_results, f, indent=2, default=str)
@@ -130,11 +148,23 @@ def main():
     logger.info("Experiment Complete!")
     logger.info("=" * 60)
     
-    print("\nSUMMARY")
-    print("=" * 40)
+    print("\n" + "=" * 70)
+    print("STEERING ANGLE REGRESSION RESULTS")
+    print("=" * 70)
+    print(f"Dataset: {DATASET_INFO['name']}")
+    print(f"URL: {DATASET_INFO['url']}")
+    print("-" * 70)
+    print(f"{'Method':<15} {'MAE':>10} {'RMSE':>10} {'Robustness':>12} {'Per-Env MAE'}")
+    print("-" * 70)
+    
     for name, res in eval_results.items():
-        print(f"{name}: Acc={res['overall_accuracy']:.4f}, Robustness={res['robustness_score']:.4f}")
+        per_env = ", ".join([f"{e['env_name']}:{e['mae']:.3f}" for e in res['per_environment']])
+        print(f"{name:<15} {res['overall_mae']:>10.4f} {res['overall_rmse']:>10.4f} "
+              f"{res['robustness_score']:>12.4f} {per_env}")
+    
+    print("-" * 70)
     print(f"\nQuantization speedup: {quant_comparison['latency']['speedup']:.2f}x")
+    print(f"Results saved to: {output_dir / 'results.json'}")
     
     return 0
 

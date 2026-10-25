@@ -10,14 +10,16 @@ from pathlib import Path
 class ModelConfig:
     backbone: str = "resnet18"
     feature_dim: int = 512
-    num_classes: int = 5  # Discretized steering angles (5 bins from -45° to +45°)
+    num_classes: int = 1  # Continuous steering angle regression
     dropout: float = 0.3
+    regression: bool = True  # Use regression instead of classification
     
     _justifications: Dict[str, str] = field(default_factory=lambda: {
         "backbone": "ResNet-18: lightweight CNN suitable for driving images, CPU-friendly",
         "feature_dim": "512 matches ResNet-18 output dimension",
-        "num_classes": "4 discrete steering actions (left, slight-left, slight-right, right)",
-        "dropout": "0.3 for regularization against distribution shift"
+        "num_classes": "1 for continuous steering angle regression (MAE/RMSE)",
+        "dropout": "0.3 for regularization against distribution shift",
+        "regression": "True - predict continuous steering angle, not discrete bins"
     }, repr=False)
 
 

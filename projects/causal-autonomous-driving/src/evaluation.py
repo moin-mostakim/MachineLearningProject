@@ -1,4 +1,4 @@
-"""Evaluation metrics and benchmark comparison."""
+"""Evaluation metrics and benchmark comparison - Regression version."""
 
 import torch
 import numpy as np
@@ -10,50 +10,65 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def evaluate_model(model, test_loaders, device="cpu") -> Dict[str, Any]:
-    """Evaluate model on test set, reporting per-environment and overall accuracy."""
+def evaluate_model(model, test_loaders, device="cpu", regression=True) -> Dict[str, Any]:
+    """
+    Evaluate model on test set for steering angle regression.
+    
+    Reports per-environment and overall MAE/RMSE for continuous steering angles.
+    """
     model.eval()
     
     env_results = []
     all_preds = []
-    all_labels = []
+    all_targets = []
     
     with torch.no_grad():
         for env_idx, loader in enumerate(test_loaders):
             env_preds = []
-            env_labels = []
+            env_targets = []
             
             for batch in loader:
                 images = batch["image"].to(device)
-                labels = batch["label"].to(device)
+                targets = batch["steering_angle"].float().to(device)
                 
-                logits = model(images)
-                preds = logits.argmax(dim=1)
+                preds = model(images)
                 
                 env_preds.extend(preds.cpu().numpy())
-                env_labels.extend(labels.cpu().numpy())
+                env_targets.extend(targets.cpu().numpy())
             
-            env_acc = accuracy_score(env_labels, env_preds)
-            env_results.append({"environment": env_idx, "accuracy": env_acc})
+            env_preds = np.array(env_preds)
+            env_targets = np.array(env_targets)
+            
+            env_mae = np.mean(np.abs(env_preds - env_targets))
+            env_rmse = np.sqrt(np.mean((env_preds - env_targets) ** 2))
+            
+            env_name = ["Clear", "Rain", "Night"][env_idx] if env_idx < 3 else f"Env{env_idx}"
+            env_results.append({
+                "environment": env_idx,
+                "env_name": env_name,
+                "mae": float(env_mae),
+                "rmse": float(env_rmse)
+            })
             
             all_preds.extend(env_preds)
-            all_labels.extend(env_labels)
+            all_targets.extend(env_targets)
     
-    overall_acc = accuracy_score(all_labels, all_preds)
-    f1 = f1_score(all_labels, all_preds, average='macro')
-    cm = confusion_matrix(all_labels, all_preds)
+    all_preds = np.array(all_preds)
+    all_targets = np.array(all_targets)
     
-    # Measure distribution shift robustness: variance across environments
-    env_accs = [r["accuracy"] for r in env_results]
-    robustness = 1 - np.std(env_accs)  # Higher is better (less variance)
+    overall_mae = np.mean(np.abs(all_preds - all_targets))
+    overall_rmse = np.sqrt(np.mean((all_preds - all_targets) ** 2))
+    
+    env_maes = [r["mae"] for r in env_results]
+    robustness = 1 - np.std(env_maes)
     
     return {
-        "overall_accuracy": overall_acc,
-        "f1_macro": f1,
+        "overall_mae": float(overall_mae),
+        "overall_rmse": float(overall_rmse),
         "per_environment": env_results,
-        "robustness_score": robustness,
-        "accuracy_std": np.std(env_accs),
-        "confusion_matrix": cm.tolist()
+        "robustness_score": float(robustness),
+        "mae_std": float(np.std(env_maes)),
+        "overall_accuracy": float(1 - overall_mae),  # For backward compat
     }
 
 
