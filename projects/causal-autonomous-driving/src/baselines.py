@@ -114,7 +114,7 @@ class DomainRandomization(nn.Module):
         self.feature_extractor = CausalFeatureExtractor(config.model)
         
         # Classifier
-        self.classifier = nn.Linear(config.model.feature_dim, config.data.num_classes)
+        self.classifier = nn.Linear(config.model.feature_dim, config.model.num_classes)
         
         # Randomization parameters
         self.brightness_range = (0.5, 1.5)
@@ -188,7 +188,7 @@ class MixupERM(nn.Module):
         self.feature_extractor = CausalFeatureExtractor(config.model)
         
         # Classifier
-        self.classifier = nn.Linear(config.model.feature_dim, config.data.num_classes)
+        self.classifier = nn.Linear(config.model.feature_dim, config.model.num_classes)
         
     def mixup_data(
         self,
@@ -257,7 +257,7 @@ class CORAL(nn.Module):
         self.feature_extractor = CausalFeatureExtractor(config.model)
         
         # Classifier
-        self.classifier = nn.Linear(config.model.feature_dim, config.data.num_classes)
+        self.classifier = nn.Linear(config.model.feature_dim, config.model.num_classes)
         
     def coral_loss(
         self,

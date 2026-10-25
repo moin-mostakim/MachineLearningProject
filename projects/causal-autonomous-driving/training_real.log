@@ -1,0 +1,153 @@
+INFO:__main__:Hardware: 4 cores, 15.6GB RAM
+INFO:__main__:============================================================
+INFO:__main__:Causal Representation Learning for Autonomous Driving
+INFO:__main__:============================================================
+INFO:__main__:Creating multi-environment dataloaders...
+INFO:src.data_loader:Loading driving dataset from https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 0 dataset: 35 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 0 dataset: 7 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 0 dataset: 8 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 1 dataset: 35 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 1 dataset: 7 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 1 dataset: 8 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 2 dataset: 35 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 2 dataset: 7 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:src.data_loader:Loading Roboflow Self-Driving Car (Udacity-based) from HuggingFace...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'roboflow/self-driving-car' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+INFO:httpx2:HTTP Request: HEAD https://huggingface.co/datasets/roboflow/self-driving-car/resolve/main/README.md "HTTP/1.1 401 Unauthorized"
+WARNING:src.data_loader:Failed to load dataset: Dataset 'roboflow/self-driving-car' doesn't exist on the Hub or cannot be accessed., using simulated driving data
+INFO:src.data_loader:Creating simulated driving images with realistic features...
+INFO:src.data_loader:Created env 2 dataset: 8 samples
+INFO:src.data_loader:Dataset: Roboflow Self-Driving Car (Udacity-based) - https://huggingface.co/datasets/roboflow/self-driving-car
+INFO:__main__:Analyzing parameters...
+INFO:__main__:
+## Model Parameter Comparison
+| Model | Total Params | Trainable | Size (MB) |
+|-------|-------------|-----------|-----------|
+| ERM | 226,053 | 226,053 | 0.86 |
+| IRM | 226,054 | 226,054 | 0.86 |
+| Augmentation | 226,053 | 226,053 | 0.86 |
+INFO:__main__:
+Training ERM...
+INFO:src.trainer:Epoch 1/2 - Loss: 1.3476, Val Acc: 0.5238
+INFO:src.trainer:Epoch 2/2 - Loss: 1.0020, Val Acc: 0.5238
+INFO:__main__:ERM - Test Acc: 0.5000, Robustness: 0.8232, Time: 4.7s
+INFO:__main__:
+Training IRM...
+INFO:src.trainer:Epoch 1/2 - Loss: 1.4594, Penalty: 0.023355, Val Acc: 0.5238
+INFO:src.trainer:Epoch 2/2 - Loss: 1.1699, Penalty: 0.186872, Val Acc: 0.5238
+INFO:__main__:IRM - Test Acc: 0.5000, Robustness: 0.8232, Time: 0.2s
+INFO:__main__:
+Training Augmentation...
+INFO:src.trainer:Epoch 1/2 - Loss: 1.3457, Val Acc: 0.5238
+INFO:src.trainer:Epoch 2/2 - Loss: 1.0483, Val Acc: 0.5238
+INFO:__main__:Augmentation - Test Acc: 0.5000, Robustness: 0.8232, Time: 0.2s
+INFO:__main__:
+Running quantization comparison...
+INFO:src.quantization:Applying INT8 quantization...
+/home/ubuntu/.local/lib/python3.12/site-packages/torch/ao/nn/quantized/modules/utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  qweight = torch.quantize_per_tensor(
+INFO:__main__:============================================================
+INFO:__main__:Experiment Complete!
+INFO:__main__:============================================================
+
+SUMMARY
+========================================
+ERM: Acc=0.5000, Robustness=0.8232
+IRM: Acc=0.5000, Robustness=0.8232
+Augmentation: Acc=0.5000, Robustness=0.8232
+
+Quantization speedup: 0.76x
