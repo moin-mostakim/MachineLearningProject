@@ -1,0 +1,144 @@
+{
+  "hardware": {
+    "cpu_model": "x86_64",
+    "cpu_cores": 4,
+    "ram_gb": 15.628128051757812,
+    "torch_version": "2.14.1+cu130"
+  },
+  "config": {
+    "model": {
+      "hidden_dims": [
+        128,
+        64
+      ],
+      "num_classes": 10,
+      "dropout": 0.2
+    },
+    "federated": {
+      "num_clients": 10,
+      "clients_per_round": 5,
+      "num_rounds": 20,
+      "local_epochs": 2
+    },
+    "dp": {
+      "epsilon": 8.0,
+      "delta": 1e-05,
+      "max_grad_norm": 1.0,
+      "noise_multiplier": 1.1
+    },
+    "training": {
+      "batch_size": 32,
+      "learning_rate": 0.01,
+      "weight_decay": 0.0001
+    },
+    "data": {
+      "dataset": "cifar10",
+      "iid": false,
+      "alpha": 0.5,
+      "samples_per_client": 500
+    },
+    "seed": 42
+  },
+  "model_params": {
+    "model_name": "SimpleCNN",
+    "total_params": 90506,
+    "trainable_params": 90506,
+    "size_mb": 0.34525299072265625
+  },
+  "resources": {
+    "wall_time_seconds": 60.96049361900077,
+    "cpu_percent_mean": 383.8171953255426,
+    "memory_peak_mb": 68.27428340911865
+  },
+  "FedAvg_accuracies": [
+    0.092,
+    0.092,
+    0.084,
+    0.084,
+    0.104,
+    0.098,
+    0.098,
+    0.098,
+    0.084,
+    0.084,
+    0.098,
+    0.092,
+    0.111,
+    0.105,
+    0.092,
+    0.11,
+    0.11,
+    0.092,
+    0.092,
+    0.084
+  ],
+  "FedAvg_final": 0.084,
+  "FedProx_accuracies": [
+    0.084,
+    0.111,
+    0.095,
+    0.111,
+    0.111,
+    0.114,
+    0.11,
+    0.11,
+    0.086,
+    0.111,
+    0.093,
+    0.098,
+    0.092,
+    0.086,
+    0.12,
+    0.12,
+    0.092,
+    0.084,
+    0.105,
+    0.086
+  ],
+  "FedProx_final": 0.086,
+  "PersonalizedFL+DP_accuracies": [
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.098,
+    0.098,
+    0.098,
+    0.098,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093,
+    0.093
+  ],
+  "PersonalizedFL+DP_final": 0.093,
+  "quantization": {
+    "size": {
+      "fp32_size_mb": 0.34955310821533203,
+      "int8_size_mb": 0.25354862213134766,
+      "compression_ratio": 1.378643296409832
+    },
+    "latency": {
+      "fp32": {
+        "mean_ms": 0.23032225944916718,
+        "p95_ms": 0.25025170361914206
+      },
+      "int8": {
+        "mean_ms": 0.2700897598697338,
+        "p95_ms": 0.30089915380813176
+      },
+      "speedup": 0.8527619098193623
+    },
+    "accuracy": {
+      "fp32_metric": 0.084,
+      "int8_metric": 0.084
+    }
+  }
+}
