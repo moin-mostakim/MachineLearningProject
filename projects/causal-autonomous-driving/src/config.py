@@ -10,7 +10,7 @@ from pathlib import Path
 class ModelConfig:
     backbone: str = "resnet18"
     feature_dim: int = 512
-    num_classes: int = 4  # steering actions
+    num_classes: int = 5  # Discretized steering angles (5 bins from -45° to +45°)
     dropout: float = 0.3
     
     _justifications: Dict[str, str] = field(default_factory=lambda: {

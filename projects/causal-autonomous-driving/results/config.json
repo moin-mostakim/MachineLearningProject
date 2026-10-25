@@ -2,7 +2,7 @@
   "model": {
     "backbone": "resnet18",
     "feature_dim": 512,
-    "num_classes": 4,
+    "num_classes": 5,
     "dropout": 0.3
   },
   "irm": {
